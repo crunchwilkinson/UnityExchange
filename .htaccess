@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# If the user is trying to access a real file (like an image or CSS), let them
+RewriteCond %{REQUEST_FILENAME} !-f
+# If the user is trying to access a real directory, let them
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Otherwise, take the URL and pass it to index.php as a variable named 'url'
+RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]

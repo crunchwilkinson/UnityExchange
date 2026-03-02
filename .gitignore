@@ -1,0 +1,19 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+
+# VS Code specific settings
+.vscode/
+
+# PHP Error logs
+error_log
+php_errors.log
+
+# User Uploaded Images
+# We want to ignore uploaded test images, but KEEP the directory and the default image
+assets/images/products/*
+!assets/images/products/default_product.png
+!assets/images/products/index.php # Optional: if you have a blank index to prevent directory listing
