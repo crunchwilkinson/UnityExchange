@@ -18,7 +18,7 @@
                 
                 <div class="product-card">
                     
-                    <a href="/UnityExchange/product/show/<?php echo $product['id']; ?>" class="product-image-link">
+                    <a href="/UnityExchange/product/details/<?php echo $product['id']; ?>" class="product-image-link">
                         <img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>" 
                              alt="<?php echo htmlspecialchars($product['name']); ?>" 
                              class="product-image">
@@ -27,7 +27,7 @@
                     <div class="product-card-body">
                         
                         <h3 class="product-title">
-                            <a href="/UnityExchange/product/show/<?php echo $product['id']; ?>">
+                            <a href="/UnityExchange/product/details/<?php echo $product['id']; ?>">
                                 <?php echo htmlspecialchars($product['name']); ?>
                             </a>
                         </h3>

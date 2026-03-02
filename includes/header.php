@@ -17,6 +17,7 @@
             <div class="nav-links">
                 <a href="/UnityExchange/home"><i class="fa fa-home"></i> Home</a>
                 <a href="/UnityExchange/product"><i class="fa fa-th-large"></i> Marketplace</a>
+                <a href="/UnityExchange/product/myListings"><i class="fa fa-box"></i> My Listings</a>
                 <a href="/UnityExchange/cart"><i class="fa fa-shopping-cart"></i> Cart</a>
             </div>
             <div class="auth-links">

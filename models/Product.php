@@ -39,7 +39,10 @@ class Product {
     }
 
     public function getProductsBySeller($user_id) {
-        $query = "SELECT * FROM products WHERE user_id = :user_id ORDER BY created_at DESC";
+        $query = "SELECT p.*, u.username as seller_name 
+        FROM products p
+        JOIN users u ON p.user_id = u.id
+        WHERE p.user_id = :user_id ORDER BY p.created_at DESC";
         $stmt = $this->db->prepare($query);
         $stmt->execute([':user_id' => $user_id]);
         return $stmt->fetchAll();
@@ -65,14 +68,15 @@ class Product {
         }
     }
 
-    public function updateProduct($user_id, $name, $description, $image_file = null, $price, $stock_quantity) {
+    public function updateProduct($id, $user_id, $name, $description, $image_file = null, $price, $stock_quantity) {
         try {
             if ($image_file) {
                 $query = "UPDATE products 
                 SET name = :name, description = :description, image_file = :image_file, price = :price, stock_quantity = :stock_quantity 
-                WHERE user_id = :user_id";
+                WHERE id = :id AND user_id = :user_id";
 
                 $params = [
+                    ":id" => $id,
                     ":user_id"=> $user_id,
                     ":name" => $name,
                     ":description" => $description,
@@ -84,9 +88,10 @@ class Product {
             else {
                 $query = "UPDATE products 
                 SET name = :name, description = :description, price = :price, stock_quantity = :stock_quantity 
-                WHERE user_id = :user_id";
+                WHERE id = :id AND user_id = :user_id";
 
                 $params = [
+                    ":id" => $id,
                     ":user_id"=> $user_id,
                     ":name" => $name,
                     ":description" => $description,
@@ -109,6 +114,17 @@ class Product {
             $query = "DELETE FROM products WHERE id = :id AND user_id = :user_id";
             $stmt = $this->db->prepare($query);
             return $stmt->execute([':id' => $id, ':user_id' => $user_id]);
+        } catch (PDOException $e) {
+            echo "Failed to delete product: " . $e->getMessage();
+            return false;
+        }
+    }
+
+    public function adminDeleteProduct($id) {
+        try {
+            $query = "DELETE FROM products WHERE id = :id";
+            $stmt = $this->db->prepare($query);
+            return $stmt->execute([':id' => $id]);
         } catch (PDOException $e) {
             echo "Failed to delete product: " . $e->getMessage();
             return false;

@@ -4,6 +4,7 @@
             <h1>Manage Users</h1>
             <p>View and manage user accounts, permissions, and roles.</p>
         </div>
+        <a href="/UnityExchange/admin" class="btn-back">← Back to Admin Dashboard</a>
     </div>
 
     <div class="table-responsive">

@@ -1,5 +1,12 @@
 <div class="products-section">
-    <h2>List a New Item</h2>
+    <div class="catalog-header">
+        <div>
+            <h1>List a new Product</h1>
+            <p>Create a new listing for your item.</p>
+        </div>
+        <a href="/UnityExchange/product/" class="btn-back" style="color: #4a5568; text-decoration: none; font-weight: 500;">← Back to Marketplace</a>
+    </div>
+
     <div class="admin-form-container">
         <form action="/UnityExchange/product/store" method="POST" enctype="multipart/form-data">
 
@@ -35,7 +42,6 @@
 
             <div class="form-actions">
                 <button type="submit" class="btn-primary">Post Item</button>
-                <a href="/UnityExchange/product" class="btn-back">← Back to Marketplace</a>
             </div>
         </form>
     </div>

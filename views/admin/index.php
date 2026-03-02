@@ -26,20 +26,20 @@
         </div>
 
         <div class="product-card">
-            <a href="/UnityExchange/admin/product" class="admin-icon-link gradient-purple">
+            <a href="/UnityExchange/admin/products" class="admin-icon-link gradient-purple">
                 <i class="fa fa-box admin-icon"></i>
             </a>
 
             <div class="product-card-body">
                 <h3 class="product-title">
-                    <a href="/UnityExchange/admin/product">Manage Products</a>
+                    <a href="/UnityExchange/admin/products">Manage Products</a>
                 </h3>
                 
                 <p class="admin-card-description">
                     Add, edit, or remove products from the marketplace. Manage inventory and product listings.
                 </p>
 
-                <a href="/UnityExchange/admin/product" class="btn-primary">View Products</a>
+                <a href="/UnityExchange/admin/products" class="btn-primary">View Products</a>
             </div>
         </div>
     </div>

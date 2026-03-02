@@ -1,5 +1,13 @@
 <div class="admin-section">
 
+    <div class="catalog-header">
+        <div>
+            <h1>Edit User: <?php echo htmlspecialchars($user['username']); ?></h1>
+            <p>View and manage user accounts, permissions, and roles.</p>
+        </div>
+        <a href="/UnityExchange/admin/users" class="btn-back">← Back to Users</a>
+    </div>
+
     <?php if (!empty($success)): ?>
         <div class="alert alert-success"><?php echo htmlspecialchars($success); ?></div>
     <?php endif; ?>
@@ -9,7 +17,6 @@
     <?php endif; ?>
 
     <div class="admin-form-container">
-        <h2>Editing <?php echo '(' . htmlspecialchars($user['username']) . ')'; ?></h2>
         <form action="/UnityExchange/admin/edit/<?php echo htmlspecialchars($user['id']); ?>" method="POST">
             <input type = "hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
             <div class="form-group">
@@ -45,7 +52,6 @@
 
             <div class="form-actions">
                 <button type="submit" class="admin-button">Update User</button>
-                <a href="/UnityExchange/admin/users" class="btn-back">← Back to Users</a>
             </div>
 
         </form>

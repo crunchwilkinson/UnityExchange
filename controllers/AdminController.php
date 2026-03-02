@@ -3,9 +3,11 @@
 
 require_once 'config/Database.php';
 require_once 'models/User.php';
+require_once 'models/Product.php';
 
 class AdminController {
     private $userModel;
+    private $productModel;
 
     public function __construct()
     {
@@ -18,6 +20,7 @@ class AdminController {
         $database = new Database();
         $db = $database->connect();
         $this->userModel = new User($db);
+        $this->productModel = new Product($db);
     }
 
     public function index() {
@@ -100,6 +103,30 @@ class AdminController {
             $this->userModel->deleteUser($id);
         }
         header("Location: /UnityExchange/admin/users");
+        exit();
+    }
+
+    public function products() {
+        $products = $this->productModel->getAllProducts();
+
+        require_once 'includes/admin_header.php';
+        require_once 'views/admin/products.php';
+        require_once 'includes/footer.php';
+    }
+
+    public function deleteProduct($id) {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('HTTP/1.0 405 Method Not Allowed');
+            exit();
+        }
+
+        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+            header('HTTP/1.0 403 Forbidden');
+            die("CSRF token validation failed. Unauthorized request.");
+        }
+
+        $this->productModel->adminDeleteProduct($id);
+        header("Location: /UnityExchange/admin/products");
         exit();
     }
 }

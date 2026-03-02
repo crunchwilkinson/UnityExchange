@@ -138,7 +138,7 @@ class ProductController {
         }
 
         require_once 'includes/header.php';
-        require_once 'views/products/edit.php';
+        require_once 'views/product/edit.php';
         require_once 'includes/footer.php';
     }
 
@@ -193,8 +193,8 @@ class ProductController {
                 }
             }
 
-            // Databae update
-            if ($this->productModel->updateProduct($seller_id, $name, $description, $image_filename, $price, $stock_quantity)) {
+            // Database update
+            if ($this->productModel->updateProduct($id, $seller_id, $name, $description, $image_filename, $price, $stock_quantity)) {
                 header("Location: /UnityExchange/product/details/" . $id);
                 exit();
             } else {
@@ -222,5 +222,17 @@ class ProductController {
                 echo "Error deleting product. It may have already been ordered.";
             }
         }
+    }
+
+    // URL: /UnityExchange/product/myListings (Shows all products for the logged-in user)
+    public function myListings() {
+        $this->requireLogin();
+
+        $user_id = $_SESSION['user_id'];
+        $products = $this->productModel->getProductsBySeller($user_id);
+
+        require_once 'includes/header.php';
+        require_once 'views/product/my_listings.php';
+        require_once 'includes/footer.php';
     }
 }
