@@ -8,7 +8,7 @@
 
     <div class="product-grid">
         <div class="product-card">
-            <a href="/UnityExchange/admin/users" class="admin-icon-link gradient-purple">
+            <a href="/UnityExchange/admin/users" class="admin-icon-link gradient-blue">
                 <i class="fa fa-users admin-icon"></i>
             </a>
 
@@ -26,7 +26,7 @@
         </div>
 
         <div class="product-card">
-            <a href="/UnityExchange/admin/products" class="admin-icon-link gradient-purple">
+            <a href="/UnityExchange/admin/products" class="admin-icon-link gradient-blue">
                 <i class="fa fa-box admin-icon"></i>
             </a>
 
