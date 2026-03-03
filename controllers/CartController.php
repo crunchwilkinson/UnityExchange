@@ -151,6 +151,19 @@ class CartController {
         $this->jsonResponse('success', 'Cart Updated', ['cart_count' => array_sum($_SESSION['cart'])]);
     }
 
+    // URL: /UnityExchange/cart/remove
+    public function remove() {
+        $this->validateApiRequest();
+
+        $product_id = intval($_POST['product_id']);
+
+        if (isset($_SESSION['cart'][$product_id])) {
+            unset($_SESSION['cart'][$product_id]);
+        }
+
+        $this->jsonResponse('success', 'Item Removed.', ['cart_count' => array_sum($_SESSION['cart'])]);
+    }
+
     // URL: /UnityExchange/cart/clear
     public function clear() {
         $this->validateApiRequest();
