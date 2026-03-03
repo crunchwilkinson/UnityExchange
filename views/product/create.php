@@ -18,6 +18,22 @@
             </div>
 
             <div class="form-group">
+                <label for="category_id">Category</label>
+                <select id="category_id" name="category_id" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-family: inherit;">
+                    <option value="" disabled selected>Select a category...</option>
+                    <?php if (!empty($categories)): ?>
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?php echo htmlspecialchars($category['id']); ?>">
+                                <?php echo htmlspecialchars($category['name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <option value="1">Other / Miscellaneous</option>
+                    <?php endif; ?>
+                </select>
+            </div>
+
+            <div class="form-group">
                 <label for="description">Description & Condition</label>
                 <textarea id="description" name="description" rows="5" placeholder="Describe the item, its condition, and any accessories included..." style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-family: inherit;" required></textarea>
             </div>

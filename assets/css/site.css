@@ -214,6 +214,7 @@ button[type="submit"]:active,
     padding: 3rem 2rem;
     max-width: 1200px;
     margin: 0 auto;
+    margin-bottom: 150px;
 }
 
 .products-section h1 {

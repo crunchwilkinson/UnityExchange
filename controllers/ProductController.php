@@ -56,6 +56,9 @@ class ProductController {
     // URL: /UnityExchange/product/create (Shows the form)
     public function create() {
         $this->requireLogin();
+
+        // Fetch categories to pass to the view for the dropdown
+        $categories = $this->productModel->getCategories();
         
         require_once 'includes/header.php';
         require_once 'views/product/create.php';
@@ -79,6 +82,9 @@ class ProductController {
             $price = floatval($_POST['price']);                     // Ensure price is treated as a float
             $stock_quantity = intval($_POST['stock_quantity']);     // Ensure stock quantity is treated as an integer
             $seller_id = $_SESSION['user_id'];
+
+            // Capture the category ID (defaulting to 1 if something goes wrong)
+            $category_id = isset($_POST['category_id']) ? intval($_POST['category_id']) : 1;
 
             $image_filename = 'default_product.png'; // Fallback if no image is uploaded
 
@@ -115,7 +121,7 @@ class ProductController {
             }
 
             // Save to Database
-            if ($this->productModel->createProduct($seller_id, $name,$description, $image_filename, $price, $stock_quantity)) {
+            if ($this->productModel->createProduct($seller_id, $category_id, $name, $description, $image_filename, $price, $stock_quantity)) {
                 header("Location: /UnityExchange/product");
                 exit();
             } else {
@@ -136,6 +142,9 @@ class ProductController {
             echo "<h1>403 Forbidden</h1><p>You do not have permission to edit this product.</p>";
             exit();
         }
+
+        // Fetch categories to populate the edit form dropdown
+        $categories = $this->productModel->getCategories();
 
         require_once 'includes/header.php';
         require_once 'views/product/edit.php';
@@ -158,6 +167,9 @@ class ProductController {
             $price = floatval($_POST['price']);
             $stock_quantity = intval($_POST['stock_quantity']);
             $seller_id = $_SESSION['user_id'];
+
+            // Capture the updated category ID
+            $category_id = isset($_POST['category_id']) ? intval($_POST['category_id']) : 1;
             
             $image_filename = null; // Default to null (optional update)
 
@@ -194,7 +206,7 @@ class ProductController {
             }
 
             // Database update
-            if ($this->productModel->updateProduct($id, $seller_id, $name, $description, $image_filename, $price, $stock_quantity)) {
+            if ($this->productModel->updateProduct($id, $seller_id, $category_id, $name, $description, $price, $stock_quantity, $image_filename)) {
                 header("Location: /UnityExchange/product/details/" . $id);
                 exit();
             } else {

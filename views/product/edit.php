@@ -26,6 +26,22 @@
                 </div>
 
                 <div class="form-group">
+                    <label for="category_id">Category</label>
+                    <select id="category_id" name="category_id" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-family: inherit;">
+                        <option value="" disabled>Select a category...</option>
+                        <?php if (!empty($categories)): ?>
+                            <?php foreach ($categories as $category): ?>
+                                <option value="<?php echo htmlspecialchars($category['id']); ?>" <?php echo ($category['id'] == $product['category_id']) ? 'selected' : ''; ?>>
+                                    <?php echo htmlspecialchars($category['name']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <option value="1" selected>Other / Miscellaneous</option>
+                        <?php endif; ?>
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label for="description">Description & Condition</label>
                     <textarea id="description" name="description" rows="5" style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-family: inherit;" required><?php echo htmlspecialchars($product['description']); ?></textarea>
                 </div>
