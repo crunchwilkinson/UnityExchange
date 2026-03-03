@@ -178,6 +178,10 @@ class ProductController {
                 header("Location: /UnityExchange/product/create");
                 exit();
             }
+        } else {
+            // If not POST, redirect back to the create page
+            header("Location: /UnityExchange/product/create");
+            exit();
         }
     }
 
@@ -258,6 +262,10 @@ class ProductController {
                 header("Location: /UnityExchange/product/edit/" . $id);
                 exit();
             }
+        } else {
+            // If not POST, redirect back to the edit page
+            header("Location: /UnityExchange/product/edit/" . $id);
+            exit();
         }
     }
 
@@ -269,7 +277,10 @@ class ProductController {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Strict CSRF verification for destructive actions
             if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-                die("CSRF validation failed.");
+                // PRG Pattern: Redirect back to the edit page with an error
+                $_SESSION['flash_error'] = "Security validation failed. Please try again.";
+                header("Location: /UnityExchange/product/edit/" . $id);
+                exit();
             }
 
             $seller_id = $_SESSION['user_id'];
@@ -279,8 +290,14 @@ class ProductController {
                 header("Location: /UnityExchange/product/myListings");
                 exit();
             } else {
-                echo "Error deleting product. It may have already been ordered.";
+                // PRG Pattern: Database failed (likely because the item is tied to an existing order)
+                $_SESSION['flash_error'] = "Error: Cannot delete this product. It may already be linked to an active customer order.";
+                header("Location: /UnityExchange/product/edit/" . $id);
+                exit();
             }
+        } else {
+            header("Location: /UnityExchange/home");
+            exit();
         }
     }
 

@@ -1,128 +1,143 @@
 <?php
 // controllers/AuthController.php
 
-// Require the necessary files
 require_once 'config/Database.php';
 require_once 'models/User.php';
+
 class AuthController {
     private $userModel;
 
     public function __construct() {
-        // Initialize the database and model once for the whole controller
         $database = new Database();
         $db = $database->connect();
         $this->userModel = new User($db);
     }
 
-    // Handles URL: /MVC_Test/auth/register
+    // Handles URL: /UnityExchange/auth/register
     public function register() {
-        $error = '';
 
+        // PRG POST: Process the form
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-                // The token is missing or doesn't match!
-                // Log this attempt, and throw a hard error.
-                header('HTTP/1.0 403 Forbidden');
-                die("CSRF token validation failed. Unauthorized request.");
+                $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
+                header("Location: /UnityExchange/auth/register");
+                exit();
             }
+
             $username = trim($_POST['username']);
             $email = trim($_POST['email']);
-            $password = ($_POST['password']);
+            $password = $_POST['password'];
 
-            // Basic validation
+            // Save inputs to session so the user doesn't have to retype them if it fails
+            $_SESSION['old_username'] = $username;
+            $_SESSION['old_email'] = $email;
+
             if (empty($username) || empty($email) || empty($password)) {
-                $error = "Please fill in all fields.";
+                $_SESSION['flash_error'] = "Please fill in all fields.";
+                header("Location: /UnityExchange/auth/register");
+                exit();
             }
-            else {
-                // Check if user already exists
-                if ($this->userModel->getUserByEmail($email)) {
-                    $error = "Email is already registered.";
-                }
-                else {
-                    // Hash the password securely
-                    $hashed_password = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
 
-                    // Create the user and get their new ID
-                    $new_user_id = $this->userModel->createUser($username, $email, $hashed_password);
+            if ($this->userModel->getUserByEmail($email)) {
+                $_SESSION['flash_error'] = "Email is already registered.";
+                header("Location: /UnityExchange/auth/register");
+                exit();
+            }
 
-                    if ($new_user_id) {
-                        // Assign the default "customer" role
-                        $this->userModel->assignRoleByName($new_user_id, 'user');
+            // Success Path
+            $hashed_password = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
+            $new_user_id = $this->userModel->createUser($username, $email, $hashed_password);
 
-                        header("Location: /UnityExchange/auth/login");
-                        exit();
-                    }
-                    else {
-                        $error = "Something went wrong. Please try again.";
-                    }
-                }
+            if ($new_user_id) {
+                $this->userModel->assignRoleByName($new_user_id, 'user');
+                // Clear old inputs on success
+                unset($_SESSION['old_username'], $_SESSION['old_email']); 
+                
+                header("Location: /UnityExchange/auth/login");
+                exit();
+            } else {
+                $_SESSION['flash_error'] = "Something went wrong. Please try again.";
+                header("Location: /UnityExchange/auth/register");
+                exit();
             }
         }
 
-        // Load he view, passing any error messages
+        // PRG GET: Grab flash data
+        $error = $_SESSION['flash_error'] ?? '';
+        $old_username = $_SESSION['old_username'] ?? '';
+        $old_email = $_SESSION['old_email'] ?? '';
+        unset($_SESSION['flash_error'], $_SESSION['old_username'], $_SESSION['old_email']);
+
+        // Load the view (Only reached on GET requests)
         require_once 'includes/header.php';
         require_once 'views/auth/register.php';
         require_once 'includes/footer.php';
     }
 
+    // Handles URL: /UnityExchange/auth/login
     public function login() {
-        $error = '';
 
+        // PRG POST: Process the form
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-                // The token is missing or doesn't match!
-                // Log this attempt, and throw a hard error.
-                header('HTTP/1.0 403 Forbidden');
-                die("CSRF token validation failed. Unauthorized request.");
+                $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
+                header("Location: /UnityExchange/auth/login");
+                exit();
             }
+
             $email = trim($_POST['email']);
             $password = $_POST['password'];
 
+            // Flash the email back
+            $_SESSION['old_email'] = $email;
+
             if (empty($email) || empty($password)) {
-                $error = "Please fill in all fields.";
+                $_SESSION['flash_error'] = "Please fill in all fields.";
+                header("Location: /UnityExchange/auth/login");
+                exit();
             }
-            else {
-                // 1. Fetch the user from the database
-                $user = $this->userModel->getUserByEmail($email);
 
-                // 2. Verify the user exists AND the password matches the hash
-                if ($user && password_verify($password, $user['password_hash'])) {
+            $user = $this->userModel->getUserByEmail($email);
 
-                    // Regenerate ID on successful login to prevent session fixation
-                    session_regenerate_id(true);
-                    
-                    // Fetch their roles as an array
-                    $roles = $this->userModel->getUserRoles($user['id']);
+            if ($user && password_verify($password, $user['password_hash'])) {
+                // Success Path
+                session_regenerate_id(true);
+                
+                $roles = $this->userModel->getUserRoles($user['id']);
 
-                    // Build the secure session
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['username'] = $user['username'];
-                    $_SESSION['roles'] = $roles;
-                    $_SESSION['logged_in'] = true;
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['roles'] = $roles;
+                $_SESSION['logged_in'] = true;
 
-                    if (in_array('admin', $roles)) {
-                        header("Location: /UnityExchange/admin");
-                        exit();
-                    }
-                    else {
-                        // Redirect to homepage
-                        header("Location: /UnityExchange/home");
-                        exit();
-                    }
+                // Clear the flashed email so it doesn't linger
+                unset($_SESSION['old_email']);
+
+                if (in_array('admin', $roles)) {
+                    header("Location: /UnityExchange/admin");
+                    exit();
+                } else {
+                    header("Location: /UnityExchange/home");
+                    exit();
                 }
-                else {
-                    $error = "Invalid email or password";
-                }
+            } else {
+                $_SESSION['flash_error'] = "Invalid email or password.";
+                header("Location: /UnityExchange/auth/login");
+                exit();
             }
         }
 
-        // Load he view, passing any error messages
+        // PRG GET: Grab flash data
+        $error = $_SESSION['flash_error'] ?? '';
+        $old_email = $_SESSION['old_email'] ?? '';
+        unset($_SESSION['flash_error'], $_SESSION['old_email']);
+
+        // Load the view (Only reached on GET requests)
         require_once 'includes/header.php';
         require_once 'views/auth/login.php';
         require_once 'includes/footer.php';
     }
 
-    // Handles URL: /MVC_Test/auth/logout
     public function logout() {
         session_unset();
         session_destroy();

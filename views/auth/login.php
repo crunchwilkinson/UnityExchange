@@ -17,7 +17,7 @@
             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($old_email ?? ''); ?>" required>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>

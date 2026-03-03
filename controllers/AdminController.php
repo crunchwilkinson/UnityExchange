@@ -38,35 +38,13 @@ class AdminController {
         require_once 'includes/footer.php';
     }
 
+    // URL: /UnityExchange/admin/edit/5
+    // STRICTLY for displaying the HTML form
     public function edit($id) {
-        $error = '';
-        $success = '';
-
-        // Process form submission
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-                // The token is missing or doesn't match!
-                // Log this attempt, and throw a hard error.
-                header('HTTP/1.0 403 Forbidden');
-                die("CSRF token validation failed. Unauthorized request.");
-            }
-
-            $username = trim($_POST['username']);
-            $email = trim($_POST['email']);
-
-            // role_ids will be an array passed from HTML checkboxes
-            $role_ids = isset($_POST['roles']) ? $_POST['roles'] : [];
-
-            // Update user details and roles
-            $this->userModel->updateUser($id, $username, $email);
-
-            // Update the user's roles
-            if ($this->userModel->updateUserRoles($id, $role_ids)) {
-                $success = "User updated successfully.";
-            } else {
-                $error = "Failed to update user roles.";
-            }
-        }
+        // Grab any flash messages sent from the update() method
+        $error = $_SESSION['flash_error'] ?? '';
+        $success = $_SESSION['flash_success'] ?? '';
+        unset($_SESSION['flash_error'], $_SESSION['flash_success']);
 
         // Fetch data for the View to display
         $user = $this->userModel->getUserById($id);
@@ -87,15 +65,50 @@ class AdminController {
         require_once 'includes/footer.php';
     }
 
-    public function delete($id) {
+    // URL: /UnityExchange/admin/update/5
+    // STRICTLY for processing the POST request
+    public function update($id) {
+        // Kick out anyone trying to load this URL directly without submitting the form
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('HTTP/1.0 405 Method Not Allowed');
+            header("Location: /UnityExchange/admin/edit/" . $id);
             exit();
         }
 
         if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            header('HTTP/1.0 403 Forbidden');
-            die("CSRF token validation failed. Unauthorized request.");
+            $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
+            header("Location: /UnityExchange/admin/edit/" . $id);
+            exit();
+        }
+
+        $username = trim($_POST['username']);
+        $email = trim($_POST['email']);
+        $role_ids = isset($_POST['roles']) ? $_POST['roles'] : [];
+
+        // Update user details
+        $this->userModel->updateUser($id, $username, $email);
+
+        // Update the user's roles and set the appropriate flash message
+        if ($this->userModel->updateUserRoles($id, $role_ids)) {
+            $_SESSION['flash_success'] = "User updated successfully.";
+        } else {
+            $_SESSION['flash_error'] = "Failed to update user roles.";
+        }
+
+        // PRG Pattern: Redirect back to the GET route!
+        header("Location: /UnityExchange/admin/edit/" . $id);
+        exit();
+    }
+
+    public function delete($id) {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: /UnityExchange/admin/users");
+            exit();
+        }
+
+        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+            $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
+            header("Location: /UnityExchange/admin/users");
+            exit();
         }
 
         // Prevent admins from deleting themselves
@@ -116,16 +129,18 @@ class AdminController {
 
     public function deleteProduct($id) {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('HTTP/1.0 405 Method Not Allowed');
+            header("Location: /UnityExchange/admin/products");
             exit();
         }
 
         if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            header('HTTP/1.0 403 Forbidden');
-            die("CSRF token validation failed. Unauthorized request.");
+            $_SESSION['flash_error'] = "CSRF token validation failed. Unauthorized request.";
+            header("Location: /UnityExchange/admin/products");
+            exit();
         }
 
         $this->productModel->adminDeleteProduct($id);
+        $_SESSION['flash_success'] = "Product deleted successfully.";
         header("Location: /UnityExchange/admin/products");
         exit();
     }

@@ -17,7 +17,7 @@
     <?php endif; ?>
 
     <div class="admin-form-container">
-        <form action="/UnityExchange/admin/edit/<?php echo htmlspecialchars($user['id']); ?>" method="POST">
+        <form action="/UnityExchange/admin/update/<?php echo htmlspecialchars($user['id']); ?>" method="POST">
             <input type = "hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
             <div class="form-group">
                 <label for="username">Username</label>
