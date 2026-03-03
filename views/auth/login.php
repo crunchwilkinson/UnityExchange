@@ -1,11 +1,18 @@
 <div class="auth-section">
+
+<div class="catalog-header">
+        <div>
+            <h1>Login to UnityExchange</h1>
+            <p>Sign in to access your account.</p>
+        </div>
+        <a href="/UnityExchange/product/" class="btn-back" style="color: #4a5568; text-decoration: none; font-weight: 500;">← Back to Marketplace</a>
+    </div>
+
     <?php if (!empty($error)): ?>
         <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
     <?php endif; ?>
 
     <div class="auth-container">
-        <h2>Login to UnityExchange</h2>
-
         <form action="/UnityExchange/auth/login" method="POST">
             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
             <div class="form-group">
