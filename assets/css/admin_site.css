@@ -680,7 +680,6 @@ footer p {
     color: #22543d;
     border: 1px solid #9ae6b4;
     max-width: 600px;
-    margin: 0 auto;
     margin-bottom: 20px;
 }
 
@@ -689,5 +688,4 @@ footer p {
     color: #822727;
     border: 1px solid #feb2b2;
     max-width: 600px;
-    margin: 0 auto;
 }
