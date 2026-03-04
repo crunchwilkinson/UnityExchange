@@ -17,3 +17,4 @@ php_errors.log
 assets/images/products/*
 !assets/images/products/default_product.png
 !assets/images/products/index.php # Optional: if you have a blank index to prevent directory listing
+.env
