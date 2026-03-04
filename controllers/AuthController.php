@@ -57,6 +57,7 @@ class AuthController {
                 // Clear old inputs on success
                 unset($_SESSION['old_username'], $_SESSION['old_email']); 
                 
+                $_SESSION['flash_success'] = "Registration successful! You can now log in.";
                 header("Location: /UnityExchange/auth/login");
                 exit();
             } else {
@@ -114,9 +115,11 @@ class AuthController {
                 unset($_SESSION['old_email']);
 
                 if (in_array('admin', $roles)) {
+                    $_SESSION['flash_success'] = "Welcome back, Admin " . htmlspecialchars($user['username']) . "!";
                     header("Location: /UnityExchange/admin");
                     exit();
                 } else {
+                    $_SESSION['flash_success'] = "Welcome back, " . htmlspecialchars($user['username']) . "!";
                     header("Location: /UnityExchange/home");
                     exit();
                 }

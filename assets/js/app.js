@@ -7,6 +7,97 @@ document.addEventListener('DOMContentLoaded', () => {
         return csrfMeta ? csrfMeta.getAttribute('content') : '';
     };
 
+    // ======================================
+    // HELPER: DISPLAY TOAST NOTIFICATION
+    // ======================================
+    const showToast = (message, type = 'success') => {
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        
+        // Determine colors and icon based on type
+        const config = {
+            success: {
+                background: 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)',
+                icon: '✓',
+                shadow: 'rgba(59, 130, 246, 0.3)'
+            },
+            error: {
+                background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)',
+                icon: '✕',
+                shadow: 'rgba(239, 68, 68, 0.3)'
+            },
+            warning: {
+                background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                icon: '!',
+                shadow: 'rgba(245, 158, 11, 0.3)'
+            }
+        };
+
+        const current = config[type] || config.success;
+        
+        // Create icon
+        const icon = document.createElement('span');
+        icon.style.cssText = `
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+            font-weight: bold;
+            font-size: 14px;
+        `;
+        icon.innerText = current.icon;
+        
+        // Create text
+        const textContent = document.createElement('span');
+        textContent.innerText = message;
+        
+        toast.appendChild(icon);
+        toast.appendChild(textContent);
+
+        Object.assign(toast.style, {
+            position: 'fixed',
+            top: '20px',
+            right: '-350px',
+            background: current.background,
+            color: 'white',
+            padding: '16px 24px',
+            borderRadius: '8px',
+            boxShadow: `0 10px 25px ${current.shadow}`,
+            fontWeight: '500',
+            fontSize: '1rem',
+            fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+            zIndex: '9999',
+            opacity: '1',
+            transition: 'right 0.4s ease-in-out, opacity 0.4s ease-in-out',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            minWidth: '300px',
+            maxWidth: '400px',
+            wordWrap: 'break-word',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
+        });
+
+        document.body.appendChild(toast);
+
+        // Slide in
+        setTimeout(() => {
+            toast.style.right = '20px';
+        }, 50);
+
+        // Fade out and remove
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => {
+                toast.remove();
+            }, 400);
+        }, 4000);
+    };
+
     // ==================================================
     // ADD TO CART BUTTON HANDLER (Product Details Page)
     // ==================================================
@@ -19,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
            
 
             if (!csrfToken) {
-                alert('Security token missing. Please refresh the page.');
+                showToast('Security token missing. Please refresh the page.', 'error');
                 return;
             }
 
@@ -50,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 // 5. Handle the PHP response (which should be JSON)
                 if (data.status === 'success') {
-                    alert(data.message);
+                    showToast(data.message, 'success');
 
                     // Update the cart count in the header (if you have a cart count element)
                     const cartCountElement = document.getElementById('cart-count');
@@ -59,14 +150,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 } else {
                     // The PHP Controller rejected the request
-                    alert('Notice: ' + data.message);
+                    showToast(data.message, 'warning');
                 }
             })
             .catch(error => {
                 // Handle any network errors or unexpected issues
                 this.innerText = originalText;
                 this.disabled = false;
-                alert('An error occured while adding the product to the cart. Please try again.');
+                showToast('An error occurred while adding the product to the cart. Please try again.', 'error');
                 console.error('Error adding to cart:', error);
             });
         });
@@ -84,7 +175,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const csrfToken = getCsrfToken();
 
             if (!csrfToken) {
-                alert('Security token missing. Please refresh the page.');
+                showToast('Security token missing. Please refresh the page.', 'error');
                 return;
             }
 
@@ -107,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Reload the page so PHP calculates the new totals and updates the cart display
                     window.location.reload();
                 } else {
-                    alert('Error: ' + data.message);
+                    showToast(data.message, 'error');
                     window.location.reload(); // Reload to reset the quantity input to the correct value
                 }
             });
@@ -127,7 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const csrfToken = getCsrfToken();
 
             if (!csrfToken) {
-                alert('Security token missing. Please refresh the page.');
+                showToast('Security token missing. Please refresh the page.', 'error');
                 return;
             }
 
@@ -147,10 +238,11 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (data.status === 'success') {
                     // Reload the page to reflect the updated cart
-                    window.location.reload();
+                    showToast(data.message, 'success');
+                    setTimeout(() => window.location.reload(), 500);
                 } else {
-                    alert('Error removing item: ' + data.message);
-                    window.location.reload(); // Reload to ensure cart display is accurate
+                    showToast(data.message, 'error');
+                    setTimeout(() => window.location.reload(), 500); // Reload to ensure cart display is accurate
                 }
             });
         });
@@ -172,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const csrfToken = getCsrfToken();
 
             if (!csrfToken) {
-                alert('Security token missing. Please refresh the page.');
+                showToast('Security token missing. Please refresh the page.', 'error');
                 return;
             }
 
@@ -190,11 +282,92 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 if (data.status === 'success') {
-                    window.location.reload(); // Reload the page to reflect the cleared cart
+                    showToast(data.message, 'success');
+                    setTimeout(() => window.location.reload(), 500); // Reload the page to reflect the cleared cart
                 } else {
-                    alert('Error clearing cart: ' + data.message);
+                    showToast(data.message, 'error');
                 }
             });
         });
+    }
+
+    // ==========================================
+    // TOAST NOTIFICATIONS (Success Messages)
+    // ==========================================
+    const flashData = document.getElementById('js-flash-message');
+
+    if (flashData) {
+        const message = flashData.getAttribute('data-message');
+
+        // Debug: Check if message exists
+        if (!message || message.trim() === '') {
+            console.warn('Toast message is empty. Check that data-message attribute is set on #js-flash-message');
+        }
+
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        
+        // Create a checkmark icon
+        const checkmark = document.createElement('span');
+        checkmark.style.cssText = `
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+            font-weight: bold;
+            font-size: 14px;
+        `;
+        checkmark.innerText = '✓';
+        
+        // Create text container
+        const textContent = document.createElement('span');
+        textContent.innerText = message || 'Success!';
+        
+        toast.appendChild(checkmark);
+        toast.appendChild(textContent);
+
+        Object.assign(toast.style, {
+            position: 'fixed',
+            top: '20px',
+            right: '-350px', // Start off-screen
+            background: 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)',
+            color: 'white',
+            padding: '16px 24px',
+            borderRadius: '8px',
+            boxShadow: '0 10px 25px rgba(59, 130, 246, 0.3)',
+            fontWeight: '500',
+            fontSize: '1rem',
+            fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+            zIndex: '9999',
+            opacity: '1',
+            transition: 'right 0.4s ease-in-out, opacity 0.4s ease-in-out',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            minWidth: '300px',
+            maxWidth: '400px',
+            wordWrap: 'break-word',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px'
+        });
+
+        // 3. Append to the body
+        document.body.appendChild(toast);
+
+        // 4. Slide it in (small delay to let the DOM render first)
+        setTimeout(() => {
+            toast.style.right = '20px';
+        }, 50);
+
+        // 5. Fade it out and remove it after 4 seconds
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            setTimeout(() => {
+                toast.remove();
+            }, 400); // Wait for the fade-out animation to finish
+        }, 4000);
     }
 });

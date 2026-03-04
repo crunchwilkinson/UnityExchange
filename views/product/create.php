@@ -4,8 +4,12 @@
             <h1>List a new Product</h1>
             <p>Create a new listing for your item.</p>
         </div>
-        <a href="/UnityExchange/product/" class="btn-back" style="color: #4a5568; text-decoration: none; font-weight: 500;">← Back to Marketplace</a>
+        <a href="/UnityExchange/product/" class="btn-primary">← Back to Marketplace</a>
     </div>
+
+    <?php if (!empty($error)): ?> 
+        <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
+    <?php endif; ?>
 
     <div class="admin-form-container">
         <form action="/UnityExchange/product/store" method="POST" enctype="multipart/form-data">

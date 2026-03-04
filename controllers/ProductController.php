@@ -173,6 +173,10 @@ class ProductController {
 
             // 4. Save everything to the database
             if ($this->productModel->createProduct($seller_id, $category_id, $name, $description, $image_filename, $price, $stock_quantity)) {
+                
+                // Set the session flash message to show on the next page load (PRG Pattern)
+                $_SESSION['flash_success'] = "Product listed successfully! It may take a few moments to appear in the marketplace catalog.";
+
                 // Success! Redirect the user back to the marketplace catalog
                 header("Location: /UnityExchange/product");
                 exit();
@@ -254,6 +258,7 @@ class ProductController {
 
             // 4. Update the database record
             if ($this->productModel->updateProduct($id, $seller_id, $category_id, $name, $description, $price, $stock_quantity, $image_filename)) {
+                $_SESSION['flash_success'] = "Product updated successfully!";
                 // Success! Send them to the product details page so they can see their updates
                 header("Location: /UnityExchange/product/details/" . $id);
                 exit();
@@ -282,6 +287,7 @@ class ProductController {
 
             // The model automatically enforces the WHERE user_id = :seller_id constraint
             if ($this->productModel->deleteProduct($id, $seller_id)) {
+                $_SESSION['flash_success'] = "Product deleted successfully.";
                 header("Location: /UnityExchange/product/myListings");
                 exit();
             } else {

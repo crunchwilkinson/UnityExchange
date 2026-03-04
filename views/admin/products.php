@@ -4,7 +4,7 @@
             <h1>Manage Products</h1>
             <p>View and manage all products listed on the marketplace.</p>
         </div>
-        <a href="/UnityExchange/admin" class="btn-back">← Back to Admin Dashboard</a>
+        <a href="/UnityExchange/admin" class="btn-primary">← Back to Admin Dashboard</a>
     </div>
 
     <div class="table-responsive">

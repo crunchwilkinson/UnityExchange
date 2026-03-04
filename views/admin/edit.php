@@ -5,12 +5,8 @@
             <h1>Edit User: <?php echo htmlspecialchars($user['username']); ?></h1>
             <p>View and manage user accounts, permissions, and roles.</p>
         </div>
-        <a href="/UnityExchange/admin/users" class="btn-back">← Back to Users</a>
+        <a href="/UnityExchange/admin/users" class="btn-primary">← Back to Users</a>
     </div>
-
-    <?php if (!empty($success)): ?>
-        <div class="alert alert-success"><?php echo htmlspecialchars($success); ?></div>
-    <?php endif; ?>
 
     <?php if (!empty($error)): ?>
         <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>

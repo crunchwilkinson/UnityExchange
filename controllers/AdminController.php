@@ -52,8 +52,7 @@ class AdminController {
     public function edit($id) {
         // Grab any flash messages sent from the update() method
         $error = $_SESSION['flash_error'] ?? '';
-        $success = $_SESSION['flash_success'] ?? '';
-        unset($_SESSION['flash_error'], $_SESSION['flash_success']);
+        unset($_SESSION['flash_error']); // Clear the flash message after using it
 
         // Fetch data for the View to display
         $user = $this->userModel->getUserById($id);
@@ -116,6 +115,7 @@ class AdminController {
         if ($_SESSION['user_id'] != $id) {
             $this->userModel->deleteUser($id);
         }
+        $_SESSION['flash_success'] = "User deleted successfully.";
         header("Location: /UnityExchange/admin/users");
         exit();
     }
