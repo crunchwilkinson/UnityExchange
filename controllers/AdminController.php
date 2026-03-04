@@ -11,6 +11,7 @@ class AdminController {
 
     public function __construct()
     {
+        // Access control: Only allow users with the 'admin' role to access any method in this controller
         if (!isset($_SESSION['logged_in']) || !isset(($_SESSION['roles'])) || !in_array('admin', $_SESSION['roles'])) {
             header('HTTP/1.0 403 Forbidden');
             echo "<div style='background-color: #fed7d7;color: #822727;border: 1px solid #feb2b2; margin: 0 auto; margin-bottom: 20px;'><h1>403 Forbidden</h1><p>You do not have administrative access.</p></div>";
@@ -21,6 +22,14 @@ class AdminController {
         $db = $database->connect();
         $this->userModel = new User($db);
         $this->productModel = new Product($db);
+    }
+
+    private function validateCRSF($headerRedirectPath) {
+        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+            $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
+            header("Location: $headerRedirectPath");
+            exit();
+        }
     }
 
     public function index() {
@@ -74,11 +83,7 @@ class AdminController {
             exit();
         }
 
-        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
-            header("Location: /UnityExchange/admin/edit/" . $id);
-            exit();
-        }
+        $this->validateCRSF("/UnityExchange/admin/edit/" . $id);
 
         $username = trim($_POST['username']);
         $email = trim($_POST['email']);
@@ -105,11 +110,7 @@ class AdminController {
             exit();
         }
 
-        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
-            header("Location: /UnityExchange/admin/users");
-            exit();
-        }
+        $this->validateCRSF("/UnityExchange/admin/users");
 
         // Prevent admins from deleting themselves
         if ($_SESSION['user_id'] != $id) {
@@ -133,11 +134,7 @@ class AdminController {
             exit();
         }
 
-        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $_SESSION['flash_error'] = "CSRF token validation failed. Unauthorized request.";
-            header("Location: /UnityExchange/admin/products");
-            exit();
-        }
+        $this->validateCRSF("/UnityExchange/admin/products");
 
         $this->productModel->adminDeleteProduct($id);
         $_SESSION['flash_success'] = "Product deleted successfully.";

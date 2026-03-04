@@ -13,16 +13,20 @@ class AuthController {
         $this->userModel = new User($db);
     }
 
+    private function validateCRSF($headerRedirectPath) {
+        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+            $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
+            header("Location: $headerRedirectPath");
+            exit();
+        }
+    }
+
     // Handles URL: /UnityExchange/auth/register
     public function register() {
 
         // PRG POST: Process the form
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-                $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
-                header("Location: /UnityExchange/auth/register");
-                exit();
-            }
+            $this->validateCRSF("/UnityExchange/auth/register");
 
             $username = trim($_POST['username']);
             $email = trim($_POST['email']);
@@ -79,11 +83,7 @@ class AuthController {
 
         // PRG POST: Process the form
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-                $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
-                header("Location: /UnityExchange/auth/login");
-                exit();
-            }
+            $this->validateCRSF("/UnityExchange/auth/login");
 
             $email = trim($_POST['email']);
             $password = $_POST['password'];

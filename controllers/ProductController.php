@@ -30,6 +30,14 @@ class ProductController {
         }
     }
 
+    private function validateCRSF($headerRedirectPath) {
+        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+            $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
+            header("Location: $headerRedirectPath");
+            exit();
+        }
+    }
+
     // Helper: Handles secure image uploading, size limits, and MIME type checks.
     // The $isRequired parameter allows us to force an upload for new products, 
     // but keep it optional when editing existing products.
@@ -140,11 +148,7 @@ class ProductController {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // 1. Validate the CSRF token to prevent cross-site request forgery
-            if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-                $_SESSION['flash_error'] = "Security validation failed. Please try submitting again.";
-                header("Location: /UnityExchange/product/create");
-                exit();
-            } 
+            $this->validateCRSF("/UnityExchange/product/create");
 
             // 2. Sanitize and extract the text inputs
             $name = trim($_POST['name']);
@@ -225,11 +229,7 @@ class ProductController {
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // 1. CSRF Token Check
-            if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-                $_SESSION['flash_error'] = "Security validation failed. Please try submitting again.";
-                header("Location: /UnityExchange/product/edit/" . $id);
-                exit();
-            }
+            $this->validateCRSF("/UnityExchange/product/edit/" . $id);
 
             // 2. Extract inputs
             $name = trim($_POST['name']);
@@ -276,12 +276,7 @@ class ProductController {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Strict CSRF verification for destructive actions
-            if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-                // PRG Pattern: Redirect back to the edit page with an error
-                $_SESSION['flash_error'] = "Security validation failed. Please try again.";
-                header("Location: /UnityExchange/product/edit/" . $id);
-                exit();
-            }
+            $this->validateCRSF("/UnityExchange/product/edit/" . $id);
 
             $seller_id = $_SESSION['user_id'];
 
