@@ -68,5 +68,19 @@ class Order {
             return false;
         }
     }
+
+    // Fetches all top-level order receipts for a specific buyer
+    public function getOrdersByUserId($user_id) {
+        $query = "SELECT id, total_amount, status, created_at 
+                  FROM orders 
+                  WHERE user_id = :user_id 
+                  ORDER BY created_at DESC";
+                  
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':user_id', $user_id);
+        $stmt->execute();
+        
+        return $stmt->fetchAll();
+    }
     
 }
