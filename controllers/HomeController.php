@@ -18,7 +18,12 @@ class HomeController {
     public function index() {
 
         // Fetch the real data from MySQL
-        $products = $this->productModel->getAllProducts();
+        if (isset($_SESSION['user_id']) && isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+            $products = $this->productModel->getHomeProducts(true, $_SESSION['user_id']);
+        } else {
+            $products = $this->productModel->getHomeProducts(false);
+        }
+        
 
         // Load the Views
         require_once 'includes/header.php';

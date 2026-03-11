@@ -41,6 +41,56 @@ class Product
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getHomeProducts($logged_in, $user_id = null) {
+        if ($logged_in && $user_id) {
+            $query = "SELECT p.*, u.username as seller_name, c.name as category_name
+                  FROM products p
+                  JOIN users u ON p.user_id = u.id
+                  JOIN categories c ON p.category_id = c.id
+                  WHERE p.stock_quantity > 0 AND p.user_id != :current_user_id
+                  ORDER BY p.created_at DESC LIMIT 9";
+
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([':current_user_id' => $user_id]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            $query = "SELECT p.*, u.username as seller_name, c.name as category_name
+                  FROM products p
+                  JOIN users u ON p.user_id = u.id
+                  JOIN categories c ON p.category_id = c.id
+                  ORDER BY p.created_at DESC LIMIT 9";
+
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+    }
+
+    public function getLatestProducts($logged_in, $user_id = null) {
+        if ($logged_in && $user_id) {
+            $query = "SELECT p.*, u.username as seller_name, c.name as category_name
+                  FROM products p
+                  JOIN users u ON p.user_id = u.id
+                  JOIN categories c ON p.category_id = c.id
+                  WHERE p.stock_quantity > 0 AND p.user_id != :current_user_id
+                  ORDER BY p.created_at DESC";
+
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([':current_user_id' => $user_id]);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            $query = "SELECT p.*, u.username as seller_name, c.name as category_name
+                  FROM products p
+                  JOIN users u ON p.user_id = u.id
+                  JOIN categories c ON p.category_id = c.id
+                  ORDER BY p.created_at DESC";
+
+            $stmt = $this->db->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+    }
+
     public function getProductById($id)
     {
         $query = "SELECT p.*, u.username as seller_name, u.email as seller_email, c.name as category_name   

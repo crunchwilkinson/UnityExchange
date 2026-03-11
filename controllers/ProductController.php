@@ -97,8 +97,12 @@ class ProductController {
     // URL: /UnityExchange/product OR /UnityExchange/product/index
     // Displays the main marketplace catalog
     public function index() {
-        // Fetch all products to display on the public grid
-        $products = $this->productModel->getAllProducts();
+        // Fetch latest products to display on the public grid
+        if (isset($_SESSION['user_id']) && isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
+            $products = $this->productModel->getLatestProducts(true, $_SESSION['user_id']);
+        } else {
+            $products = $this->productModel->getLatestProducts(false);
+        }
         
         require_once 'includes/header.php';
         require_once 'views/product/index.php';
