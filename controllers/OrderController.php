@@ -22,6 +22,14 @@ class OrderController {
         }
     }
 
+    private function validateCRSF($headerRedirectPath) {
+        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+            $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
+            header("Location: $headerRedirectPath");
+            exit();
+        }
+    }
+
     // URL: /UnityExchange/order
     // Displays the "My Orders" list for the buyer
     public function index() {
@@ -36,5 +44,58 @@ class OrderController {
         require_once 'includes/header.php';
         require_once 'views/order/index.php';
         require_once 'includes/footer.php';
+    }
+
+    // URL: /UnityExchange/order/details/5
+    public function details($order_id) {
+        $this->requireLogin();
+        // Grab any error messages triggered by the store() method (PRG Pattern)
+        $error = $_SESSION['flash_error'] ?? '';
+        unset($_SESSION['flash_error']); // Clear the error immediately after grabbing it
+
+        $user_id = $_SESSION['user_id'];
+
+        // 1. Fetch the main order and implicitly check if the buyer owns it
+        $order = $this->orderModel->getOrderById($order_id, $user_id);
+
+        if (!$order) {
+            $_SESSION['flash_error'] = "Order not found or you do not have permission to view it.";
+            header("Location: /UnityExchange/order");
+            exit();
+        }
+
+        // 2. Fetch the itemized list
+        $items = $this->orderModel->getOrderItems($order_id);
+
+        // 3. Load the view
+        require_once 'includes/header.php';
+        require_once 'views/order/details.php';
+        require_once 'includes/footer.php';
+    }
+
+    // URL: /UnityExchange/order/complete/5
+    public function complete($order_id) {
+        $this->requireLogin();
+
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $_SESSION['flash_error'] = "Invalid request method.";
+            header("Location: /UnityExchange/order/details/" . $order_id);
+            exit();
+        }
+
+        $this->validateCRSF("/UnityExchange/order/details/" . $order_id);
+
+        $user_id = $_SESSION['user_id'];
+
+        // Attempt the status update
+        if ($this->orderModel->markOrderCompleted($order_id,$user_id)) {
+            $_SESSION['flash_success'] = "Thank you for confirming receipt! Your order is now marked as completed.";
+            header("Location: /UnityExchange/order/details/" . $order_id);
+            exit();
+        } else {
+            $_SESSION['flash_error'] = "Failed to update order status. Please try again.";
+            header("Location: /UnityExchange/order/details/" . $order_id);
+            exit();
+        }
     }
 }

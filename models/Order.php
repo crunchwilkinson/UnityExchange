@@ -82,5 +82,66 @@ class Order {
         
         return $stmt->fetchAll();
     }
-    
+
+    // Fetch a single order, strictly checking the user_id for security
+    public function getOrderById($order_id, $user_id) {
+        $query = "SELECT * FROM orders WHERE id = :order_id AND user_id = :user_id";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([':order_id' => $order_id, ':user_id' => $user_id]);
+        
+        return $stmt->fetch(); // Returns false if not found or doesn't belong to them
+    }
+
+    // Fetch all line items for an order, including the snapshot price and the seller's username
+    public function getOrderItems($order_id) {
+        $query = "SELECT oi.quantity, oi.price_at_purchase, 
+                         p.name as product_name, p.image_file, p.id as product_id, 
+                         u.username as seller_name
+                  FROM order_items oi
+                  JOIN products p ON oi.product_id = p.id
+                  JOIN users u ON p.user_id = u.id
+                  WHERE oi.order_id = :order_id";
+                  
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([':order_id' => $order_id]);
+        
+        return $stmt->fetchAll();
+    }
+
+    // Updates the order status to completed, strictly verifying ownership and current status
+    public function markOrderCompleted($order_id, $user_id) {
+        $query = "UPDATE orders 
+                  SET status = 'completed' 
+                  WHERE id = :order_id 
+                  AND user_id = :user_id 
+                  AND status = 'pending'";
+                  
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([':order_id' => $order_id, ':user_id' => $user_id]);
+        
+        if ($stmt->rowCount() > 0) {
+            return true; // Successfully updated
+        } else {
+            return false; // No rows updated, either because the order doesn't exist, doesn't belong to the user, or isn't pending
+        }
+    }
+
+    // Fetch all orders that a specific seller has sold (for their own sales dashboard)
+    public function getSellerSales($seller_id) {
+        $query = "SELECT oi.quantity, oi.price_at_purchase, 
+                         p.name as product_name, p.image_file, 
+                         o.id as order_id, o.created_at as sale_date, o.status as order_status,
+                         u.username as buyer_name, u.email as buyer_email
+                  FROM order_items oi
+                  JOIN products p ON oi.product_id = p.id
+                  JOIN orders o ON oi.order_id = o.id
+                  JOIN users u ON o.user_id = u.id
+                  WHERE p.user_id = :seller_id
+                  ORDER BY o.created_at DESC";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->execute([':seller_id' => $seller_id]);
+
+        return $stmt->fetchAll();
+    }
 }
