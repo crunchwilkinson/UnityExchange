@@ -21,7 +21,13 @@
                 <a href="/UnityExchange/product"><i class="fa fa-th-large"></i> Marketplace</a>
                 <a href="/UnityExchange/product/myListings"><i class="fa fa-box"></i> My Listings</a>
                 <a href="/UnityExchange/cart"><i class="fa fa-shopping-cart"></i> Cart</a>
-                <a href="/UnityExchange/order"><i class="fa fa-receipt"></i> Orders</a>
+                <div class="nav-dropdown">
+                    <span class="dropdown-trigger"><i class="fa fa-exchange-alt"></i> Transactions <i class="fa fa-caret-down"></i></span>
+                    <div class="dropdown-content">
+                        <a href="/UnityExchange/order"><i class="fa fa-shopping-bag"></i> My Purchases</a>
+                        <a href="/UnityExchange/sales"><i class="fa fa-store"></i> My Sales</a>
+                    </div>
+                </div>
             </div>
             <div class="auth-links">
                 <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>

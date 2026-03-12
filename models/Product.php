@@ -48,7 +48,7 @@ class Product
                   JOIN users u ON p.user_id = u.id
                   JOIN categories c ON p.category_id = c.id
                   WHERE p.stock_quantity > 0 AND p.user_id != :current_user_id
-                  ORDER BY p.created_at DESC LIMIT 9";
+                  ORDER BY p.created_at DESC LIMIT 3";
 
             $stmt = $this->db->prepare($query);
             $stmt->execute([':current_user_id' => $user_id]);
@@ -58,7 +58,7 @@ class Product
                   FROM products p
                   JOIN users u ON p.user_id = u.id
                   JOIN categories c ON p.category_id = c.id
-                  ORDER BY p.created_at DESC LIMIT 9";
+                  ORDER BY p.created_at DESC LIMIT 3";
 
             $stmt = $this->db->prepare($query);
             $stmt->execute();

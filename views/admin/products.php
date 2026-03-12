@@ -57,7 +57,7 @@
                                 ?>
                             </td>
 
-                            <td class="action-buttons">
+                            <td class="action-buttons product-action-buttons">
                                 <form action="/UnityExchange/admin/deleteProduct/<?php echo $product['id']; ?>" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to completely delete product <?php echo htmlspecialchars($product['name']); ?>? This cannot be undone.');">
                                     <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
                                     <button type="submit" class="btn-delete">

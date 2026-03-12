@@ -1,78 +1,95 @@
-<main class="products-section">
-    <div class="catalog-header">
-        <div>
-            <h1>Latest Products</h1>
-            <p>Discover the newest items from sellers in your community.</p>
+<div class="home-section">
+    
+    <div class="hero-banner">
+        <div class="hero-content">
+            <h1>Empowering Local Trade</h1>
+            <p>Connect directly with buyers and sellers in your community. UnityExchange makes informal trading secure, fast, and simple.</p>
+            <div class="hero-actions">
+                <a href="/UnityExchange/product" class="btn-primary">Shop the Marketplace</a>
+                <a href="/UnityExchange/auth/register" class="btn-secondary">Start Selling</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-section">
+        <h2 class="section-title">How It Works</h2>
+        <div class="info-grid">
+            
+            <div class="info-card">
+                <div class="info-icon">🤝</div>
+                <h3>Connect Locally</h3>
+                <p>Discover unique handcrafted goods, fresh produce, and services directly from people in your area.</p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">🔒</div>
+                <h3>Secure Agreements</h3>
+                <p>Lock in prices and reserve items safely using our transparent digital cart and checkout system.</p>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">📈</div>
+                <h3>Grow Your Hustle</h3>
+                <p>Set up your digital storefront in minutes and reach more customers without expensive overhead fees.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="products-grid">
+        <div class="home-section-header">
+            <h2 class="section-title home-section-title">Featured Listings</h2>
+            <a href="/UnityExchange/product" class="home-section-link">View All -></a>
         </div>
         
-        <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
-            <a href="/UnityExchange/product/create" class="btn-primary">+ List an Item</a>
-        <?php else: ?>
-            <a href="/UnityExchange/auth/login" class="btn-primary">Login to Sell</a>
-        <?php endif; ?>
-    </div>
-
-    <div class="product-grid">
-        <?php if (!empty($products)): ?>
-            <?php foreach ($products as $product): ?>
+        <div class="product-grid">
+            <?php if (!empty($products)): ?>
+                <?php foreach ($products as $product): ?>
+                    <div class="product-card">
                 
-                <div class="product-card">
+                <a href="/UnityExchange/product/details/<?php echo $product['id']; ?>" class="product-image-link">
+                    <img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>" 
+                         alt="<?php echo htmlspecialchars($product['name']); ?>" 
+                         class="product-image">
+                </a>
+
+                <div class="product-card-body">
                     
-                    <a href="/UnityExchange/product/details/<?php echo $product['id']; ?>" class="product-image-link">
-                        <img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>" 
-                             alt="<?php echo htmlspecialchars($product['name']); ?>" 
-                             class="product-image">
-                    </a>
+                    <h3 class="product-title">
+                        <a href="/UnityExchange/product/details/<?php echo $product['id']; ?>">
+                            <?php echo htmlspecialchars($product['name']); ?>
+                        </a>
+                    </h3>
+                    
+                    <p class="product-price">
+                        R <?php echo number_format($product['price'], 2); ?>
+                    </p>
 
-                    <div class="product-card-body">
+                    <div class="product-footer">
+                        <span class="seller-info">
+                            Sold by <strong><?php echo htmlspecialchars($product['seller_name']); ?></strong>
+                        </span>
                         
-                        <h3 class="product-title">
-                            <a href="/UnityExchange/product/details/<?php echo $product['id']; ?>">
-                                <?php echo htmlspecialchars($product['name']); ?>
-                            </a>
-                        </h3>
-                        
-                        <p class="product-price">
-                            R <?php echo number_format($product['price'], 2); ?>
-                        </p>
-
-                        <?php if (!empty($product['description'])): ?>
-                            <p style="color: #718096; font-size: 0.9rem; margin-bottom: 15px; line-height: 1.5;">
-                                <?php echo htmlspecialchars(substr($product['description'], 0, 80)); ?>
-                                <?php if (strlen($product['description']) > 80) echo '...'; ?>
-                            </p>
+                        <?php if ($product['stock_quantity'] > 0): ?>
+                            <span class="stock-badge in-stock">In Stock</span>
+                        <?php else: ?>
+                            <span class="stock-badge sold-out">Sold Out</span>
                         <?php endif; ?>
-
-                        <div class="product-footer">
-                            <?php if (!empty($product['seller_name'])): ?>
-                                <span class="seller-info">
-                                    By <strong><?php echo htmlspecialchars($product['seller_name']); ?></strong>
-                                </span>
-                            <?php endif; ?>
-                            
-                            <?php if (isset($product['stock_quantity'])): ?>
-                                <?php if ($product['stock_quantity'] > 0): ?>
-                                    <span class="stock-badge in-stock">In Stock</span>
-                                <?php else: ?>
-                                    <span class="stock-badge sold-out">Sold Out</span>
-                                <?php endif; ?>
-                            <?php endif; ?>
-                        </div>
-                        
                     </div>
+                    
                 </div>
-
-            <?php endforeach; ?>
-        <?php else: ?>
-            
-            <div class="empty-state">
-                <h3>No products yet</h3>
-                <p>Be the first to list an item on UnityExchange!</p>
-                <?php if (isset($_SESSION['logged_in'])): ?>
-                    <a href="/UnityExchange/product/create" class="btn-primary">List an Item Now</a>
-                <?php endif; ?>
             </div>
-            
-        <?php endif; ?>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>No featured products available at the moment.</p>
+            <?php endif; ?>
+        </div>
     </div>
-</main>
+
+    <div class="bottom-cta">
+        <h2>Ready to turn your skills into income?</h2>
+        <p>Join hundreds of local entrepreneurs already trading on the platform.</p>
+        <a href="/UnityExchange/product/create" class="btn-primary">List Your First Item</a>
+    </div>
+
+</div>
