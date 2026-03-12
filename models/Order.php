@@ -127,7 +127,7 @@ class Order {
     }
 
     // Fetch all orders that a specific seller has sold (for their own sales dashboard)
-    public function getSellerSales($seller_id) {
+    public function getSalesBySellerId($seller_id) {
         $query = "SELECT oi.quantity, oi.price_at_purchase, 
                          p.name as product_name, p.image_file, 
                          o.id as order_id, o.created_at as sale_date, o.status as order_status,
