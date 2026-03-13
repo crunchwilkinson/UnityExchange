@@ -120,7 +120,7 @@ class AuthController {
                     exit();
                 } else {
                     $_SESSION['flash_success'] = "Welcome back, " . htmlspecialchars($user['username']) . "!";
-                    header("Location: /UnityExchange/home");
+                    header("Location: /UnityExchange/product");
                     exit();
                 }
             } else {
