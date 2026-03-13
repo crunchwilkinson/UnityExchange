@@ -10,8 +10,8 @@
 
     <?php if (empty($orders)): ?>
         
-        <div class="empty-state">
-            <h3>No orders yet</h3>
+        <div class="empty-cart">
+            <h2>No orders yet</h2>
             <p>You haven't purchased anything from the marketplace yet.</p>
             <a href="/UnityExchange/product" class="btn-primary" style="display: inline-block; margin-top: 10px;">
                 Start Exploring

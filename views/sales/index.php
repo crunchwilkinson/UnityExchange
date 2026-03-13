@@ -5,14 +5,17 @@
             <h1>My Sales Dashboard</h1>
             <p>Track the items you've sold and arrange fulfillment with buyers.</p>
         </div>
-        <a href="/UnityExchange/product/create" class="btn-secondary">List New Product</a>
+        <a href="/UnityExchange/product" class="btn-secondary">← Back to Marketplace</a>
     </div>
 
     <?php if (empty($sales)): ?>
         
-        <div class="empty-state">
-            <h3>No sales yet</h3>
+        <div class="empty-cart">
+            <h2>No sales yet</h2>
             <p>Keep listing great products! Your sales will appear here.</p>
+            <a href="/UnityExchange/product/create" class="btn-primary" style="display: inline-block; margin-top: 10px;">
+                List New Product
+            </a>
         </div>
 
     <?php else: ?>

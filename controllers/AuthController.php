@@ -31,13 +31,20 @@ class AuthController {
             $username = trim($_POST['username']);
             $email = trim($_POST['email']);
             $password = $_POST['password'];
+            $password_confirm = $_POST['password_confirm'] ?? '';
 
             // Save inputs to session so the user doesn't have to retype them if it fails
             $_SESSION['old_username'] = $username;
             $_SESSION['old_email'] = $email;
 
-            if (empty($username) || empty($email) || empty($password)) {
+            if (empty($username) || empty($email) || empty($password) || empty($password_confirm)) {
                 $_SESSION['flash_error'] = "Please fill in all fields.";
+                header("Location: /UnityExchange/auth/register");
+                exit();
+            }
+
+            if ($password !== $password_confirm) {
+                $_SESSION['flash_error'] = "Passwords do not match.";
                 header("Location: /UnityExchange/auth/register");
                 exit();
             }
