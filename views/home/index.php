@@ -6,7 +6,11 @@
             <p>Connect directly with buyers and sellers in your community. UnityExchange makes informal trading secure, fast, and simple.</p>
             <div class="hero-actions">
                 <a href="/UnityExchange/product" class="btn-primary">Shop the Marketplace</a>
-                <a href="/UnityExchange/auth/register" class="btn-secondary">Start Selling</a>
+                <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
+                    <a href="/UnityExchange/product/create" class="btn-secondary">Start Selling</a>
+                <?php else: ?>
+                    <a href="/UnityExchange/auth/register" class="btn-secondary">Join Now</a>
+                <?php endif; ?>
             </div>
         </div>
     </div>
@@ -16,19 +20,19 @@
         <div class="info-grid">
             
             <div class="info-card">
-                <div class="info-icon">🤝</div>
+                <div class="info-icon"><i class="fa fa-handshake" style="color: #004471;"></i></div>
                 <h3>Connect Locally</h3>
                 <p>Discover unique handcrafted goods, fresh produce, and services directly from people in your area.</p>
             </div>
 
             <div class="info-card">
-                <div class="info-icon">🔒</div>
+                <div class="info-icon"><i class="fa fa-shield-alt" style="color: #ce8c00;"></i></div>
                 <h3>Secure Agreements</h3>
                 <p>Lock in prices and reserve items safely using our transparent digital cart and checkout system.</p>
             </div>
 
             <div class="info-card">
-                <div class="info-icon">📈</div>
+                <div class="info-icon"><i class="fa fa-chart-line" style="color: #008f43;"></i></div>
                 <h3>Grow Your Hustle</h3>
                 <p>Set up your digital storefront in minutes and reach more customers without expensive overhead fees.</p>
             </div>
@@ -39,7 +43,7 @@
     <div class="products-grid">
         <div class="home-section-header">
             <h2 class="section-title home-section-title">Featured Listings</h2>
-            <a href="/UnityExchange/product" class="home-section-link">View All -></a>
+            <a href="/UnityExchange/product" class="home-section-link">View All →</a>
         </div>
         
         <div class="product-grid">

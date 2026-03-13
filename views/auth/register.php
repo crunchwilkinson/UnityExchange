@@ -5,7 +5,7 @@
             <h1>Create an Account</h1>
             <p>Create a new account to access UnityExchange.</p>
         </div>
-        <a href="/UnityExchange/product/" class="btn-back" style="color: #4a5568; text-decoration: none; font-weight: 500;">← Back to Marketplace</a>
+        <a href="/UnityExchange/product/" class="btn-secondary">← Back to Marketplace</a>
     </div>
 
     <?php if (!empty($error)): ?>
@@ -27,7 +27,7 @@
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit">Register</button>
+            <button type="submit" class="btn-primary">Register</button>
         </form>
 
         <p class="auth-link-container">Already have an account? <a class="auth-link" href="/UnityExchange/auth/login">Login here</a></p>

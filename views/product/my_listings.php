@@ -6,9 +6,9 @@
         </div>
         
         <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
-            <a href="/UnityExchange/product/create" class="btn-primary">+ List an Item</a>
+            <a href="/UnityExchange/product/create" class="btn-secondary">+ List an Item</a>
         <?php else: ?>
-            <a href="/UnityExchange/auth/login" class="btn-primary">Login to Sell</a>
+            <a href="/UnityExchange/auth/login" class="btn-secondary">Login to Sell</a>
         <?php endif; ?>
     </div>
 

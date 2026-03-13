@@ -5,7 +5,7 @@
             <h1>My Sales Dashboard</h1>
             <p>Track the items you've sold and arrange fulfillment with buyers.</p>
         </div>
-        <a href="/UnityExchange/product/create" class="btn-primary">List New Product</a>
+        <a href="/UnityExchange/product/create" class="btn-secondary">List New Product</a>
     </div>
 
     <?php if (empty($sales)): ?>

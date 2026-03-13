@@ -4,7 +4,7 @@
             <h1>List a new Product</h1>
             <p>Create a new listing for your item.</p>
         </div>
-        <a href="/UnityExchange/product/" class="btn-primary">← Back to Marketplace</a>
+        <a href="/UnityExchange/product/" class="btn-secondary">← Back to Marketplace</a>
     </div>
 
     <?php if (!empty($error)): ?> 

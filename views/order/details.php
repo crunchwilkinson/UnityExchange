@@ -5,7 +5,7 @@
             <h1>Order #<?php echo htmlspecialchars($order['id']); ?></h1>
             <p>Placed on <?php echo date('F j, Y \a\t g:i A', strtotime($order['created_at'])); ?></p>
         </div>
-        <a href="/UnityExchange/order" class="btn-primary">← Back to Order History</a>
+        <a href="/UnityExchange/order" class="btn-secondary">← Back to Order History</a>
     </div>
 
     <div class="cart-layout">
