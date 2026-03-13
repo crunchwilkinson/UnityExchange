@@ -103,6 +103,9 @@ class ProductController {
         } else {
             $products = $this->productModel->getLatestProducts(false);
         }
+
+        // Fetch categories to populate the filter buttons on the catalog page
+        $categories = $this->productModel->getCategories();
         
         require_once 'includes/header.php';
         require_once 'views/product/index.php';
@@ -315,6 +318,7 @@ class ProductController {
         
         // Fetch only products belonging to this specific user
         $products = $this->productModel->getProductsBySeller($user_id);
+        $categories = $this->productModel->getCategories();
 
         require_once 'includes/header.php';
         require_once 'views/product/my_listings.php';

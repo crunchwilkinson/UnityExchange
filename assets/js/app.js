@@ -370,4 +370,31 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 400); // Wait for the fade-out animation to finish
         }, 4000);
     }
+
+    // ==========================================
+    // CATEGORY FILTERING (Catalog Page)
+    // ==========================================
+
+    // 1. Grab the dropdown and all the product cards
+    const categoryFilter = document.getElementById('categoryFilter');
+    const productCards = document.querySelectorAll('.product-card');
+
+    // 2. Listen for any changes to the dropdown menu
+    categoryFilter.addEventListener('change', (event) => {
+        // Get the ID of the selected category (e.g., "all", "1", "5")
+        const filterValue = event.target.value;
+
+        // 3. Loop through every product card
+        productCards.forEach(card => {
+            // If "All" is selected or the card's category matches the selected filter, show it; otherwise, hide it
+            if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                // Show it (using flex to maintain your existing layout)
+                card.style.display = 'flex'; 
+            } else {
+                // Hide it
+                card.style.display = 'none'; 
+            }
+        });
+        
+    });
 });
