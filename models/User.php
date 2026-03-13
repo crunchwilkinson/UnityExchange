@@ -19,21 +19,24 @@ class User {
 
         // Returns the associative array or false if no user is found
         return $stmt->fetch();
-    
-        
     }
 
     // Insert a new user into the database for registration
     public function createUser($username, $email, $password_hash) {
-        $query = "INSERT INTO users (username, email, password_hash) VALUES (:username, :email, :password_hash)";
-
-        $stmt = $this->db->prepare($query);
+        try {
+            $query = "INSERT INTO users (username, email, password_hash) VALUES (:username, :email, :password_hash)";
+            $stmt = $this->db->prepare($query);
         
-        if ($stmt->execute([':username' => $username, ':email' => $email, ':password_hash' => $password_hash])) {
-            // Return the ID of the newly created user
-            return $this->db->lastInsertId();
+            if ($stmt->execute([':username' => $username, ':email' => $email, ':password_hash' => $password_hash])) {
+                // Return the ID of the newly created user
+                return $this->db->lastInsertId();
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            error_log("User creation failed: " . $e->getMessage());
+            return false;
         }
-        return false;
     }
 
     // --- ROLE MANAGEMENT ---
@@ -57,18 +60,24 @@ class User {
 
     // Assign a role to a user by its name (used during registration)
     public function assignRoleByName($user_id, $role_name) {
-        // Find the role by its name to ensure it exists
-        $query = "SELECT id FROM roles WHERE name = :name LIMIT 1";
-        $stmt = $this->db->prepare($query);
-        $stmt->execute([':name' => $role_name]);
-        $role = $stmt->fetch();
-
-        if ($role) {
-            $query = "INSERT INTO user_roles (user_id, role_id) VALUES (:user_id, :role_id)";
+        try {
+            // Find the role by its name to ensure it exists
+            $query = "SELECT id FROM roles WHERE name = :name LIMIT 1";
             $stmt = $this->db->prepare($query);
-            return $stmt->execute([':user_id' => $user_id, ':role_id' => $role['id']]);
+            $stmt->execute([':name' => $role_name]);
+            $role = $stmt->fetch();
+
+            if ($role) {
+                $query = "INSERT INTO user_roles (user_id, role_id) VALUES (:user_id, :role_id)";
+                $stmt = $this->db->prepare($query);
+                return $stmt->execute([':user_id' => $user_id, ':role_id' => $role['id']]);
+            } else {
+                return false; // Role not found
+            }
+        } catch (PDOException $e) {
+            error_log('Failed to assign role: ' . $e->getMessage());
+            return false;
         }
-        return false; // Role not found
     }
 
     // Update user roles (Used by Admin) using a database transaction to ensure data integrity
@@ -116,12 +125,22 @@ class User {
     }
 
     public function updateUser($id, $username, $email) {
-        $stmt = $this->db->prepare("UPDATE users SET username = :username, email = :email WHERE id = :id");
-        return $stmt->execute([':id' => $id, ':username' => $username, ':email' => $email]);
+        try {
+            $stmt = $this->db->prepare("UPDATE users SET username = :username, email = :email WHERE id = :id");
+            return $stmt->execute([':id' => $id, ':username' => $username, ':email' => $email]);
+        } catch (PDOException $e) {
+            error_log("User update failed: " . $e->getMessage());
+            return false;
+        }
     }
 
     public function deleteUser($id) {
-        $stmt = $this->db->prepare("DELETE FROM users WHERE id = :id");
-        return $stmt->execute([':id' => $id]);
+        try {
+            $stmt = $this->db->prepare("DELETE FROM users WHERE id = :id");
+            return $stmt->execute([':id' => $id]);
+        } catch (PDOException $e) {
+            error_log("User delete failed: " . $e->getMessage());
+            return false;
+        }
     }
 }

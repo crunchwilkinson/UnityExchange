@@ -64,8 +64,8 @@ class Order {
         } catch (PDOException $e) {
             // Handle any errors that occur during the transaction
             $this->db->rollBack();
-            error_log("Order creation failed: " . $e->getMessage());
-            return false;
+                error_log("Order creation failed: " . $e->getMessage());
+                return false;
         }
     }
 
@@ -110,19 +110,23 @@ class Order {
 
     // Updates the order status to completed, strictly verifying ownership and current status
     public function markOrderCompleted($order_id, $user_id) {
-        $query = "UPDATE orders 
+        try {
+            $query = "UPDATE orders 
                   SET status = 'completed' 
                   WHERE id = :order_id 
                   AND user_id = :user_id 
                   AND status = 'pending'";
                   
-        $stmt = $this->db->prepare($query);
-        $stmt->execute([':order_id' => $order_id, ':user_id' => $user_id]);
+            $stmt = $this->db->prepare($query);
+            $stmt->execute([':order_id' => $order_id, ':user_id' => $user_id]);
         
-        if ($stmt->rowCount() > 0) {
-            return true; // Successfully updated
-        } else {
-            return false; // No rows updated, either because the order doesn't exist, doesn't belong to the user, or isn't pending
+            if ($stmt->rowCount() > 0) {
+                return true; // Successfully updated
+            } else {
+                return false; // No rows updated, either because the order doesn't exist, doesn't belong to the user, or isn't pending
+            }
+        } catch (PDOException $e) {
+            error_log("Failed to mark order as completed: " . $e->getMessage());
         }
     }
 
