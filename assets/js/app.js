@@ -375,26 +375,43 @@ document.addEventListener('DOMContentLoaded', () => {
     // CATEGORY FILTERING (Catalog Page)
     // ==========================================
 
-    // 1. Grab the dropdown and all the product cards
     const categoryFilter = document.getElementById('categoryFilter');
     const productCards = document.querySelectorAll('.product-card');
+    const emptyState = document.getElementById('js-empty-state');
+    const clearFilterBtn = document.getElementById('clearFilterBtn');
 
-    // 2. Listen for any changes to the dropdown menu
-    categoryFilter.addEventListener('change', (event) => {
-        // Get the ID of the selected category (e.g., "all", "1", "5")
-        const filterValue = event.target.value;
+    // Function to handle the filtering logic
+    function filterProducts(filterValue) {
+        let visibleCount = 0;
 
-        // 3. Loop through every product card
+        // Loop through and show/hide cards
         productCards.forEach(card => {
-            // If "All" is selected or the card's category matches the selected filter, show it; otherwise, hide it
             if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-                // Show it (using flex to maintain your existing layout)
-                card.style.display = 'flex'; 
+                card.style.display = 'flex';
+                visibleCount++;
             } else {
-                // Hide it
-                card.style.display = 'none'; 
+                card.style.display = 'none';
             }
         });
-        
+
+        // Toggle the empty state based on the visible count
+        if (visibleCount === 0) {
+            emptyState.style.display = 'block';
+        } else {
+            emptyState.style.display = 'none';
+        }
+    }
+
+    // Listen for dropdown changes
+    categoryFilter.addEventListener('change', (event) => {
+        filterProducts(event.target.value);
     });
+
+    // Let the "View All Items" button reset the dropdown and grid
+    if (clearFilterBtn) {
+        clearFilterBtn.addEventListener('click', () => {
+            categoryFilter.value = 'all'; // Reset select visually
+            filterProducts('all');        // Reset grid
+        });
+    }
 });
