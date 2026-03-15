@@ -19,6 +19,13 @@
                 <a href="/UnityExchange/admin"><i class="fa fa-home"></i> Home</a>
                 <a href="/UnityExchange/admin/users"><i class="fa fa-users"></i> Users</a>
                 <a href="/UnityExchange/admin/products"><i class="fa fa-shopping-cart"></i> Products</a>
+
+                <div class="nav-search">
+                <div class="search-container">
+                    <input type="text" id="adminLiveSearch" placeholder="Search records...">
+                    <button type="button" aria-label="Search"><i class="fa fa-search"></i></button>
+                </div>
+            </div>
             </div>
             <div class="auth-links">
                 <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>

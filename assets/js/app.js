@@ -372,46 +372,153 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // CATEGORY FILTERING (Catalog Page)
+    // GLOBAL CATEGORY FILTERING
     // ==========================================
-
     const categoryFilter = document.getElementById('categoryFilter');
-    const productCards = document.querySelectorAll('.product-card');
-    const emptyState = document.getElementById('js-empty-state');
-    const clearFilterBtn = document.getElementById('clearFilterBtn');
 
-    // Function to handle the filtering logic
-    function filterProducts(filterValue) {
-        let visibleCount = 0;
+    // ONLY run this script if a filter actually exists on the current page
+    if (categoryFilter) {
+        
+        const productCards = document.querySelectorAll('.product-card');
+        const productRows = document.querySelectorAll('.product-row');
+        const emptyState = document.getElementById('js-empty-state');
+        const clearFilterBtn = document.getElementById('clearFilterBtn');
 
-        // Loop through and show/hide cards
-        productCards.forEach(card => {
-            if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-                card.style.display = 'flex';
-                visibleCount++;
-            } else {
-                card.style.display = 'none';
+        // Listen for dropdown changes
+        categoryFilter.addEventListener('change', (event) => {
+            const filterValue = event.target.value;
+            let visibleCount = 0;
+
+            // 1. Are we on the Catalog Page? (Filter Cards)
+            if (productCards.length > 0) {
+                productCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (emptyState) {
+                    emptyState.style.display = (visibleCount === 0) ? 'block' : 'none';
+                }
+            }
+
+            // 2. Are we on the Admin Page? (Filter Table Rows)
+            if (productRows.length > 0) {
+                productRows.forEach(row => {
+                    if (filterValue === 'all' || row.getAttribute('data-category') === filterValue) {
+                        row.style.display = ''; // Reverts to default table-row
+                        visibleCount++;
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+
+                if (emptyState) {
+                    emptyState.style.display = (visibleCount === 0) ? '' : 'none';
+                }
             }
         });
 
-        // Toggle the empty state based on the visible count
-        if (visibleCount === 0) {
-            emptyState.style.display = 'block';
-        } else {
-            emptyState.style.display = 'none';
+        // 3. Let the "View All Items" button reset the dropdown
+        if (clearFilterBtn) {
+            clearFilterBtn.addEventListener('click', () => {
+                categoryFilter.value = 'all'; // Change the dropdown back to "All"
+                categoryFilter.dispatchEvent(new Event('change')); // Force the script to run the filter again
+            });
         }
     }
 
-    // Listen for dropdown changes
-    categoryFilter.addEventListener('change', (event) => {
-        filterProducts(event.target.value);
-    });
+    // ==========================================
+    // USER ROLE FILTERING (Admin)
+    // ==========================================
+    const userRoleFilter = document.getElementById('userRoleFilter');
+    
+    // ONLY run this script if the User Filter actually exists on the page
+    if (userRoleFilter) {
+        const userRows = document.querySelectorAll('.user-row');
+        const userEmptyState = document.getElementById('js-user-empty-state');
 
-    // Let the "View All Items" button reset the dropdown and grid
-    if (clearFilterBtn) {
-        clearFilterBtn.addEventListener('click', () => {
-            categoryFilter.value = 'all'; // Reset select visually
-            filterProducts('all');        // Reset grid
+        userRoleFilter.addEventListener('change', (event) => {
+            // Convert to lowercase to ensure it matches the data-roles attribute perfectly
+            const filterValue = event.target.value.toLowerCase();
+            let visibleCount = 0;
+
+            userRows.forEach(row => {
+                const userRoles = row.getAttribute('data-roles') || '';
+                
+                // If "all" is selected OR if the row's roles string INCLUDES the selected role
+                if (filterValue === 'all' || userRoles.includes(filterValue)) {
+                    row.style.display = ''; // Reverts to default table-row
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none'; // Hides the row
+                }
+            });
+
+            // Toggle the empty state row based on the visible count
+            if (userEmptyState) {
+                userEmptyState.style.display = (visibleCount === 0 && userRows.length > 0) ? '' : 'none';
+            }
+        });
+    }
+
+    // ==========================================
+    // ADMIN LIVE SEARCH (Users & Products Tables)
+    // ==========================================
+    const adminSearch = document.getElementById('adminLiveSearch');
+
+    if (adminSearch) {
+        adminSearch.addEventListener('input', (event) => {
+            const searchTerm = event.target.value.toLowerCase();
+            
+            // Grab both types of rows and empty states
+            const productRows = document.querySelectorAll('.product-row');
+            const userRows = document.querySelectorAll('.user-row');
+            const productEmptyState = document.getElementById('js-empty-state');
+            const userEmptyState = document.getElementById('js-user-empty-state');
+
+            // 1. Filter Products Table (if it exists on the page)
+            if (productRows.length > 0) {
+                let visibleCount = 0;
+                productRows.forEach(row => {
+                    // .textContent grabs ALL the text in the row (Name, ID, Description, Price)
+                    const rowText = row.textContent.toLowerCase();
+                    if (rowText.includes(searchTerm)) {
+                        row.style.display = ''; // Show row
+                        visibleCount++;
+                    } else {
+                        row.style.display = 'none'; // Hide row
+                    }
+                });
+                
+                // Show empty state if nothing matches
+                if (productEmptyState) {
+                    productEmptyState.style.display = (visibleCount === 0) ? '' : 'none';
+                }
+            }
+
+            // 2. Filter Users Table (if it exists on the page)
+            if (userRows.length > 0) {
+                let visibleCount = 0;
+                userRows.forEach(row => {
+                    // .textContent grabs ALL the text (Username, Email, ID, Roles)
+                    const rowText = row.textContent.toLowerCase();
+                    if (rowText.includes(searchTerm)) {
+                        row.style.display = ''; // Show row
+                        visibleCount++;
+                    } else {
+                        row.style.display = 'none'; // Hide row
+                    }
+                });
+                
+                // Show empty state if nothing matches
+                if (userEmptyState) {
+                    userEmptyState.style.display = (visibleCount === 0) ? '' : 'none';
+                }
+            }
         });
     }
 });

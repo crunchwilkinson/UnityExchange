@@ -64,6 +64,65 @@ body {
     color: #ecf0f1;
 }
 
+/* --- Admin Navbar Search Bar --- */
+.nav-search {
+    width: 270px; 
+    margin-left: 1; 
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    height: 36px;
+}
+
+.search-container input {
+    flex: 1;
+    height: 100%;
+    padding: 4px 15px;
+    background-color: #1a252f;
+    border: 1px solid #34495e;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.search-container input:focus {
+    border-color: #3498db;
+}
+
+.search-container input::placeholder {
+    color: #7f8c8d;
+}
+
+.search-container button {
+    width: auto;
+    height: auto;
+    padding: 0 5px;
+    margin: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    color: #cbd5e0;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default; /* Changed from pointer since it's just a visual icon for live search */
+}
+
+/* Make it wrap nicely on smaller screens */
+@media (max-width: 900px) {
+    .nav-search {
+        order: 3;
+        width: 100%;
+        margin: 1rem 0 0 0;
+    }
+}
+
 
 /* =========================================
    Data Tables & Users View
@@ -72,34 +131,35 @@ body {
 .table-responsive {
     overflow-x: auto;
     margin-bottom: 1rem;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    padding: 20px;
+    /* Removed the white background and shadow here since the parent div handles it */
+    width: 100%;
+    margin-top: 20px; /* Gives some space between the filter and the table */
 }
 
 .admin-table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
-    background-color: white;
+    background-color: transparent; /* Lets the #2c3e50 from the parent shine through */
+    color: #cbd5e0; /* Default text color for the table */
 }
 
 .admin-table th, 
 .admin-table td {
     padding: 18px 20px;
-    border-bottom: 1px solid #edf2f7;
-    color: #4a5568;
+    border-bottom: 1px solid #34495e; /* Darker border */
+    color: #cbd5e0; /* Light text for dark background */
 }
 
 .admin-table th {
-    background-color: #f8fafc;
+    background-color: #1a252f; /* Slightly darker than the background to pop */
     font-weight: 600;
     text-transform: uppercase;
     font-size: 0.8rem;
     letter-spacing: 0.05em;
-    color: #718096;
-    border-bottom: 2px solid #e2e8f0;
+    color: #a0aec0; /* Slightly muted text for headers */
+    border-bottom: 2px solid #34495e;
+    white-space: nowrap; /* Forces the header text to stay on one line */
 }
 
 .admin-table tr:last-child td {
@@ -110,8 +170,14 @@ body {
     transition: background-color 0.2s ease;
 }
 
+/* Hover effect on rows */
 .admin-table tr:hover td {
-    background-color: #f7fafc;
+    background-color: #34495e; /* Subtle highlight when hovering */
+}
+
+/* Make strong tags (like the product name) bright white */
+.admin-table td strong {
+    color: #fff;
 }
 
 .admin-table .product-image {
@@ -119,7 +185,7 @@ body {
     height: 60px;
     object-fit: cover;
     border-radius: 6px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid #34495e; /* Darker border around images */
     display: block;
 }
 
@@ -147,13 +213,13 @@ body {
 
 .empty-table-message {
     text-align: center;
-    color: #718096;
+    color: #a0aec0; /* Lighter color for empty state text */
     padding: 40px 20px !important;
     font-style: italic;
 }
 
 .text-muted {
-    color: #a0aec0;
+    color: #718096; /* Darker gray for N/A or 0 values */
     font-style: italic;
 }
 

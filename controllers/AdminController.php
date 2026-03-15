@@ -123,6 +123,7 @@ class AdminController {
     public function products() {
         $products = $this->productModel->getAllProducts();
 
+        $categories = $this->productModel->getCategories();
         require_once 'includes/admin_header.php';
         require_once 'views/admin/products.php';
         require_once 'includes/footer.php';

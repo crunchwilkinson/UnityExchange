@@ -7,74 +7,100 @@
         <a href="/UnityExchange/admin" class="btn-secondary">← Back to Admin Dashboard</a>
     </div>
 
-    <div class="table-responsive">
-        <table class="admin-table">
-            <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>Stock Quantity</th>
-                    <th>Created At</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if (!empty($products)): ?>
-                    <?php foreach ($products as $product): ?>
-                        <tr>
-                            <td><img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>" alt="Product Image" class="product-image"></td>
-                            <td><?php echo htmlspecialchars($product['id']); ?></td>
-                            <td><strong><?php echo htmlspecialchars($product['name']); ?></strong></td>
-                            <td><?php echo htmlspecialchars($product['description']); ?></td>
+    <div style="background-color: #2c3e50; padding: 30px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); margin-bottom: 50px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; padding-bottom: 20px;">
+            <div style="color: #fff; font-size: 1.2rem; font-weight: 600;">
+                <i class="fa fa-filter" style="color: #3498db; margin-right: 8px;"></i> Filter Inventory
+            </div>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <select id="categoryFilter" style="padding: 10px 15px; border: 1px solid #34495e; border-radius: 6px; background-color: #2c3e50; color: #fff; font-size: 0.95rem; min-width: 250px; cursor: pointer; outline: none;">
+                    <option value="all">All Categories</option>
+                    <?php if (!empty($categories)): ?>
+                        <?php foreach ($categories as $cat): ?>
+                            <option value="<?php echo $cat['id']; ?>">
+                                <?php echo htmlspecialchars($cat['name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                </select>
+            </div>
+        </div>
 
-                            <td>
-                                <?php
-                                if (!empty($product['price'])) {
-                                    echo '$' . number_format($product['price'], 2);
-                                } else {
-                                    echo '<em class="text-muted">N/A</em>';
-                                }
-                                ?>
-                            </td>
-
-                            <td>
-                                <?php
-                                if (!empty($product['stock_quantity'])) {
-                                    echo htmlspecialchars($product['stock_quantity']);
-                                } else {
-                                    echo '<em class="text-muted">0</em>';
-                                }
-                                ?>
-                            </td>
-
-                            <td>
-                                <?php
-                                $date = new DateTime($product['created_at']);
-                                echo $date->format('M j, Y');
-                                ?>
-                            </td>
-
-                            <td class="action-buttons product-action-buttons">
-                                <form action="/UnityExchange/admin/deleteProduct/<?php echo $product['id']; ?>" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to completely delete product <?php echo htmlspecialchars($product['name']); ?>? This cannot be undone.');">
-                                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
-                                    <button type="submit" class="btn-delete">
-                                        Delete
-                                    </button>
-                                </form>
-
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
+        <div class="table-responsive">
+            <table class="admin-table">
+                <thead>
                     <tr>
-                        <td colspan="6" class="empty-table-message">No products found.</td>
+                        <th>Image</th>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Stock Quantity</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
                     </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
-    </div>
+                </thead>
+                <tbody>
+                    <?php if (!empty($products)): ?>
+                        <?php foreach ($products as $product): ?>
+                            <tr class="product-row" data-category="<?php echo isset($product['category_id']) ? htmlspecialchars($product['category_id']) : ''; ?>">
+                                <td><img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>" alt="Product Image" class="product-image" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;"></td>
+                                <td><?php echo htmlspecialchars($product['id']); ?></td>
+                                <td><strong><?php echo htmlspecialchars($product['name']); ?></strong></td>
+                                <td><?php echo htmlspecialchars($product['description']); ?></td>
 
+                                <td>
+                                    <?php
+                                    if (!empty($product['price'])) {
+                                        echo 'R ' . number_format($product['price'], 2); // Changed $ to R for consistency
+                                    } else {
+                                        echo '<em class="text-muted">N/A</em>';
+                                    }
+                                    ?>
+                                </td>
+
+                                <td>
+                                    <?php
+                                    if (!empty($product['stock_quantity'])) {
+                                        echo htmlspecialchars($product['stock_quantity']);
+                                    } else {
+                                        echo '<em class="text-muted">0</em>';
+                                    }
+                                    ?>
+                                </td>
+
+                                <td>
+                                    <?php
+                                    $date = new DateTime($product['created_at']);
+                                    echo $date->format('M j, Y');
+                                    ?>
+                                </td>
+
+                                <td class="action-buttons product-action-buttons">
+                                    <form action="/UnityExchange/admin/deleteProduct/<?php echo $product['id']; ?>" method="POST" class="delete-form" style="margin: 0;" onsubmit="return confirm('Are you sure you want to completely delete product <?php echo htmlspecialchars($product['name']); ?>? This cannot be undone.');">
+                                        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+                                        <button type="submit" class="btn-delete">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="8" class="empty-table-message" style="text-align: center; padding: 30px;">No products found in the database.</td>
+                        </tr>
+                    <?php endif; ?>
+
+                    <tr id="js-empty-state" style="display: none;">
+                        <td colspan="8" class="empty-table-message" style="text-align: center; padding: 40px; color: #718096;">
+                            <i class="fa fa-folder-open" style="font-size: 2rem; display: block; margin-bottom: 10px; color: #cbd5e0;"></i>
+                            No products match this category filter.
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
