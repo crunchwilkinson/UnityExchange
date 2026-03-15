@@ -98,11 +98,14 @@ class ProductController {
     // URL: /UnityExchange/product OR /UnityExchange/product/index
     // Displays the main marketplace catalog
     public function index() {
-        // Fetch latest products to display on the public grid
+        // Grab the search term if it exists, otherwise set to null
+        $search_term = isset($_GET['search']) ? trim($_GET['search']) : null;
+
+        // Fetch the filtered products 
         if (isset($_SESSION['user_id']) && isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true) {
-            $products = $this->productModel->getLatestProducts(true, $_SESSION['user_id']);
+            $products = $this->productModel->getLatestProducts(true, $_SESSION['user_id'], $search_term);
         } else {
-            $products = $this->productModel->getLatestProducts(false);
+            $products = $this->productModel->getLatestProducts(false, null, $search_term);
         }
 
         // Fetch categories to populate the filter buttons on the catalog page

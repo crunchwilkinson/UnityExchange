@@ -133,6 +133,82 @@ body {
     z-index: 90;
 }
 
+/* --- Navbar Search Bar --- */
+.nav-search {
+    width: 270px; 
+    margin-left: 1rem;
+}
+
+.nav-search form {
+    display: flex;
+    align-items: center;
+    gap: 8px; 
+    height: 36px;
+}
+
+.nav-search input {
+    flex: 1;
+    height: 100%;
+    padding: 4px 15px;
+    background-color: #1a252f;
+    border: 1px solid #34495e;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.nav-search input:focus {
+    border-color: #3498db;
+}
+
+.nav-search input::placeholder {
+    color: #7f8c8d;
+}
+
+/* --- OVERRIDE GLOBAL SUBMIT BUTTON STYLES --- */
+.nav-search button[type="submit"] {
+    width: auto;
+    height: auto;
+    padding: 0 5px;
+    margin: 0;
+    background: transparent;
+    box-shadow: none;
+    color: #cbd5e0;
+    font-size: 1rem; /* Keeps the icon small and neat */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* 1. Kill the global button shine effect */
+.nav-search button[type="submit"]::before {
+    display: none;
+}
+
+/* 2. Kill the global hover and active bounce animations */
+.nav-search button[type="submit"]:hover,
+.nav-search button[type="submit"]:active {
+    transform: none;
+    box-shadow: none;
+    color: #cbd5e0; /* Forces the color to stay exactly the same */
+    background: transparent;
+}
+
+/* Make it wrap nicely on smaller screens */
+@media (max-width: 900px) {
+    .navbar {
+        flex-wrap: wrap;
+    }
+    .nav-search {
+        order: 3;
+        width: 100%;
+        margin: 1rem 0 0 0;
+    }
+}
+
 /* --- Forms Styling --- */
 .auth-container {
     background: white;

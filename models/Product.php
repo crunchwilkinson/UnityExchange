@@ -66,29 +66,40 @@ class Product
         }
     }
 
-    public function getLatestProducts($logged_in, $user_id = null) {
+    public function getLatestProducts($logged_in, $user_id = null, $search_term = null) {
+        $params = [];
+        $whereClauses = [];
+
+        // Rule 1: If logged in, don't show the user's own products, and only show in-stock items
         if ($logged_in && $user_id) {
-            $query = "SELECT p.*, u.username as seller_name, c.name as category_name
-                  FROM products p
-                  JOIN users u ON p.user_id = u.id
-                  JOIN categories c ON p.category_id = c.id
-                  WHERE p.stock_quantity > 0 AND p.user_id != :current_user_id
-                  ORDER BY p.created_at DESC";
-
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([':current_user_id' => $user_id]);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } else {
-            $query = "SELECT p.*, u.username as seller_name, c.name as category_name
-                  FROM products p
-                  JOIN users u ON p.user_id = u.id
-                  JOIN categories c ON p.category_id = c.id
-                  ORDER BY p.created_at DESC";
-
-            $stmt = $this->db->prepare($query);
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $whereClauses[] = "p.stock_quantity > 0";
+            $whereClauses[] = "p.user_id != :current_user_id";
+            $params[':current_user_id'] = $user_id;
         }
+
+        // Rule 2: If the user typed a search term, look for it in the name or description
+        if (!empty($search_term)) {
+            $whereClauses[] = "(p.name LIKE :search OR p.description LIKE :search)";
+            // Add % wildcards so it finds the word anywhere in the text
+            $params[':search'] = '%' . $search_term . '%'; 
+        }
+
+        // Piece the WHERE clauses together seamlessly with AND
+        $whereSql = "";
+        if (count($whereClauses) > 0) {
+            $whereSql = "WHERE " . implode(" AND ", $whereClauses);
+        }
+
+        $query = "SELECT p.*, u.username as seller_name, c.name as category_name
+                  FROM products p
+                  JOIN users u ON p.user_id = u.id
+                  JOIN categories c ON p.category_id = c.id
+                  $whereSql
+                  ORDER BY p.created_at DESC";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getProductById($id)

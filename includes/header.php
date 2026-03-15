@@ -15,6 +15,9 @@
         <div class="logo">
             <a href="/UnityExchange/home" style="color: whitesmoke; text-decoration: none;">UnityExchange</a>
         </div>
+
+        
+        
         <nav>
             <div class="nav-links">
                 <a href="/UnityExchange/home"><i class="fa fa-home"></i> Home</a>
@@ -28,6 +31,12 @@
                         <a href="/UnityExchange/sales"><i class="fa fa-store"></i> My Sales</a>
                     </div>
                 </div>
+                <div class="nav-search">
+                    <form action="/UnityExchange/product" method="GET">
+                    <input type="text" name="search" placeholder="Search items..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
+                    <button type="submit" aria-label="Search"><i class="fa fa-search"></i></button>
+                </form>
+        </div>
             </div>
             <div class="auth-links">
                 <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
