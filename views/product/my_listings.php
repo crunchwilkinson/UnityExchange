@@ -12,15 +12,15 @@
         <?php endif; ?>
     </div>
 
-    <div style="background-color: #2c3e50; padding: 30px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); margin-bottom: 50px;">
+    <div class="product-grid-wrapper">
         
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #34495e;">
+        <div class="filter-bar-wrapper">
             <div style="color: #fff; font-size: 1.2rem; font-weight: 600;">
                 <i class="fa fa-filter" style="color: #3498db; margin-right: 8px;"></i> Browse by Category
             </div>
 
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <select id="categoryFilter" style="padding: 10px 15px; border: 1px solid #34495e; border-radius: 6px; background-color: #2c3e50; color: #fff; font-size: 0.95rem; min-width: 250px; cursor: pointer; outline: none;">
+            <div class="filter-bar">
+                <select id="categoryFilter" class="category-select">
                     <option value="all">All Categories</option>
                     <?php if (!empty($categories)): ?>
                         <?php foreach ($categories as $cat): ?>
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="product-grid" style="margin-bottom: 0;">
+        <div class="product-grid">
             
             <?php if (!empty($products)): ?>
                 <?php foreach ($products as $product): ?>
@@ -68,7 +68,7 @@
             <?php if (empty($products)): ?>
                 <div class="empty-state" style="background-color: transparent;">
                     <h3>No items found</h3>
-                    <p>The marketplace is currently empty. Be the first to list an item!</p>
+                    <p>Your Listings are currently empty. List a item today!</p>
                 </div>
             <?php endif; ?>
         </div>
