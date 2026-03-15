@@ -21,12 +21,21 @@ class CartController {
         }
     }
 
+    private function requireLogin() {
+        if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+            $_SESSION['flash_error'] = "Please log in to view your cart.";
+            header("Location: /UnityExchange/auth/login");
+            exit();
+        }
+    }
+
     // ==========================
     // HTML VIEW ROUTES
     // ==========================
 
     // URL: /UnityExchange/cart
     public function index() {
+        $this->requireLogin();
         $cart_items = [];
         $grand_total = 0;
 
@@ -85,6 +94,7 @@ class CartController {
 
     // URL: /UnityExchange/cart/add (expects POST with product_id and quantity)
     public function add() {
+        $this->requireLogin();
         $this->validateApiRequest();
 
         $product_id = intval($_POST['product_id']);
@@ -122,6 +132,7 @@ class CartController {
 
     // URL: /UnityExchange/cart/update
     public function update() {
+        $this->requireLogin();
         $this->validateApiRequest();
 
         $product_id = intval($_POST['product_id']);
@@ -153,6 +164,7 @@ class CartController {
 
     // URL: /UnityExchange/cart/remove
     public function remove() {
+        $this->requireLogin();
         $this->validateApiRequest();
 
         $product_id = intval($_POST['product_id']);
@@ -166,6 +178,7 @@ class CartController {
 
     // URL: /UnityExchange/cart/clear
     public function clear() {
+        $this->requireLogin();
         $this->validateApiRequest();
         
         $_SESSION['cart'] = [];

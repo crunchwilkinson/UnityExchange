@@ -64,7 +64,7 @@
                                         Delete
                                     </button>
                                 </form>
-                               
+
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -76,4 +76,5 @@
             </tbody>
         </table>
     </div>
+
 </div>

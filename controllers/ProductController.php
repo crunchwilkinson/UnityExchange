@@ -25,6 +25,7 @@ class ProductController {
     // Helper: Checks if a user is logged in, kicks them to login page if not
     private function requireLogin() {
         if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+            $_SESSION['flash_error'] = "Please log in to create/modify/view your listings.";
             header("Location: /UnityExchange/auth/login");
             exit();
         }
