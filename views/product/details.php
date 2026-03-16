@@ -51,7 +51,7 @@
 				<?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true && $_SESSION['user_id'] == $product['user_id']): ?>
 					<a href="/UnityExchange/product/edit/<?php echo $product['id']; ?>" class="btn-primary">Edit Product</a>
 				<?php elseif (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
-					<a href="#" class="btn-primary" id="add-to-cart-button" data-id="<?php echo $product['id']; ?>">Add to cart</a>
+					<a class="btn-primary" id="add-to-cart-button" data-id="<?php echo $product['id']; ?>">Add to cart</a>
 				<?php else: ?>
 					<a href="/UnityExchange/auth/login" class="btn-primary">Login to Add to Cart</a>
 				<?php endif; ?>
