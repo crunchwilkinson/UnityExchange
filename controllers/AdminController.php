@@ -33,6 +33,10 @@ class AdminController {
     }
 
     public function index() {
+        // Get total counts for dashboard stats
+        $total_users = $this->userModel->getTotalUsers();
+        $total_products = $this->productModel->getTotalProducts();
+        
         require_once 'includes/admin_header.php';
         require_once 'views/admin/index.php';
         require_once 'includes/footer.php';

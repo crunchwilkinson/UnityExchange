@@ -6,9 +6,9 @@ ini_set('session.use_strict_mode', 1);
 
 session_set_cookie_params([
     'lifetime' => 1800,                     // 30 minutes
-    'domain' => 'localhost',                // 
+    'domain' => 'localhost',                
     'path' => '/',                          // Available across the entire domain   
-    'secure' => true,                      // Set to true if using HTTPS
+    'secure' => true,                       // Set to true if using HTTPS
     'httponly' => true,                     // Prevent JavaScript access to session cookies
     'samesite' => 'Lax'                     // Adjust as needed (None, Lax, Strict)
 ]);

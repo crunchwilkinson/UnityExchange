@@ -143,4 +143,12 @@ class User {
             return false;
         }
     }
+
+    public function getTotalUsers() {
+        $query = "SELECT COUNT(*) as total FROM users";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total'];
+    }
 }

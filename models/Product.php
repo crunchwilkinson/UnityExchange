@@ -224,4 +224,12 @@ class Product
             return false;
         }
     }
+
+     public function getTotalProducts() {
+        $query = "SELECT COUNT(*) as total FROM products";
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row['total'];
+    }
 }
