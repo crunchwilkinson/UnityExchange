@@ -299,76 +299,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (flashData) {
         const message = flashData.getAttribute('data-message');
 
-        // Debug: Check if message exists
-        if (!message || message.trim() === '') {
-            console.warn('Toast message is empty. Check that data-message attribute is set on #js-flash-message');
+        const type = flashData.getAttribute('data-type') || 'success'; // Default to 'success' if no type is provided
+
+        if (message && message.trim() !== '') {
+            showToast(message, type);
         }
-
-        const toast = document.createElement('div');
-        toast.className = 'toast-notification';
-        
-        // Create a checkmark icon
-        const checkmark = document.createElement('span');
-        checkmark.style.cssText = `
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            flex-shrink: 0;
-            font-weight: bold;
-            font-size: 14px;
-        `;
-        checkmark.innerText = '✓';
-        
-        // Create text container
-        const textContent = document.createElement('span');
-        textContent.innerText = message || 'Success!';
-        
-        toast.appendChild(checkmark);
-        toast.appendChild(textContent);
-
-        Object.assign(toast.style, {
-            position: 'fixed',
-            top: '20px',
-            right: '-350px', // Start off-screen
-            background: 'linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)',
-            color: 'white',
-            padding: '16px 24px',
-            borderRadius: '8px',
-            boxShadow: '0 10px 25px rgba(59, 130, 246, 0.3)',
-            fontWeight: '500',
-            fontSize: '1rem',
-            fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
-            zIndex: '9999',
-            opacity: '1',
-            transition: 'right 0.4s ease-in-out, opacity 0.4s ease-in-out',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            minWidth: '300px',
-            maxWidth: '400px',
-            wordWrap: 'break-word',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '12px'
-        });
-
-        // 3. Append to the body
-        document.body.appendChild(toast);
-
-        // 4. Slide it in (small delay to let the DOM render first)
-        setTimeout(() => {
-            toast.style.right = '20px';
-        }, 50);
-
-        // 5. Fade it out and remove it after 4 seconds
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            setTimeout(() => {
-                toast.remove();
-            }, 400); // Wait for the fade-out animation to finish
-        }, 4000);
     }
 
     // ==========================================
