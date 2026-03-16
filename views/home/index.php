@@ -93,7 +93,7 @@
     <div class="bottom-cta">
         <h2>Ready to turn your skills into income?</h2>
         <p>Join hundreds of local entrepreneurs already trading on the platform.</p>
-        <a href="/UnityExchange/product/create" class="btn-primary">List Your First Item</a>
+        <a href="/UnityExchange/product/create" class="btn-secondary">List Your First Item</a>
     </div>
 
 </div>
