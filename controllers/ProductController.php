@@ -162,10 +162,10 @@ class ProductController {
             $this->validateCRSF("/UnityExchange/product/create");
 
             // 2. Sanitize and extract the text inputs
-            $name = trim($_POST['name']);
-            $description = trim($_POST['description']);
-            $price = floatval($_POST['price']); // Force to decimal
-            $stock_quantity = intval($_POST['stock_quantity']); // Force to whole number
+            $name =  isset($_POST['name']) ? trim($_POST['name']) : '';
+            $description = isset($_POST['description']) ? trim($_POST['description']) : '';
+            $price = isset($_POST['price']) ? floatval($_POST['price']) : 0.0;
+            $stock_quantity = isset($_POST['stock_quantity']) ? intval($_POST['stock_quantity']) : 0;
             $seller_id = $_SESSION['user_id'];
             $category_id = isset($_POST['category_id']) ? intval($_POST['category_id']) : 1;
             
@@ -247,10 +247,10 @@ class ProductController {
             $this->validateCRSF("/UnityExchange/product/edit/" . $id);
 
             // 2. Extract inputs
-            $name = trim($_POST['name']);
-            $description = trim($_POST['description']);
-            $price = floatval($_POST['price']);
-            $stock_quantity = intval($_POST['stock_quantity']);
+            $name = isset($_POST['name']) ? trim($_POST['name']) : '';
+            $description = isset($_POST['description']) ? trim($_POST['description']) : '';
+            $price = isset($_POST['price']) ? floatval($_POST['price']) : 0.0;
+            $stock_quantity = isset($_POST['stock_quantity']) ? intval($_POST['stock_quantity']) : 0;
             $seller_id = $_SESSION['user_id'];
             $category_id = isset($_POST['category_id']) ? intval($_POST['category_id']) : 1; 
 

@@ -88,8 +88,8 @@ class AdminController {
 
         $this->validateCRSF("/UnityExchange/admin/edit/" . $id);
 
-        $username = trim($_POST['username']);
-        $email = trim($_POST['email']);
+        $username = isset($_POST['username']) ? trim($_POST['username']) : '';
+        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
         $role_ids = isset($_POST['roles']) ? $_POST['roles'] : [];
 
         // Update user details

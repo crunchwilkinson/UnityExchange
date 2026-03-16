@@ -28,10 +28,10 @@ class AuthController {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $this->validateCRSF("/UnityExchange/auth/register");
 
-            $username = trim($_POST['username']);
-            $email = trim($_POST['email']);
-            $password = $_POST['password'];
-            $password_confirm = $_POST['password_confirm'] ?? '';
+            $username = isset($_POST['username']) ? trim($_POST['username']) : '';
+            $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+            $password = isset($_POST['password']) ? $_POST['password'] : '';
+            $password_confirm = isset($_POST['password_confirm']) ? $_POST['password_confirm'] : '';
 
             // Save inputs to session so the user doesn't have to retype them if it fails
             $_SESSION['old_username'] = $username;
@@ -93,8 +93,8 @@ class AuthController {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $this->validateCRSF("/UnityExchange/auth/login");
 
-            $email = trim($_POST['email']);
-            $password = $_POST['password'];
+            $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+            $password = isset($_POST['password']) ? $_POST['password'] : '';
 
             // Flash the email back
             $_SESSION['old_email'] = $email;
