@@ -8,10 +8,6 @@
         <a href="/UnityExchange/cart" class="btn-primary">← Back to Cart</a>
     </div>
 
-    <?php if (!empty($error)): ?>
-        <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
-    <?php endif; ?>
-
     <div class="cart-layout">
         
         <div class="cart-items">

@@ -16,7 +16,8 @@ class OrderController {
     // Security check
     private function requireLogin() {
         if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            $_SESSION['flash_error'] = "Please log in to view your order history.";
+            $_SESSION['flash_message'] = "Please log in to view your order history.";
+            $_SESSION['flash_type'] = "error";
             header("Location: /UnityExchange/auth/login");
             exit();
         }
@@ -24,7 +25,8 @@ class OrderController {
 
     private function validateCRSF($headerRedirectPath) {
         if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
+            $_SESSION['flash_message'] = "Security validation failed. Unauthorized request.";
+            $_SESSION['flash_type'] = "error";
             header("Location: $headerRedirectPath");
             exit();
         }
@@ -49,9 +51,6 @@ class OrderController {
     // URL: /UnityExchange/order/details/5
     public function details($order_id) {
         $this->requireLogin();
-        // Grab any error messages triggered by the store() method (PRG Pattern)
-        $error = $_SESSION['flash_error'] ?? '';
-        unset($_SESSION['flash_error']); // Clear the error immediately after grabbing it
 
         $user_id = $_SESSION['user_id'];
 
@@ -59,7 +58,8 @@ class OrderController {
         $order = $this->orderModel->getOrderById($order_id, $user_id);
 
         if (!$order) {
-            $_SESSION['flash_error'] = "Order not found or you do not have permission to view it.";
+            $_SESSION['flash_message'] = "Order not found or you do not have permission to view it.";
+            $_SESSION['flash_type'] = "error";
             header("Location: /UnityExchange/order");
             exit();
         }
@@ -78,7 +78,8 @@ class OrderController {
         $this->requireLogin();
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $_SESSION['flash_error'] = "Invalid request method.";
+            $_SESSION['flash_message'] = "Invalid request method.";
+            $_SESSION['flash_type'] = "error";
             header("Location: /UnityExchange/order/details/" . $order_id);
             exit();
         }
@@ -89,11 +90,13 @@ class OrderController {
 
         // Attempt the status update
         if ($this->orderModel->markOrderCompleted($order_id,$user_id)) {
-            $_SESSION['flash_success'] = "Thank you for confirming receipt! Your order is now marked as completed.";
+            $_SESSION['flash_message'] = "Thank you for confirming receipt! Your order is now marked as completed.";
+            $_SESSION['flash_type'] = "success";
             header("Location: /UnityExchange/order/details/" . $order_id);
             exit();
         } else {
-            $_SESSION['flash_error'] = "Failed to update order status. Please try again.";
+            $_SESSION['flash_message'] = "Failed to update order status. Please try again.";
+            $_SESSION['flash_type'] = "error";
             header("Location: /UnityExchange/order/details/" . $order_id);
             exit();
         }

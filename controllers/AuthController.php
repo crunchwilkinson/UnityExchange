@@ -44,13 +44,15 @@ class AuthController {
             }
 
             if ($password !== $password_confirm) {
-                $_SESSION['flash_error'] = "Passwords do not match.";
+                $_SESSION['flash_message'] = "Passwords do not match.";
+                $_SESSION['flash_type'] = "error";
                 header("Location: /UnityExchange/auth/register");
                 exit();
             }
 
             if ($this->userModel->getUserByEmail($email)) {
-                $_SESSION['flash_error'] = "Email is already registered.";
+                $_SESSION['flash_message'] = "Email is already registered.";
+                $_SESSION['flash_type'] = "error";
                 header("Location: /UnityExchange/auth/register");
                 exit();
             }
@@ -64,21 +66,22 @@ class AuthController {
                 // Clear old inputs on success
                 unset($_SESSION['old_username'], $_SESSION['old_email']); 
                 
-                $_SESSION['flash_success'] = "Registration successful! You can now log in.";
+                $_SESSION['flash_message'] = "Registration successful! You can now log in.";
+                $_SESSION['flash_type'] = "success";
                 header("Location: /UnityExchange/auth/login");
                 exit();
             } else {
-                $_SESSION['flash_error'] = "Something went wrong. Please try again.";
+                $_SESSION['flash_message'] = "Something went wrong. Please try again.";
+                $_SESSION['flash_type'] = "error";
                 header("Location: /UnityExchange/auth/register");
                 exit();
             }
         }
 
         // PRG GET: Grab flash data
-        $error = $_SESSION['flash_error'] ?? '';
         $old_username = $_SESSION['old_username'] ?? '';
         $old_email = $_SESSION['old_email'] ?? '';
-        unset($_SESSION['flash_error'], $_SESSION['old_username'], $_SESSION['old_email']);
+        unset($_SESSION['old_username'], $_SESSION['old_email']);
 
         // Load the view (Only reached on GET requests)
         require_once 'includes/header.php';
@@ -100,7 +103,8 @@ class AuthController {
             $_SESSION['old_email'] = $email;
 
             if (empty($email) || empty($password)) {
-                $_SESSION['flash_error'] = "Please fill in all fields.";
+                $_SESSION['flash_message'] = "Please fill in all fields.";
+                $_SESSION['flash_type'] = "error";
                 header("Location: /UnityExchange/auth/login");
                 exit();
             }
@@ -117,30 +121,33 @@ class AuthController {
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['roles'] = $roles;
                 $_SESSION['logged_in'] = true;
+                $_SESSION['profile_picture'] = $user['profile_picture'] ?? 'default_avatar.png';
 
                 // Clear the flashed email so it doesn't linger
                 unset($_SESSION['old_email']);
 
                 if (in_array('admin', $roles)) {
-                    $_SESSION['flash_success'] = "Welcome back, Admin " . htmlspecialchars($user['username']) . "!";
+                    $_SESSION['flash_message'] = "Welcome back, Admin " . htmlspecialchars($user['username']) . "!";
+                    $_SESSION['flash_type'] = "success";
                     header("Location: /UnityExchange/admin");
                     exit();
                 } else {
-                    $_SESSION['flash_success'] = "Welcome back, " . htmlspecialchars($user['username']) . "!";
+                    $_SESSION['flash_message'] = "Welcome back, " . htmlspecialchars($user['username']) . "!";
+                    $_SESSION['flash_type'] = "success";
                     header("Location: /UnityExchange/product");
                     exit();
                 }
             } else {
-                $_SESSION['flash_error'] = "Invalid email or password.";
+                $_SESSION['flash_message'] = "Invalid email or password.";
+                $_SESSION['flash_type'] = "error";
                 header("Location: /UnityExchange/auth/login");
                 exit();
             }
         }
 
         // PRG GET: Grab flash data
-        $error = $_SESSION['flash_error'] ?? '';
         $old_email = $_SESSION['old_email'] ?? '';
-        unset($_SESSION['flash_error'], $_SESSION['old_email']);
+        unset($_SESSION['old_email']);
 
         // Load the view (Only reached on GET requests)
         require_once 'includes/header.php';

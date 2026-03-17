@@ -19,6 +19,8 @@ class CheckoutController {
 
     private function requireLogin() {
         if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+            $_SESSION['flash_message'] = "Please log in to view the checkout page.";
+            $_SESSION['flash_type'] = "error";
             header("Location: /UnityExchange/auth/login");
             exit();
         }
@@ -26,7 +28,8 @@ class CheckoutController {
 
     private function validateCRSF($headerRedirectPath) {
         if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
+            $_SESSION['flash_message'] = "Security validation failed. Unauthorized request.";
+            $_SESSION['flash_type'] = "error";
             header("Location: $headerRedirectPath");
             exit();
         }
@@ -37,12 +40,10 @@ class CheckoutController {
     public function index() {
         $this->requireLogin();
 
-        $error = $_SESSION['flash_error'] ?? null;
-        unset($_SESSION['flash_error']);
-
         $cart_session = $_SESSION['cart'] ?? [];
         if (empty($cart_session)) {
-            $_SESSION['flash_error'] = "Your cart is empty. Please add items to your cart before checking out.";
+            $_SESSION['flash_message'] = "Your cart is empty. Please add items to your cart before checking out.";
+            $_SESSION['flash_type'] = "error";
             header("Location: /UnityExchange/cart");
             exit();
         }
@@ -109,7 +110,8 @@ class CheckoutController {
             if ($product) {
                 // Strict check: if stock is gone, abort the entire checkout
                 if ($quantity > $product['stock_quantity']) {
-                    $_SESSION['flash_error'] = "Sorry, '" . $product['name'] . "' only has " . $product['stock_quantity'] . " left in stock. Please adjust your cart.";
+                    $_SESSION['flash_message'] = "Sorry, '" . $product['name'] . "' only has " . $product['stock_quantity'] . " left in stock. Please adjust your cart.";
+                    $_SESSION['flash_type'] = "error";
                     header("Location: /UnityExchange/cart");
                     exit();
                 }
@@ -135,7 +137,8 @@ class CheckoutController {
             header("Location: /UnityExchange/checkout/success/" . $order_id);
             exit();
         } else {
-            $_SESSION['flash_error'] = "An error occurred while processing your order. Please try again.";
+            $_SESSION['flash_message'] = "An error occurred while processing your order. Please try again.";
+            $_SESSION['flash_type'] = "error";
             header("Location: /UnityExchange/checkout");
             exit();
         }

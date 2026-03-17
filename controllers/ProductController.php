@@ -25,7 +25,8 @@ class ProductController {
     // Helper: Checks if a user is logged in, kicks them to login page if not
     private function requireLogin() {
         if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            $_SESSION['flash_error'] = "Please log in to create/modify/view your listings.";
+            $_SESSION['flash_message'] = "Please log in to create/modify/view your listings.";
+            $_SESSION['flash_type'] = "error";
             header("Location: /UnityExchange/auth/login");
             exit();
         }
@@ -33,7 +34,8 @@ class ProductController {
 
     private function validateCRSF($headerRedirectPath) {
         if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
+            $_SESSION['flash_message'] = "Security validation failed. Unauthorized request.";
+            $_SESSION['flash_type'] = "error";
             header("Location: $headerRedirectPath");
             exit();
         }
@@ -139,10 +141,6 @@ class ProductController {
     // Shows the blank form to list a new item
     public function create() {
         $this->requireLogin();
-        
-        // Grab any error messages triggered by the store() method (PRG Pattern)
-        $error = $_SESSION['flash_error'] ?? '';
-        unset($_SESSION['flash_error']); // Clear the error immediately after grabbing it
 
         // Fetch categories to populate the HTML dropdown menu
         $categories = $this->productModel->getCategories();
@@ -174,7 +172,8 @@ class ProductController {
             
             // If the upload failed (or was empty), send the error back to the form
             if (!$uploadResult['success']) {
-                $_SESSION['flash_error'] = $uploadResult['error'];
+                $_SESSION['flash_message'] = $uploadResult['error'];
+                $_SESSION['flash_type'] = "error";
                 header("Location: /UnityExchange/product/create");
                 exit();
             }
@@ -186,14 +185,16 @@ class ProductController {
             if ($this->productModel->createProduct($seller_id, $category_id, $name, $description, $image_filename, $price, $stock_quantity)) {
                 
                 // Set the session flash message to show on the next page load (PRG Pattern)
-                $_SESSION['flash_success'] = "Product listed successfully! It may take a few moments to appear in the marketplace catalog.";
+                $_SESSION['flash_message'] = "Product listed successfully! It may take a few moments to appear in the marketplace catalog.";
+                $_SESSION['flash_type'] = "success";
 
                 // Success! Redirect the user back to the marketplace catalog
                 header("Location: /UnityExchange/product");
                 exit();
             } else {
                 // Database failed
-                $_SESSION['flash_error'] = "Database error: Could not save your product. Please try again.";
+                $_SESSION['flash_message'] = "Database error: Could not save your product. Please try again.";
+                $_SESSION['flash_type'] = "error";
                 header("Location: /UnityExchange/product/create");
                 exit();
             }
@@ -217,10 +218,6 @@ class ProductController {
             header('HTTP/1.0 403 Forbidden');
             die("<h1>403 Forbidden</h1><p>You do not have permission to edit this product.</p>");
         }
-
-        // Grab any error messages triggered by the update() method
-        $error = $_SESSION['flash_error'] ?? '';
-        unset($_SESSION['flash_error']);
 
         // Fetch categories to populate the HTML dropdown menu
         $categories = $this->productModel->getCategories();
@@ -269,12 +266,14 @@ class ProductController {
 
             // 4. Update the database record
             if ($this->productModel->updateProduct($id, $seller_id, $category_id, $name, $description, $price, $stock_quantity, $image_filename)) {
-                $_SESSION['flash_success'] = "Product updated successfully!";
+                $_SESSION['flash_message'] = "Product updated successfully!";
+                $_SESSION['flash_type'] = "success";
                 // Success! Send them to the product details page so they can see their updates
                 header("Location: /UnityExchange/product/details/" . $id);
                 exit();
             } else {
-                $_SESSION['flash_error'] = "Database error: Could not update your product.";
+                $_SESSION['flash_message'] = "Database error: Could not update your product.";
+                $_SESSION['flash_type'] = "error";
                 header("Location: /UnityExchange/product/edit/" . $id);
                 exit();
             }
@@ -298,12 +297,14 @@ class ProductController {
 
             // The model automatically enforces the WHERE user_id = :seller_id constraint
             if ($this->productModel->deleteProduct($id, $seller_id)) {
-                $_SESSION['flash_success'] = "Product deleted successfully.";
+                $_SESSION['flash_message'] = "Product deleted successfully.";
+                $_SESSION['flash_type'] = "success";
                 header("Location: /UnityExchange/product/myListings");
                 exit();
             } else {
                 // PRG Pattern: Database failed (likely because the item is tied to an existing order)
-                $_SESSION['flash_error'] = "Error: Cannot delete this product. It may already be linked to an active customer order.";
+                $_SESSION['flash_message'] = "Error: Cannot delete this product. It may already be linked to an active customer order.";
+                $_SESSION['flash_type'] = "error";
                 header("Location: /UnityExchange/product/edit/" . $id);
                 exit();
             }

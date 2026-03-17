@@ -7,10 +7,6 @@
         <a href="/UnityExchange/product/" class="btn-secondary">← Back to Marketplace</a>
     </div>
 
-    <?php if (!empty($error)): ?> 
-        <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
-    <?php endif; ?>
-
     <div class="admin-form-container">
         <form action="/UnityExchange/product/store" method="POST" enctype="multipart/form-data">
 

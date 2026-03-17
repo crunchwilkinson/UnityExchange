@@ -8,10 +8,6 @@
         <a href="/UnityExchange/admin/users" class="btn-secondary">← Back to Users</a>
     </div>
 
-    <?php if (!empty($error)): ?>
-        <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
-    <?php endif; ?>
-
     <div class="admin-form-container">
         <form action="/UnityExchange/admin/update/<?php echo htmlspecialchars($user['id']); ?>" method="POST">
             <input type = "hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">

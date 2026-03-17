@@ -22,7 +22,7 @@ class ProfileController {
 
    private function requireLogin() {
         if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            $_SESSION['flash_error'] = "Please log in to view your profile.";
+            $_SESSION['flash_message'] = "Please log in to view your profile.";
             header("Location: /UnityExchange/auth/login");
             exit();
         }
@@ -30,7 +30,7 @@ class ProfileController {
 
     private function validateCRSF($headerRedirectPath) {
         if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
+            $_SESSION['flash_message'] = "Security validation failed. Unauthorized request.";
             header("Location: $headerRedirectPath");
             exit();
         }
@@ -107,8 +107,14 @@ class ProfileController {
         $this->validateCRSF("/UnityExchange/profile");
 
         $user_id = $_SESSION['user_id'];
-        $username = trim($_POST['username']);
-        $email = trim($_POST['email']);
+        $username = isset($_POST['username']) ? trim($_POST['username']) : '';
+        $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+
+        if (empty($username) || empty($email)) {
+            $_SESSION['flash_message'] = "Please fill in all required fields.";
+            header("Location: /UnityExchange/profile");
+            exit();
+        }
 
         // 1. Process the profile picture upload using the optimal helper method
         $uploadResult = $this->handleImageUpload($_FILES['profile_picture'] ?? null);
@@ -129,12 +135,18 @@ class ProfileController {
         }
 
         // 3. Update the basic text info
-        $this->userModel->updateUser($user_id, $username, $email);
-        $_SESSION['username'] = $username; // Update the active session username
+        if($this->userModel->updateUser($user_id, $username, $email)) {
+            $_SESSION['username'] = $username; // Update the active session username
 
-        $_SESSION['flash_success'] = "Account details updated successfully!";
-        $_SESSION['flash_type'] = "success";
-        header("Location: /UnityExchange/profile");
-        exit();
+            $_SESSION['flash_message'] = "Account details updated successfully!";
+            $_SESSION['flash_type'] = "success";
+            header("Location: /UnityExchange/profile");
+            exit();
+        } else {
+            $_SESSION['flash_message'] = "Failed to update account details. Please try again.";
+            $_SESSION['flash_type'] = "error";
+            header("Location: /UnityExchange/profile");
+            exit();
+        }
     }
 }

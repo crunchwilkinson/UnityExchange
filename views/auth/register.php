@@ -8,10 +8,6 @@
         <a href="/UnityExchange/product/" class="btn-secondary">← Back to Marketplace</a>
     </div>
 
-    <?php if (!empty($error)): ?>
-        <div class="alert alert-error"><?php echo htmlspecialchars($error); ?></div>
-    <?php endif; ?>
-
     <div class="auth-container">
         <form action="/UnityExchange/auth/register" method="POST">
             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">

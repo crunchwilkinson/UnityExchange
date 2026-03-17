@@ -26,7 +26,8 @@ class AdminController {
 
     private function validateCRSF($headerRedirectPath) {
         if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
+            $_SESSION['flash_message'] = "Security validation failed. Unauthorized request.";
+            $_SESSION['flash_type'] = "error";
             header("Location: $headerRedirectPath");
             exit();
         }
@@ -97,9 +98,11 @@ class AdminController {
 
         // Update the user's roles and set the appropriate flash message
         if ($this->userModel->updateUserRoles($id, $role_ids)) {
-            $_SESSION['flash_success'] = "User updated successfully.";
+            $_SESSION['flash_message'] = "User updated successfully.";
+            $_SESSION['flash_type'] = "success";
         } else {
-            $_SESSION['flash_error'] = "Failed to update user roles.";
+            $_SESSION['flash_message'] = "Failed to update user roles.";
+            $_SESSION['flash_type'] = "error";
         }
 
         // PRG Pattern: Redirect back to the GET route!
@@ -119,7 +122,8 @@ class AdminController {
         if ($_SESSION['user_id'] != $id) {
             $this->userModel->deleteUser($id);
         }
-        $_SESSION['flash_success'] = "User deleted successfully.";
+        $_SESSION['flash_message'] = "User deleted successfully.";
+        $_SESSION['flash_type'] = "success";
         header("Location: /UnityExchange/admin/users");
         exit();
     }
@@ -142,7 +146,8 @@ class AdminController {
         $this->validateCRSF("/UnityExchange/admin/products");
 
         $this->productModel->adminDeleteProduct($id);
-        $_SESSION['flash_success'] = "Product deleted successfully.";
+        $_SESSION['flash_message'] = "Product deleted successfully.";
+        $_SESSION['flash_type'] = "success";
         header("Location: /UnityExchange/admin/products");
         exit();
     }
