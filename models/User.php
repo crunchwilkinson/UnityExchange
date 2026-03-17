@@ -119,7 +119,7 @@ class User {
         return $stmt->fetchAll();
     }
     public function getUserById($id) {
-        $stmt = $this->db->prepare("SELECT id, username, email, profile_picture FROM users WHERE id = :id");
+        $stmt = $this->db->prepare("SELECT id, username, email, password_hash, profile_picture FROM users WHERE id = :id");
         $stmt->execute([':id' => $id]);
         return $stmt->fetch();
     }
@@ -130,6 +130,17 @@ class User {
             return $stmt->execute([':id' => $id, ':username' => $username, ':email' => $email]);
         } catch (PDOException $e) {
             error_log("User update failed: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function updatePassword($id, $password_hash) {
+        try {
+            $stmt = $this->db->prepare("UPDATE users SET password_hash = :password_hash WHERE id = :id");
+            return $stmt->execute([':id' => $id, ':password_hash' => $password_hash]);
+
+        } catch (PDOException $e) {
+            error_log("Password update failed: " . $e->getMessage());
             return false;
         }
     }

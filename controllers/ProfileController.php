@@ -148,4 +148,64 @@ class ProfileController {
             exit();
         }
     }
+
+    public function updatePassword() {
+        $this->requireLogin();
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: /UnityExchange/profile");
+            exit();
+        }
+
+        // Validate CSRF
+        $this->validateCRSF("/UnityExchange/profile");
+
+        $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+        $current_password = isset($_POST['current_password']) ? $_POST['current_password'] : '';
+        $new_password = isset($_POST['new_password']) ? $_POST['new_password'] : '';
+        $confirm_password = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : '';
+
+        if (empty($current_password) || empty($new_password) || empty($confirm_password)) {
+            $_SESSION['flash_message'] = "Please fill in all password fields.";
+            $_SESSION['flash_type'] = "error";
+            header("Location: /UnityExchange/profile");
+            exit();
+        }
+
+        if ($new_password !== $confirm_password) {
+            $_SESSION['flash_message'] = "New password and confirmation do not match.";
+            $_SESSION['flash_type'] = "error";
+            header("Location: /UnityExchange/profile");
+            exit();
+        }
+
+        $user = $this->userModel->getUserById($user_id);
+
+        if (empty($user)) {
+            $_SESSION['flash_message'] = "User not found.";
+            $_SESSION['flash_type'] = "error";
+            header("Location: /UnityExchange/profile");
+            exit();
+        }
+
+        if (!password_verify($current_password, $user['password_hash'])) {
+            $_SESSION['flash_message'] = "Please ensure your current password is correct.";
+            $_SESSION['flash_type'] = "error";
+            header("Location: /UnityExchange/profile");
+            exit();
+        }
+
+        $new_password_hash = password_hash($new_password, PASSWORD_BCRYPT, ['cost' => 12]);
+
+        if ($this->userModel->updatePassword($user_id, $new_password_hash)) {
+            $_SESSION['flash_message'] = "Password updated successfully!";
+            $_SESSION['flash_type'] = "success";
+            header("Location: /UnityExchange/profile");
+            exit();
+        } else {
+            $_SESSION['flash_message'] = "Failed to update password. Please try again.";
+            $_SESSION['flash_type'] = "error";
+            header("Location: /UnityExchange/profile");
+            exit();
+        }
+    }
 }
