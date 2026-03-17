@@ -7,14 +7,14 @@
         <a href="/UnityExchange/admin" class="btn-secondary">← Back to Admin Dashboard</a>
     </div>
 
-    <div style="background-color: #2c3e50; padding: 30px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08); margin-bottom: 50px;">
+    <div class="admin-users-grid-wrapper">
         
-        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; padding-bottom: 20px;">
+        <div class="users-filterbar-wrapper">
             <div style="color: #fff; font-size: 1.2rem; font-weight: 600;">
                 <i class="fa fa-users" style="color: #3498db; margin-right: 8px;"></i> Filter Users
             </div>
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <select id="userRoleFilter" style="padding: 10px 15px; border: 1px solid #34495e; border-radius: 6px; background-color: #2c3e50; color: #fff; font-size: 0.95rem; min-width: 250px; cursor: pointer; outline: none;">
+            <div class="users-filterbar">
+                <select id="userRoleFilter" class="users-filterbar-select">
                     <option value="all">All Roles</option>
                     <option value="admin">Admin</option>
                     <option value="user">User</option>

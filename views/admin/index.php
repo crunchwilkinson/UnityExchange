@@ -9,7 +9,7 @@
         </a>
     </div>
 
-    <div class="product-grid" style="margin-top: 40px;">
+    <div class="product-grid">
 
         <div class="product-card">
             <a href="/UnityExchange/admin/users" class="admin-icon-link gradient-purple">
