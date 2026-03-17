@@ -1476,3 +1476,211 @@ button[type="submit"].btn-danger:hover,
     background: linear-gradient(135deg, #c53030 0%, #9b2c2c 100%);
     box-shadow: 0 6px 16px rgba(229, 62, 62, 0.45);
 }
+
+/* =========================================
+   Public Seller Profile
+   ========================================= */
+
+/* Overrides the 600px max-width of the standard admin form container */
+.seller-profile-card {
+    max-width: 800px;
+}
+
+.seller-profile-header {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    border-bottom: 1px solid #edf2f7;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+}
+
+.seller-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #3498db;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.seller-username {
+    margin: 0 0 5px 0;
+    color: #2d3748;
+    font-size: 2rem;
+}
+
+.bio-section-title {
+    color: #4a5568;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.25rem;
+}
+
+.bio-content-box {
+    color: #4a5568;
+    line-height: 1.8;
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.empty-bio-text {
+    color: #a0aec0;
+    font-style: italic;
+}
+
+/* Reusable Button Utility for smaller actions */
+.btn-sm {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px !important;
+    font-size: 0.9rem !important;
+    width: auto !important; /* Overrides the width: 100% on normal btn-primary */
+    margin-top: 10px !important;
+}
+
+.btn-sm i {
+    margin-right: 8px;
+}
+
+/* =========================================
+   Dashboard & Order Cards
+   ========================================= */
+
+/* List Wrapper */
+.dashboard-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Card Structure */
+.order-card {
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    gap: 20px;
+}
+
+.order-header {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Product Info */
+.order-product-info {
+    display: flex;
+    gap: 15px;
+    flex: 1;
+    min-width: 250px;
+}
+
+.order-product-image {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #edf2f7;
+}
+
+.order-product-title {
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #2d3748;
+    font-size: 1.25rem;
+}
+
+.order-meta-text {
+    margin: 0;
+    color: #718096;
+    font-size: 0.95rem;
+}
+
+/* Financial Summary Box */
+.financial-summary-box {
+    background-color: #f7fafc;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px dashed #cbd5e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.financial-detail {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.financial-detail.align-right {
+    text-align: right;
+}
+
+.financial-label {
+    font-size: 0.85rem;
+    color: #3182ce;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.financial-value {
+    font-size: 0.85rem;
+    color: #3182ce;
+    font-weight: bold;
+}
+
+.financial-label-alt {
+    font-size: 0.85rem;
+    color: #718096;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.financial-total {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #38a169;
+}
+
+/* User/Buyer Details Section */
+.user-details-section {
+    border-top: 1px solid #edf2f7;
+    padding-top: 15px;
+}
+
+.user-details-title {
+    margin: 0 0 10px 0;
+    font-size: 1rem;
+    color: #4a5568;
+}
+
+.user-details-text {
+    margin: 0 0 5px 0;
+    color: #2d3748;
+}
+
+.user-details-text:last-child {
+    margin-bottom: 0;
+}
+
+.user-details-link {
+    color: #3182ce;
+    text-decoration: none;
+}
+
+.user-details-link:hover {
+    text-decoration: underline;
+}
+
+/* New Status Badge Variation */
+.stock-badge.pending {
+    background-color: #ebf8ff;
+    color: #2b6cb0;
+}

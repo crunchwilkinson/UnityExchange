@@ -20,41 +20,39 @@
 
     <?php else: ?>
 
-        <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div class="dashboard-list">
             <?php foreach ($sales as $sale): ?>
                 
                 <?php 
-                    // Reusing your badge logic for the order status
+                    // Simplified Badge Logic (Removed $inlineStyle)
                     $status = strtolower($sale['order_status']);
                     if ($status === 'completed') {
                         $badgeClass = 'stock-badge in-stock'; 
                         $statusText = 'Completed';
-                        $inlineStyle = '';
                     } elseif ($status === 'cancelled') {
                         $badgeClass = 'stock-badge sold-out'; 
                         $statusText = 'Cancelled';
-                        $inlineStyle = '';
                     } else {
-                        $badgeClass = 'stock-badge';
+                        // Utilizes the new .pending CSS class
+                        $badgeClass = 'stock-badge pending';
                         $statusText = 'Pending Delivery';
-                        $inlineStyle = 'background-color: #ebf8ff; color: #2b6cb0;'; 
                     }
                 ?>
 
-                <div class="product-card" style="display: flex; flex-direction: column; padding: 25px; gap: 20px;">
+                <div class="product-card order-card">
                     
-                    <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: space-between;">
+                    <div class="order-header">
                         
-                        <div style="display: flex; gap: 15px; flex: 1; min-width: 250px;">
+                        <div class="order-product-info">
                             <img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($sale['image_file']); ?>" 
                                  alt="<?php echo htmlspecialchars($sale['product_name']); ?>" 
-                                 style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #edf2f7;">
+                                 class="order-product-image">
                             
                             <div>
-                                <h3 style="margin-top: 0; margin-bottom: 5px; color: #2d3748; font-size: 1.25rem;">
+                                <h3 class="order-product-title">
                                     <?php echo htmlspecialchars($sale['product_name']); ?>
                                 </h3>
-                                <p style="margin: 0; color: #718096; font-size: 0.95rem;">
+                                <p class="order-meta-text">
                                     Sold on <?php echo date('F j, Y', strtotime($sale['sale_date'])); ?> <br>
                                     (Order #<?php echo htmlspecialchars($sale['order_id']); ?>)
                                 </p>
@@ -62,38 +60,38 @@
                         </div>
 
                         <div style="text-align: right;">
-                            <span class="<?php echo $badgeClass; ?>" style="<?php echo $inlineStyle; ?> display: inline-block; margin-bottom: 5px;">
+                            <span class="<?php echo $badgeClass; ?>" style="display: inline-block; margin-bottom: 5px;">
                                 <?php echo htmlspecialchars($statusText); ?>
                             </span>
                         </div>
                     </div>
 
-                    <div style="background-color: #f7fafc; padding: 15px; border-radius: 8px; border: 1px dashed #cbd5e0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+                    <div class="financial-summary-box">
                         
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span style="font-size: 0.85rem; color: #3182ce; font-weight: bold; text-transform: uppercase;">Quantity Sold:</span>
-                            <span style="font-size: 0.85rem; color: #3182ce; font-weight: bold;">
+                        <div class="financial-detail">
+                            <span class="financial-label">Quantity Sold:</span>
+                            <span class="financial-value">
                                 <?php echo htmlspecialchars($sale['quantity']); ?>
                             </span>
                         </div>
                         
-                        <div style="display: flex; align-items: center; gap: 8px; text-align: right;">
-                            <span style="font-size: 0.85rem; color: #718096; font-weight: bold; text-transform: uppercase;">Total Earned:</span>
-                            <span style="font-size: 1.25rem; font-weight: bold; color: #38a169;">
+                        <div class="financial-detail align-right">
+                            <span class="financial-label-alt">Total Earned:</span>
+                            <span class="financial-total">
                                 R <?php echo number_format($sale['price_at_purchase'] * $sale['quantity'], 2); ?>
                             </span>
                         </div>
 
                     </div>
 
-                    <div style="border-top: 1px solid #edf2f7; padding-top: 15px;">
-                        <h4 style="margin: 0 0 10px 0; font-size: 1rem; color: #4a5568;">Buyer Details</h4>
-                        <p style="margin: 0 0 5px 0; color: #2d3748;">
+                    <div class="user-details-section">
+                        <h4 class="user-details-title">Buyer Details</h4>
+                        <p class="user-details-text">
                             <strong>Username:</strong> <?php echo htmlspecialchars($sale['buyer_name']); ?>
                         </p>
-                        <p style="margin: 0; color: #2d3748;">
+                        <p class="user-details-text">
                             <strong>Email:</strong> 
-                            <a href="mailto:<?php echo htmlspecialchars($sale['buyer_email']); ?>" style="color: #3182ce; text-decoration: none;">
+                            <a href="mailto:<?php echo htmlspecialchars($sale['buyer_email']); ?>" class="user-details-link">
                                 <?php echo htmlspecialchars($sale['buyer_email']); ?>
                             </a>
                         </p>
