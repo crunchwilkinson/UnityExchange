@@ -16,7 +16,6 @@ class SalesController {
 
     private function requireLogin() {
         if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            $_SESSION['flash_error'] = "Please log in to view your sales dashboard.";
             header("Location: /UnityExchange/auth/login");
             exit();
         }

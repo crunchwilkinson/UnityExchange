@@ -16,8 +16,6 @@ class OrderController {
     // Security check
     private function requireLogin() {
         if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            $_SESSION['flash_message'] = "Please log in to view your order history.";
-            $_SESSION['flash_type'] = "error";
             header("Location: /UnityExchange/auth/login");
             exit();
         }

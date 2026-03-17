@@ -22,7 +22,6 @@ class ProfileController {
 
    private function requireLogin() {
         if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            $_SESSION['flash_message'] = "Please log in to view your profile.";
             header("Location: /UnityExchange/auth/login");
             exit();
         }

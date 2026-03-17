@@ -19,8 +19,6 @@ class CheckoutController {
 
     private function requireLogin() {
         if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            $_SESSION['flash_message'] = "Please log in to view the checkout page.";
-            $_SESSION['flash_type'] = "error";
             header("Location: /UnityExchange/auth/login");
             exit();
         }
