@@ -20,19 +20,19 @@
         <div class="info-grid">
             
             <div class="info-card">
-                <div class="info-icon"><i class="fa fa-handshake" style="color: #004471;"></i></div>
+                <div class="info-icon"><i class="fa fa-handshake icon-navy"></i></div>
                 <h3>Connect Locally</h3>
                 <p>Discover unique handcrafted goods, fresh produce, and services directly from people in your area.</p>
             </div>
 
             <div class="info-card">
-                <div class="info-icon"><i class="fa fa-shield-alt" style="color: #ce8c00;"></i></div>
+                <div class="info-icon"><i class="fa fa-shield-alt icon-gold"></i></div>
                 <h3>Secure Agreements</h3>
                 <p>Lock in prices and reserve items safely using our transparent digital cart and checkout system.</p>
             </div>
 
             <div class="info-card">
-                <div class="info-icon"><i class="fa fa-chart-line" style="color: #008f43;"></i></div>
+                <div class="info-icon"><i class="fa fa-chart-line icon-emerald"></i></div>
                 <h3>Grow Your Hustle</h3>
                 <p>Set up your digital storefront in minutes and reach more customers without expensive overhead fees.</p>
             </div>

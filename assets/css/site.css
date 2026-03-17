@@ -62,6 +62,31 @@ body {
     color: #3498db;
 }
 
+/* Targets the link inside the logo directly */
+.navbar .logo a {
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.navbar .logo a:hover {
+    color: #fff;
+}
+
+/* User Profile & Avatar in Navbar */
+.nav-user-profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3498db;
+}
+
 .welcome-message {
     margin: 0;
     font-size: 0.95rem;
@@ -280,8 +305,7 @@ body {
 
 /* Buttons */
 .btn,
-button[type="submit"],
-.product-card button {
+button[type="submit"] {
     display: block;
     width: 100%;
     padding: 1rem 1.5rem;
@@ -300,8 +324,7 @@ button[type="submit"],
 }
 
 .btn::before,
-button[type="submit"]::before,
-.product-card button::before {
+button[type="submit"]::before {
     content: '';
     position: absolute;
     top: 0;
@@ -313,36 +336,22 @@ button[type="submit"]::before,
 }
 
 .btn:hover,
-button[type="submit"]:hover,
-.product-card button:hover {
+button[type="submit"]:hover{
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(44, 62, 80, 0.5);
 }
 
 .btn:hover::before,
-button[type="submit"]:hover::before,
-.product-card button:hover::before {
+button[type="submit"]:hover::before {
     left: 100%;
 }
 
 .btn:active,
-button[type="submit"]:active,
-.product-card button:active {
+button[type="submit"]:active {
     transform: translateY(0);
     box-shadow: 0 2px 10px rgba(44, 62, 80, 0.35);
 }
 
-/* Product Card Buttons - Specific Styling */
-.product-card button {
-    background: linear-gradient(135deg, #2c3e50 0%, #35495d 100%);
-    box-shadow: 0 4px 15px rgba(44, 62, 80, 0.35);
-    margin-top: 1rem;
-    font-size: 1rem;
-}
-
-.product-card button:hover {
-    box-shadow: 0 6px 20px rgba(44, 62, 80, 0.5);
-}
 
 .auth-section {
     padding: 3rem 2rem;
@@ -416,12 +425,6 @@ button[type="submit"]:active,
     outline: none;
 }
 
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-}
-
 .product-card {
     background: #fff;
     border-radius: 8px;
@@ -448,11 +451,6 @@ button[type="submit"]:active,
     color: #718096;
     margin-top: 8px;
     margin-bottom: 0;
-}
-
-.price {
-    color: green;
-    font-weight: bold;
 }
 
 .alert {
@@ -517,13 +515,6 @@ footer p {
 
 .form-actions {
     margin-top: 25px;
-}
-
-
-.btn-back {
-    color: #4a5568;
-    text-decoration: none;
-    font-weight: 500;
 }
 
 /* =========================================
@@ -1308,6 +1299,10 @@ footer p {
     margin-bottom: 15px;
 }
 
+.icon-navy { color: #004471; }
+.icon-gold { color: #ce8c00; }
+.icon-emerald { color: #008f43; }
+
 .info-card h3 {
     color: #2d3748;
     margin-bottom: 10px;
@@ -1683,4 +1678,322 @@ button[type="submit"].btn-danger:hover,
 .stock-badge.pending {
     background-color: #ebf8ff;
     color: #2b6cb0;
+}
+
+/* =========================================
+   Success & Confirmation Screens
+   ========================================= */
+
+.success-container-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.success-card {
+    background: white;
+    padding: 50px 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    max-width: 550px;
+    width: 100%;
+    border: 1px solid #e2e8f0;
+}
+
+.success-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    background-color: #e6fffa;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 25px auto;
+}
+
+.success-icon {
+    width: 45px;
+    height: 45px;
+    color: #38a169;
+}
+
+.success-title {
+    color: #2d3748;
+    margin-bottom: 10px;
+    font-size: 2.2rem;
+}
+
+.success-subtitle {
+    color: #718096;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+}
+
+/* Reference Box (Can be reused for receipts/invoices) */
+.reference-box {
+    background-color: #f7fafc;
+    border: 2px dashed #cbd5e0;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 35px;
+}
+
+.reference-label {
+    margin: 0;
+    color: #4a5568;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.reference-value {
+    margin: 5px 0 0 0;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #3182ce;
+}
+
+.success-footer-text {
+    color: #4a5568;
+    margin-bottom: 35px;
+    line-height: 1.6;
+}
+
+/* Reusable Button Utility for prominent call-to-actions */
+.btn-lg {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 35px !important;
+    font-size: 1.1rem !important;
+    width: auto !important; /* Overrides the width: 100% on normal btn-primary */
+}
+
+/* =========================================
+   Checkout Review Screen
+   ========================================= */
+
+/* Prevents the hover float effect on items in the review screen */
+.cart-item-readonly {
+    cursor: default;
+}
+
+.cart-item-readonly:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Text utility for highlighting prices */
+.text-highlight-blue {
+    color: #3182ce !important;
+    font-weight: bold;
+}
+
+/* Specific typography for the review layout */
+.item-quantity .qty-display-value {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #2d3748;
+    margin: 0;
+}
+
+.item-actions .action-label-small {
+    font-size: 0.85rem;
+    color: #718096;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Removes default form margins to keep the summary card compact */
+.order-summary form.no-margin-form {
+    margin: 0;
+}
+
+/* =========================================
+   Order History Specifics
+   ========================================= */
+
+/* Horizontal card layout for buyer history */
+.order-history-card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+    flex-direction: row;
+    gap: 15px;
+}
+
+.order-history-details {
+    flex: 1;
+    min-width: 200px;
+}
+
+.order-ref-title {
+    margin-top: 0;
+    margin-bottom: 5px;
+    color: #2b6349;
+    font-size: 1.25rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.order-total-price {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #3182ce;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.order-history-actions {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+/* Reusable Green/Success Button Variant */
+.btn-green,
+button[type="submit"].btn-green {
+    background: linear-gradient(135deg, #2f855a 0%, #22543d 100%);
+    box-shadow: 0 4px 12px rgba(47, 133, 90, 0.3);
+}
+
+.btn-green:hover,
+button[type="submit"].btn-green:hover {
+    background: linear-gradient(135deg, #22543d 0%, #1c4532 100%);
+    box-shadow: 0 6px 16px rgba(47, 133, 90, 0.45);
+}
+
+/* Utility to override margins on inline buttons */
+.no-margin {
+    margin: 0 !important;
+}
+
+/* =========================================
+   Order Receipt Specifics
+   ========================================= */
+
+/* Typography specific to order receipt items */
+.item-price-each {
+    color: #3182ce;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* Slightly larger badge for the receipt summary box */
+.badge-md {
+    font-size: 0.95rem;
+    padding: 5px 12px;
+}
+
+/* Helper text for the order action area */
+.receipt-help-text {
+    font-size: 0.85rem;
+    color: #718096;
+    margin-bottom: 15px;
+}
+
+/* =========================================
+   Form Layout & Utilities
+   ========================================= */
+
+/* Creates a side-by-side input layout that safely wraps on small mobile screens */
+.form-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap; 
+}
+
+/* Forces the columns to share equal space, but not crush smaller than 120px */
+.form-col {
+    flex: 1;
+    min-width: 120px; 
+}
+
+/* Cleans up the spacing specifically for standard file inputs */
+.form-file-input {
+    display: block;
+    margin-top: 5px;
+}
+
+/* =========================================
+   Product Details Specifics
+   ========================================= */
+
+/* Clean text link that inherits parent color but highlights blue on hover */
+.seller-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.seller-link:hover {
+    color: #3182ce;
+}
+
+/* =========================================
+   Product Edit Specifics
+   ========================================= */
+
+.current-image-preview {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.current-image-label {
+    margin-bottom: 10px;
+    color: #718096;
+    font-weight: 600;
+}
+
+.current-image-img {
+    max-width: 300px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.delete-warning-title {
+    color: #9b2c2c;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+.delete-warning-text {
+    color: #718096;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+}
+
+/* =========================================
+   Marketplace / Catalog Specifics
+   ========================================= */
+
+.filter-title {
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.filter-icon {
+    color: #3498db;
+    margin-right: 8px;
+}
+
+/* Modifier to remove the white background from empty states in the catalog */
+.empty-state-transparent {
+    background-color: transparent;
+}
+
+.filter-clear-btn {
+    margin-top: 15px;
 }

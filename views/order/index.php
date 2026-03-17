@@ -13,61 +13,55 @@
         <div class="empty-cart">
             <h2>No orders yet</h2>
             <p>You haven't purchased anything from the marketplace yet.</p>
-            <a href="/UnityExchange/product" class="btn-primary" style="display: inline-block; margin-top: 10px;">
+            <a href="/UnityExchange/product" class="btn-primary btn-sm">
                 Start Exploring
             </a>
         </div>
 
     <?php else: ?>
 
-        <div style="display: flex; flex-direction: column; gap: 20px;">
+        <div class="dashboard-list">
             <?php foreach ($orders as $order): ?>
                 
-                <div class="product-card" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; padding: 25px; flex-direction: row; gap: 15px;">
+                <div class="product-card order-history-card">
 
                     <?php 
+                        // Simplified Badge Logic using our existing CSS states
                         $status = strtolower($order['status']);
                         if ($status === 'completed') {
                             $badgeClass = 'stock-badge in-stock'; 
                             $statusText = 'Completed';
-                            $inlineStyle = '';
                         } elseif ($status === 'cancelled') {
                             $badgeClass = 'stock-badge sold-out'; 
                             $statusText = 'Cancelled';
-                            $inlineStyle = '';
                         } else {
-                            // Default Pending State
-                            $badgeClass = 'stock-badge';
+                            // Uses the .pending class we made earlier!
+                            $badgeClass = 'stock-badge pending';
                             $statusText = 'Pending';
-                            // Removed align-self from here so the parent h3 controls it uniformly
-                            $inlineStyle = 'background-color: #ebf8ff; color: #2b6cb0;'; 
                         }
                     ?>
                     
-                    <div style="flex: 1; min-width: 200px;">
-                        <h3 style="margin-top: 0; margin-bottom: 5px; color: #2b6349; font-size: 1.25rem; display: flex; align-items: flex-start; gap: 12px;">
+                    <div class="order-history-details">
+                        <h3 class="order-ref-title">
                             Order Reference #<?php echo htmlspecialchars($order['id']); ?> 
                             
-                            <span class="<?php echo $badgeClass; ?>" style="<?php echo $inlineStyle; ?> margin-top: 2px;">
+                            <span class="<?php echo $badgeClass; ?>">
                                 <?php echo htmlspecialchars($statusText); ?>
                             </span>
                         </h3>
                         
-                        <p style="margin: 0 0 8px 0; color: #718096; font-size: 0.95rem;">
+                        <p class="order-meta-text">
                             Placed on <?php echo date('F j, Y', strtotime($order['created_at'])); ?>
                         </p>
-                        <span style="font-size: 1.25rem; font-weight: bold; color: #3182ce;">
+                        <span class="order-total-price">
                             R <?php echo number_format($order['grand_total'] ?? $order['total_amount'], 2); ?>
                         </span>
                     </div>
 
-                    <div style="display: flex; align-items: center; gap: 25px; flex-wrap: wrap; justify-content: flex-end;">
-
-                        <a href="/UnityExchange/order/details/<?php echo $order['id']; ?>" class="btn-primary" style="padding: 10px 24px; font-size: 0.95rem; margin: 0; white-space: nowrap;
-                            background: linear-gradient(135deg, #2f855a 0%, #22543d 100%);">
+                    <div class="order-history-actions">
+                        <a href="/UnityExchange/order/details/<?php echo $order['id']; ?>" class="btn-primary btn-sm btn-green no-margin">
                             View Details
                         </a>
-                        
                     </div>
 
                 </div>

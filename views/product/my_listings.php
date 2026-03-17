@@ -15,8 +15,8 @@
     <div class="product-grid-wrapper">
         
         <div class="filter-bar-wrapper">
-            <div style="color: #fff; font-size: 1.2rem; font-weight: 600;">
-                <i class="fa fa-filter" style="color: #3498db; margin-right: 8px;"></i> Browse by Category
+            <div class="filter-title">
+                <i class="fa fa-filter filter-icon"></i> Browse by Category
             </div>
 
             <div class="filter-bar">
@@ -47,7 +47,14 @@
                             </h3>
                             <p class="product-price">R <?php echo number_format($product['price'], 2); ?></p>
                             <div class="product-footer">
-                                <span class="seller-info">Sold by <strong><?php echo htmlspecialchars($product['seller_name']); ?></strong></span>
+                                <span class="seller-info">
+                                    Sold by: 
+                                    <strong>
+                                        <a href="/UnityExchange/profile/details/<?php echo $product['user_id']; ?>" class="seller-link">
+                                            <?php echo htmlspecialchars($product['seller_name']); ?>
+                                        </a>
+                                    </strong>
+                                </span>
                                 <?php if ($product['stock_quantity'] > 0): ?>
                                     <span class="stock-badge in-stock">In Stock</span>
                                 <?php else: ?>
@@ -59,16 +66,16 @@
                 <?php endforeach; ?>
             <?php endif; ?>
 
-            <div id="js-empty-state" class="empty-state" style="display: none; background-color: transparent;">
+            <div id="js-empty-state" class="empty-state empty-state-transparent" style="display: none;">
                 <h3>No matches found</h3>
                 <p>There are currently no items listed in this specific category.</p>
-                <button type="button" id="clearFilterBtn" class="btn-primary" style="margin-top: 15px;">View All Items</button>
+                <button type="button" id="clearFilterBtn" class="btn-primary filter-clear-btn">View All Items</button>
             </div>
 
             <?php if (empty($products)): ?>
-                <div class="empty-state" style="background-color: transparent;">
+                <div class="empty-state empty-state-transparent">
                     <h3>No items found</h3>
-                    <p>Your Listings are currently empty. List a item today!</p>
+                    <p>Your Listings are currently empty. List an item today!</p>
                 </div>
             <?php endif; ?>
         </div>

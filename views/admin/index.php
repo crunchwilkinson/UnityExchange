@@ -5,7 +5,7 @@
             <p>Welcome to the UnityExchange command center.</p>
         </div>
         <a href="/UnityExchange/home" class="btn-secondary" target="_blank">
-            <i class="fa fa-external-link-alt" style="margin-right: 8px;"></i> View Live Site
+            <i class="fa fa-external-link-alt btn-icon-left"></i> View Live Site
         </a>
     </div>
 
@@ -29,7 +29,7 @@
                 <p class="admin-card-description">
                     Review registered accounts, update email addresses, and manage administrative roles across the platform.
                 </p>
-                <a href="/UnityExchange/admin/users" class="btn-primary" style="text-align: center;">
+                <a href="/UnityExchange/admin/users" class="btn-primary btn-block">
                     Manage Users &rarr;
                 </a>
             </div>
@@ -53,7 +53,7 @@
                 <p class="admin-card-description">
                     Monitor all active listings, moderate inappropriate content, and completely remove products from the database.
                 </p>
-                <a href="/UnityExchange/admin/products" class="btn-primary" style="text-align: center;">
+                <a href="/UnityExchange/admin/products" class="btn-primary btn-block">
                     Manage Inventory &rarr;
                 </a>
             </div>
@@ -77,7 +77,7 @@
                 <p class="admin-card-description">
                     Track marketplace sales, view order histories, and resolve transaction disputes between buyers and sellers.
                 </p>
-                <a href="#" class="btn-primary" style="text-align: center;">
+                <a href="#" class="btn-primary btn-block">
                     Coming Soon
                 </a>
             </div>

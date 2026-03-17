@@ -4,21 +4,24 @@
             <h1>Manage Users</h1>
             <p>View and manage user accounts, permissions, and roles.</p>
         </div>
-        <a href="/UnityExchange/admin" class="btn-secondary">← Back to Admin Dashboard</a>
+        <a href="/UnityExchange/admin" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i> Back to Admin Dashboard
+        </a>
     </div>
 
-    <div class="admin-users-grid-wrapper">
+    <div class="admin-grid-wrapper">
         
-        <div class="users-filterbar-wrapper">
-            <div style="color: #fff; font-size: 1.2rem; font-weight: 600;">
-                <i class="fa fa-users" style="color: #3498db; margin-right: 8px;"></i> Filter Users
+        <div class="admin-filterbar-wrapper">
+            <div class="admin-filter-title">
+                <i class="fa fa-users admin-filter-icon"></i> Filter Users
             </div>
-            <div class="users-filterbar">
-                <select id="userRoleFilter" class="users-filterbar-select">
+            
+            <div class="admin-filter-bar">
+                <select id="userRoleFilter" class="admin-filter-select">
                     <option value="all">All Roles</option>
                     <option value="admin">Admin</option>
                     <option value="user">User</option>
-                    </select>
+                </select>
             </div>
         </div>
 
@@ -85,8 +88,8 @@
                     <?php endif; ?>
 
                     <tr id="js-user-empty-state" style="display: none;">
-                        <td colspan="6" class="empty-table-message" style="text-align: center; padding: 40px; color: #718096;">
-                            <i class="fa fa-user-slash" style="font-size: 2rem; display: block; margin-bottom: 10px; color: #cbd5e0;"></i>
+                        <td colspan="6" class="empty-table-message">
+                            <i class="fa fa-user-slash empty-table-icon"></i>
                             No users match this role filter.
                         </td>
                     </tr>

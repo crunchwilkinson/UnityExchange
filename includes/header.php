@@ -13,7 +13,7 @@
 <body>
     <header class="navbar">
         <div class="logo">
-            <a href="/UnityExchange/home" style="color: whitesmoke; text-decoration: none;">UnityExchange</a>
+            <a href="/UnityExchange/home">UnityExchange</a>
         </div>
 
         <nav>
@@ -38,14 +38,14 @@
             </div>
             <div class="auth-links">
                 <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
-                    <div style="display: flex; align-items: center; gap: 10px;">
+                    <div class="nav-user-profile">
                         <?php $nav_avatar = !empty($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : 'default_avatar.png'; ?>
                         <a href="/UnityExchange/profile">
-                        <img src="/UnityExchange/assets/images/users/<?php echo htmlspecialchars($nav_avatar); ?>" 
-                             alt="Avatar" 
-                             style="width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid #3498db;">
+                            <img src="/UnityExchange/assets/images/users/<?php echo htmlspecialchars($nav_avatar); ?>" 
+                                 alt="Avatar" 
+                                 class="nav-avatar">
                         </a>
-                        <p class="welcome-message" style="margin: 0;">
+                        <p class="welcome-message">
                             Welcome, <?php echo htmlspecialchars($_SESSION['username']);?>
                         </p>
                     </div>

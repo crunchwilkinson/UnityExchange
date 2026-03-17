@@ -5,12 +5,15 @@
             <h1>Edit User: <?php echo htmlspecialchars($user['username']); ?></h1>
             <p>View and manage user accounts, permissions, and roles.</p>
         </div>
-        <a href="/UnityExchange/admin/users" class="btn-secondary">← Back to Users</a>
+        <a href="/UnityExchange/admin/users" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i> Back to Users
+        </a>
     </div>
 
     <div class="admin-form-container">
         <form action="/UnityExchange/admin/update/<?php echo htmlspecialchars($user['id']); ?>" method="POST">
             <input type = "hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+            
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
@@ -43,7 +46,7 @@
             </fieldset>
 
             <div class="form-actions">
-                <button type="submit" class="admin-button">Update User</button>
+                <button type="submit" class="btn-primary btn-block">Update User</button>
             </div>
 
         </form>

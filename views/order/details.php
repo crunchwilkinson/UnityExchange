@@ -13,7 +13,7 @@
         <div class="cart-items">
             
             <?php foreach ($items as $item): ?>
-                <div class="cart-item" style="cursor: default;">
+                <div class="cart-item cart-item-readonly">
 
                     <img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($item['image_file']); ?>" 
                              alt="<?php echo htmlspecialchars($item['product']['name']); ?>">
@@ -26,21 +26,21 @@
                         </h3>
                         <p>Sold by: <strong><?php echo htmlspecialchars($item['seller_name']); ?></strong></p>
                         
-                        <p style="color: #3182ce; font-weight: bold; margin-top: 5px;">
+                        <p class="item-price-each">
                             R <?php echo number_format($item['price_at_purchase'], 2); ?> each
                         </p>
                     </div>
                     
                     <div class="item-quantity">
                         <label>Purchased</label>
-                        <p style="font-size: 1.1rem; font-weight: bold; color: #2d3748; margin: 0;">
+                        <p class="qty-display-value">
                             <?php echo htmlspecialchars($item['quantity']); ?>
                         </p>
                     </div>
                     
                     <div class="item-actions">
-                        <label style="font-size: 0.85rem; color: #718096; font-weight: 600;">Subtotal</label>
-                        <p style="margin: 0;">
+                        <label class="action-label-small">Subtotal</label>
+                        <p class="no-margin">
                             R <?php echo number_format($item['price_at_purchase'] * $item['quantity'], 2); ?>
                         </p>
                     </div>
@@ -48,28 +48,26 @@
             <?php endforeach; ?>
         </div>
 
-        <div class="order-summary" style="height: fit-content;">
+        <div class="order-summary">
             <h2>Receipt Summary</h2>
             
             <div>
                 <span>Status</span>
                 <?php 
+                    // Cleaned up badge logic utilizing the .pending class
                     $status = strtolower($order['status']);
                     if ($status === 'completed') {
                         $badgeClass = 'stock-badge in-stock'; 
                         $statusText = 'Completed';
-                        $inlineStyle = '';
                     } elseif ($status === 'cancelled') {
                         $badgeClass = 'stock-badge sold-out'; 
                         $statusText = 'Cancelled';
-                        $inlineStyle = '';
                     } else {
-                        $badgeClass = 'stock-badge';
+                        $badgeClass = 'stock-badge pending';
                         $statusText = 'Pending';
-                        $inlineStyle = 'background-color: #ebf8ff; color: #2b6cb0;'; 
                     }
                 ?>
-                <span class="<?php echo $badgeClass; ?>" style="<?php echo $inlineStyle; ?> font-size: 0.95rem;">
+                <span class="<?php echo $badgeClass; ?> badge-md">
                     <?php echo htmlspecialchars($statusText); ?>
                 </span>
             </div>
@@ -79,19 +77,20 @@
                 <span>R <?php echo number_format($order['total_amount'], 2); ?></span>
             </div>
             
-            <div style="border-top: 2px solid #edf2f7; padding-top: 15px; margin-top: 15px;">
-                <span style="font-size: 1.25rem; font-weight: bold; color: #2d3748;">Total</span>
-                <span style="font-size: 1.25rem; font-weight: bold; color: #3182ce;">R <?php echo number_format($order['total_amount'], 2); ?></span>
+            <div>
+                <span>Total</span>
+                <span>R <?php echo number_format($order['total_amount'], 2); ?></span>
             </div>
 
             <?php if ($status === 'pending'): ?>
-                    <form action="/UnityExchange/order/complete/<?php echo $order['id']; ?>" method="POST" style="margin: 0;">
+                    <form action="/UnityExchange/order/complete/<?php echo $order['id']; ?>" method="POST" class="no-margin-form">
                         <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
-                        <button type="submit" class="btn-primary" style="background: linear-gradient(135deg, #38a169 0%, #2f855a 100%); width: 100%;">
+                        
+                        <button type="submit" class="btn-primary btn-green">
                             Mark as Received
                         </button>
                     </form>
-                    <p style="font-size: 0.85rem; color: #718096; margin-bottom: 15px;">
+                    <p class="receipt-help-text">
                         Have you received these items from the seller?
                     </p>
                 

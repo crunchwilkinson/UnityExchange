@@ -19,7 +19,7 @@
 
             <div class="form-group">
                 <label for="category_id">Category</label>
-                <select id="category_id" name="category_id" required style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-family: inherit;">
+                <select id="category_id" name="category_id" required>
                     <option value="" disabled selected>Select a category...</option>
                     <?php if (!empty($categories)): ?>
                         <?php foreach ($categories as $category): ?>
@@ -35,16 +35,16 @@
 
             <div class="form-group">
                 <label for="description">Description & Condition</label>
-                <textarea id="description" name="description" rows="5" placeholder="Describe the item, its condition, and any accessories included..." style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-family: inherit;" required></textarea>
+                <textarea id="description" name="description" rows="5" placeholder="Describe the item, its condition, and any accessories included..." required></textarea>
             </div>
 
-            <div style="display: flex; gap: 15px;">
-                <div class="form-group" style="flex: 1;">
+            <div class="form-row">
+                <div class="form-group form-col">
                     <label for="price">Price (R)</label>
                     <input type="number" id="price" name="price" step="0.01" min="0" placeholder="0.00" required>
                 </div>
 
-                <div class="form-group" style="flex: 1;">
+                <div class="form-group form-col">
                     <label for="stock_quantity">Quantity Available</label>
                     <input type="number" id="stock_quantity" name="stock_quantity" min="1" value="1" required>
                 </div>
@@ -52,7 +52,7 @@
 
             <div class="form-group">
                 <label for="product_image">Upload a Photo (JPG, PNG, WEBP)</label>
-                <input type="file" id="product_image" name="product_image" accept="image/jpeg, image/png, image/webp" style="display: block; margin-top: 5px;">
+                <input type="file" id="product_image" name="product_image" accept="image/jpeg, image/png, image/webp" class="form-file-input">
                 <p class="help-text">Clear, well-lit photos sell faster.</p>
             </div>
 
