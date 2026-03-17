@@ -119,7 +119,7 @@ class User {
         return $stmt->fetchAll();
     }
     public function getUserById($id) {
-        $stmt = $this->db->prepare("SELECT id, username, email FROM users WHERE id = :id");
+        $stmt = $this->db->prepare("SELECT id, username, email, profile_picture FROM users WHERE id = :id");
         $stmt->execute([':id' => $id]);
         return $stmt->fetch();
     }
@@ -132,6 +132,15 @@ class User {
             error_log("User update failed: " . $e->getMessage());
             return false;
         }
+    }
+
+    public function updateProfilePicture($id, $fileName) {
+        $query = "UPDATE users SET profile_picture = :profile_picture WHERE id = :id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':profile_picture', $fileName);
+        $stmt->bindParam(':id', $id);
+        
+        return $stmt->execute();
     }
 
     public function deleteUser($id) {
