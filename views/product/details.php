@@ -27,7 +27,11 @@
 
 				<div class="meta-row">
 					<span class="meta-label">Seller</span>
-					<span class="meta-value"><?php echo htmlspecialchars($product['seller_name']); ?></span>
+					<span class="meta-value">
+						<a href="/UnityExchange/profile/details/<?php echo $product['user_id']; ?>" style="color: inherit; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#3182ce'" onmouseout="this.style.color='inherit'">
+							<?php echo htmlspecialchars($product['seller_name']); ?>
+						</a>
+					</span>
 				</div>
 
 				<?php if (!empty($product['seller_email'])): ?>
@@ -55,7 +59,7 @@
 				<?php else: ?>
 					<a href="/UnityExchange/auth/login" class="btn-primary">Login to Add to Cart</a>
 				<?php endif; ?>
-                
+
 			</div>
 		</div>
 	</div>

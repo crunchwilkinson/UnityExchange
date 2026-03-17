@@ -108,6 +108,7 @@ class ProfileController {
         $user_id = $_SESSION['user_id'];
         $username = isset($_POST['username']) ? trim($_POST['username']) : '';
         $email = isset($_POST['email']) ? trim($_POST['email']) : '';
+        $description = isset($_POST['description']) ? trim($_POST['description']) : null;
 
         if (empty($username) || empty($email)) {
             $_SESSION['flash_message'] = "Please fill in all required fields.";
@@ -134,7 +135,7 @@ class ProfileController {
         }
 
         // 3. Update the basic text info
-        if($this->userModel->updateUser($user_id, $username, $email)) {
+        if($this->userModel->updateUser($user_id, $username, $email, $description)) {
             $_SESSION['username'] = $username; // Update the active session username
 
             $_SESSION['flash_message'] = "Account details updated successfully!";
@@ -207,5 +208,19 @@ class ProfileController {
             header("Location: /UnityExchange/profile");
             exit();
         }
+    }
+
+    public function details($id) {
+        // Fetch the user's data
+        $user = $this->userModel->getUserById($id);
+
+        if (!$user) {
+            echo "<h1>404 Error</h1><p>User profile not found.</p>";
+            exit();
+        }
+
+        require_once 'includes/header.php';
+        require_once 'views/profile/details.php';
+        require_once 'includes/footer.php';
     }
 }

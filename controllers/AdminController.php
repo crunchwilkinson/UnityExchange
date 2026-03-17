@@ -94,7 +94,7 @@ class AdminController {
         $role_ids = isset($_POST['roles']) ? $_POST['roles'] : [];
 
         // Update user details
-        $this->userModel->updateUser($id, $username, $email);
+        $this->userModel->updateUser($id, $username, $email, null);
 
         // Update the user's roles and set the appropriate flash message
         if ($this->userModel->updateUserRoles($id, $role_ids)) {

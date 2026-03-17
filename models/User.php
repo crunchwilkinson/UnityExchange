@@ -119,15 +119,15 @@ class User {
         return $stmt->fetchAll();
     }
     public function getUserById($id) {
-        $stmt = $this->db->prepare("SELECT id, username, email, password_hash, profile_picture FROM users WHERE id = :id");
+        $stmt = $this->db->prepare("SELECT id, username, email, password_hash, profile_picture, description FROM users WHERE id = :id");
         $stmt->execute([':id' => $id]);
         return $stmt->fetch();
     }
 
-    public function updateUser($id, $username, $email) {
+    public function updateUser($id, $username, $email, $description = null) {
         try {
-            $stmt = $this->db->prepare("UPDATE users SET username = :username, email = :email WHERE id = :id");
-            return $stmt->execute([':id' => $id, ':username' => $username, ':email' => $email]);
+            $stmt = $this->db->prepare("UPDATE users SET username = :username, email = :email, description = :description WHERE id = :id");
+            return $stmt->execute([':id' => $id, ':username' => $username, ':email' => $email, ':description' => $description]);
         } catch (PDOException $e) {
             error_log("User update failed: " . $e->getMessage());
             return false;

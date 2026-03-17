@@ -4,7 +4,7 @@
             <h1>Marketplace</h1>
             <p>Discover items from sellers in your community.</p>
         </div>
-        
+
         <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
             <a href="/UnityExchange/product/create" class="btn-secondary">+ List an Item</a>
         <?php else: ?>
@@ -13,7 +13,7 @@
     </div>
 
     <div class="product-grid-wrapper">
-        
+
         <div class="filter-bar-wrapper">
             <div style="color: #fff; font-size: 1.2rem; font-weight: 600;">
                 <i class="fa fa-filter" style="color: #3498db; margin-right: 8px;"></i> Browse by Category
@@ -34,7 +34,7 @@
         </div>
 
         <div class="product-grid">
-            
+
             <?php if (!empty($products)): ?>
                 <?php foreach ($products as $product): ?>
                     <div class="product-card" data-category="<?php echo $product['category_id']; ?>">
@@ -47,7 +47,16 @@
                             </h3>
                             <p class="product-price">R <?php echo number_format($product['price'], 2); ?></p>
                             <div class="product-footer">
-                                <span class="seller-info">Sold by <strong><?php echo htmlspecialchars($product['seller_name']); ?></strong></span>
+                                <span class="seller-info">
+                                    <div class="seller-info">
+                                        Sold by:
+                                        <strong>
+                                            <a href="/UnityExchange/profile/details/<?php echo $product['user_id']; ?>" style="color: inherit; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#3182ce'" onmouseout="this.style.color='inherit'">
+                                                <?php echo htmlspecialchars($product['seller_name']); ?>
+                                            </a>
+                                        </strong>
+                                    </div>
+                                </span>
                                 <?php if ($product['stock_quantity'] > 0): ?>
                                     <span class="stock-badge in-stock">In Stock</span>
                                 <?php else: ?>
