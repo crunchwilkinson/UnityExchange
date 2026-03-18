@@ -2,17 +2,16 @@
 // controllers/HomeController.php
 
 // Require the necessary files
-require_once 'config/Database.php';
+require_once 'BaseController.php';
 require_once 'models/Product.php';
 
-class HomeController {
+class HomeController extends BaseController{
     private $productModel;
     public function __construct() {
-        $database = new Database();
-        $db = $database->connect();
+        parent::__construct();
 
         // Instantiate the Model, passing the DB connection
-        $this->productModel = new Product($db);
+        $this->productModel = new Product($this->db);
     }
     
     public function index() {
@@ -24,7 +23,6 @@ class HomeController {
             $products = $this->productModel->getHomeProducts(false);
         }
         
-
         // Load the Views
         require_once 'includes/header.php';
         require_once 'views/home/index.php';

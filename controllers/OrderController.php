@@ -1,40 +1,22 @@
 <?php
 // controllers/OrderController.php
 
-require_once 'config/Database.php';
+require_once 'BaseController.php';
 require_once 'models/Order.php';
 
-class OrderController {
+class OrderController extends BaseController {
     private $orderModel;
 
     public function __construct() {
-        $database = new Database();
-        $db = $database->connect();
-        $this->orderModel = new Order($db);
-    }
+        parent::__construct();
+        $this->requireLogin();
 
-    // Security check
-    private function requireLogin() {
-        if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            header("Location: /UnityExchange/auth/login");
-            exit();
-        }
-    }
-
-    private function validateCRSF($headerRedirectPath) {
-        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $_SESSION['flash_message'] = "Security validation failed. Unauthorized request.";
-            $_SESSION['flash_type'] = "error";
-            header("Location: $headerRedirectPath");
-            exit();
-        }
+        $this->orderModel = new Order($this->db);
     }
 
     // URL: /UnityExchange/order
     // Displays the "My Orders" list for the buyer
     public function index() {
-        $this->requireLogin();
-
         $user_id = $_SESSION['user_id'];
 
         // Fetch the orders from the database
@@ -48,8 +30,6 @@ class OrderController {
 
     // URL: /UnityExchange/order/details/5
     public function details($order_id) {
-        $this->requireLogin();
-
         $user_id = $_SESSION['user_id'];
 
         // 1. Fetch the main order and implicitly check if the buyer owns it
@@ -73,8 +53,6 @@ class OrderController {
 
     // URL: /UnityExchange/order/complete/5
     public function complete($order_id) {
-        $this->requireLogin();
-
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $_SESSION['flash_message'] = "Invalid request method.";
             $_SESSION['flash_type'] = "error";
@@ -82,7 +60,7 @@ class OrderController {
             exit();
         }
 
-        $this->validateCRSF("/UnityExchange/order/details/" . $order_id);
+        $this->validateCSRF("/UnityExchange/order/details/" . $order_id);
 
         $user_id = $_SESSION['user_id'];
 

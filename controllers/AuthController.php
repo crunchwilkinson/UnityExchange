@@ -1,24 +1,16 @@
 <?php
 // controllers/AuthController.php
 
-require_once 'config/Database.php';
+require_once 'BaseController.php';
 require_once 'models/User.php';
 
-class AuthController {
+class AuthController extends BaseController {
     private $userModel;
 
     public function __construct() {
-        $database = new Database();
-        $db = $database->connect();
-        $this->userModel = new User($db);
-    }
+        parent::__construct();
 
-    private function validateCRSF($headerRedirectPath) {
-        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $_SESSION['flash_error'] = "Security validation failed. Unauthorized request.";
-            header("Location: $headerRedirectPath");
-            exit();
-        }
+        $this->userModel = new User($this->db);
     }
 
     // Handles URL: /UnityExchange/auth/register
@@ -26,7 +18,7 @@ class AuthController {
 
         // PRG POST: Process the form
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->validateCRSF("/UnityExchange/auth/register");
+            $this->validateCSRF("/UnityExchange/auth/register");
 
             $username = isset($_POST['username']) ? trim($_POST['username']) : '';
             $email = isset($_POST['email']) ? trim($_POST['email']) : '';
@@ -94,7 +86,7 @@ class AuthController {
 
         // PRG POST: Process the form
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->validateCRSF("/UnityExchange/auth/login");
+            $this->validateCSRF("/UnityExchange/auth/login");
 
             $email = isset($_POST['email']) ? trim($_POST['email']) : '';
             $password = isset($_POST['password']) ? $_POST['password'] : '';

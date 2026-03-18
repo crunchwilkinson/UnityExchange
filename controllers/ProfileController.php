@@ -1,39 +1,23 @@
 <?php
 // controllers/ProfileController.php
 
-require_once 'config/Database.php';
+require_once 'BaseController.php';
 require_once 'models/User.php';
 
-class ProfileController {
+class ProfileController extends BaseController {
     private $userModel;
 
     public function __construct()
     {
-        $database = new Database();
-        $db = $database->connect();
+        parent::__construct();
 
-        $this->userModel = new User($db);
+        $this->userModel = new User($this->db);
     }
 
 
     // ==================================
     // PRIVATE HELPER METHODS
     // ==================================
-
-   private function requireLogin() {
-        if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            header("Location: /UnityExchange/auth/login");
-            exit();
-        }
-    }
-
-    private function validateCRSF($headerRedirectPath) {
-        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $_SESSION['flash_message'] = "Security validation failed. Unauthorized request.";
-            header("Location: $headerRedirectPath");
-            exit();
-        }
-    }
 
     // Reusing your optimal upload logic from ProductController
     private function handleImageUpload($fileArray) {
@@ -103,7 +87,7 @@ class ProfileController {
         }
 
         // Validate CSRF
-        $this->validateCRSF("/UnityExchange/profile");
+        $this->validateCSRF("/UnityExchange/profile");
 
         $user_id = $_SESSION['user_id'];
         $username = isset($_POST['username']) ? trim($_POST['username']) : '';
@@ -158,7 +142,7 @@ class ProfileController {
         }
 
         // Validate CSRF
-        $this->validateCRSF("/UnityExchange/profile");
+        $this->validateCSRF("/UnityExchange/profile");
 
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
         $current_password = isset($_POST['current_password']) ? $_POST['current_password'] : '';

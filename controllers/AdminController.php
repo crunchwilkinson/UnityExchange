@@ -1,39 +1,27 @@
 <?php
 // controllers/AdminController.php
 
-require_once 'config/Database.php';
+require_once 'BaseController.php';
 require_once 'models/User.php';
 require_once 'models/Product.php';
 require_once 'models/Order.php';
 
-class AdminController {
+class AdminController extends BaseController {
     private $userModel;
     private $productModel;
     private $orderModel;
 
     public function __construct()
     {
-        // Access control: Only allow users with the 'admin' role to access any method in this controller
-        if (!isset($_SESSION['logged_in']) || !isset(($_SESSION['roles'])) || !in_array('admin', $_SESSION['roles'])) {
-            header('HTTP/1.0 403 Forbidden');
-            echo "<div style='background-color: #fed7d7;color: #822727;border: 1px solid #feb2b2; margin: 0 auto; margin-bottom: 20px;'><h1>403 Forbidden</h1><p>You do not have administrative access.</p></div>";
-            exit();
-        }
+        // Call the BaseController constructor to set up the DB connection
+        parent::__construct(); 
 
-        $database = new Database();
-        $db = $database->connect();
-        $this->userModel = new User($db);
-        $this->productModel = new Product($db);
-        $this->orderModel = new Order($db);
-    }
+        // Ensure the user is logged in and has the 'admin' role before allowing access to any AdminController methods
+        $this->requireAdmin();
 
-    private function validateCRSF($headerRedirectPath) {
-        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $_SESSION['flash_message'] = "Security validation failed. Unauthorized request.";
-            $_SESSION['flash_type'] = "error";
-            header("Location: $headerRedirectPath");
-            exit();
-        }
+        $this->userModel = new User($this->db);
+        $this->productModel = new Product($this->db);
+        $this->orderModel = new Order($this->db);
     }
 
     public function index() {
@@ -91,7 +79,7 @@ class AdminController {
             exit();
         }
 
-        $this->validateCRSF("/UnityExchange/admin/edit/" . $id);
+        $this->validateCSRF("/UnityExchange/admin/edit/" . $id);
 
         $username = isset($_POST['username']) ? trim($_POST['username']) : '';
         $email = isset($_POST['email']) ? trim($_POST['email']) : '';
@@ -120,7 +108,7 @@ class AdminController {
             exit();
         }
 
-        $this->validateCRSF("/UnityExchange/admin/users");
+        $this->validateCSRF("/UnityExchange/admin/users");
 
         // Prevent admins from deleting themselves
         if ($_SESSION['user_id'] === $id) {
@@ -156,7 +144,7 @@ class AdminController {
             exit();
         }
 
-        $this->validateCRSF("/UnityExchange/admin/products");
+        $this->validateCSRF("/UnityExchange/admin/products");
 
         $this->productModel->adminDeleteProduct($id);
         $_SESSION['flash_message'] = "Product deleted successfully.";
@@ -179,7 +167,7 @@ class AdminController {
             exit();
         }
 
-        $this->validateCRSF("/UnityExchange/admin/transactions");
+        $this->validateCSRF("/UnityExchange/admin/transactions");
 
         $new_status = isset($_POST['status']) ? trim($_POST['status']) : '';
         

@@ -1,19 +1,19 @@
 <?php
 // controllers/CartController.php
 
-require_once 'config/Database.php';
+require_once 'BaseController.php';
 require_once 'models/Product.php';
 
-class CartController {
+class CartController extends BaseController{
     private $productModel;
 
     public function __construct()
     {
-        $database = new Database();
-        $db = $database->connect();
+        parent::__construct();
 
+        $this->requireLogin();
         // Instantiate the Product Model, passing the DB connection
-        $this->productModel = new Product($db);
+        $this->productModel = new Product($this->db);
 
         // Ensure the cart session variable is initialized
         if (!isset($_SESSION['cart'])) {
@@ -21,10 +21,25 @@ class CartController {
         }
     }
 
-    private function requireLogin() {
-        if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            header("Location: /UnityExchange/auth/login");
-            exit();
+    // ==========================================
+    // JSON API ENDPOINTS (For JavaScript Fetch)
+    // ==========================================
+
+    // Helper method to send JSON responses and stop execution
+    private function jsonResponse($status, $message, $data = []) {
+        header('Content-Type: application/json');
+        echo json_encode(array_merge(['status' => $status, 'message' => $message], $data));
+        exit();
+    }
+
+    // Helper method to strictly validate Fetch API POST requests
+    private function validateApiRequest() {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            $this->jsonResponse('error', 'Invalid request method. POST required.');
+        }
+
+        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+            $this->jsonResponse('error', 'CSRF token validation failed.');
         }
     }
 
@@ -34,7 +49,6 @@ class CartController {
 
     // URL: /UnityExchange/cart
     public function index() {
-        $this->requireLogin();
         $cart_items = [];
         $grand_total = 0;
 
@@ -69,31 +83,8 @@ class CartController {
         require_once 'includes/footer.php';
     }
 
-    // ==========================================
-    // JSON API ENDPOINTS (For JavaScript Fetch)
-    // ==========================================
-
-    // Helper method to send JSON responses and stop execution
-    private function jsonResponse($status, $message, $data = []) {
-        header('Content-Type: application/json');
-        echo json_encode(array_merge(['status' => $status, 'message' => $message], $data));
-        exit();
-    }
-
-    // Helper method to strictly validate Fetch API POST requests
-    private function validateApiRequest() {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            $this->jsonResponse('error', 'Invalid request method. POST required.');
-        }
-
-        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $this->jsonResponse('error', 'CSRF token validation failed.');
-        }
-    }
-
     // URL: /UnityExchange/cart/add (expects POST with product_id and quantity)
     public function add() {
-        $this->requireLogin();
         $this->validateApiRequest();
 
         $product_id = intval($_POST['product_id']);
@@ -131,7 +122,6 @@ class CartController {
 
     // URL: /UnityExchange/cart/update
     public function update() {
-        $this->requireLogin();
         $this->validateApiRequest();
 
         $product_id = intval($_POST['product_id']);
@@ -163,7 +153,6 @@ class CartController {
 
     // URL: /UnityExchange/cart/remove
     public function remove() {
-        $this->requireLogin();
         $this->validateApiRequest();
 
         $product_id = intval($_POST['product_id']);
@@ -177,7 +166,6 @@ class CartController {
 
     // URL: /UnityExchange/cart/clear
     public function clear() {
-        $this->requireLogin();
         $this->validateApiRequest();
         
         $_SESSION['cart'] = [];

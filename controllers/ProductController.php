@@ -1,42 +1,18 @@
 <?php
 // controllers/ProductController.php
 
-// Pull in the database configuration and the Product model
-require_once 'config/Database.php';
+require_once 'BaseController.php';
 require_once 'models/Product.php';
 
-class ProductController {
+class ProductController extends BaseController {
     private $productModel;
     
     // The constructor runs automatically when the controller is called
     public function __construct() {
-        // Establish the database connection
-        $database = new Database();
-        $db = $database->connect();
+        parent::__construct();
         
         // Instantiate the Product model and pass the connection to it
-        $this->productModel = new Product($db);
-    }
-
-    // ==================================
-    // PRIVATE HELPER METHODS
-    // ==================================
-
-    // Helper: Checks if a user is logged in, kicks them to login page if not
-    private function requireLogin() {
-        if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            header("Location: /UnityExchange/auth/login");
-            exit();
-        }
-    }
-
-    private function validateCRSF($headerRedirectPath) {
-        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $_SESSION['flash_message'] = "Security validation failed. Unauthorized request.";
-            $_SESSION['flash_type'] = "error";
-            header("Location: $headerRedirectPath");
-            exit();
-        }
+        $this->productModel = new Product($this->db);
     }
 
     // Helper: Handles secure image uploading, size limits, and MIME type checks.
@@ -155,7 +131,7 @@ class ProductController {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // 1. Validate the CSRF token to prevent cross-site request forgery
-            $this->validateCRSF("/UnityExchange/product/create");
+            $this->validateCSRF("/UnityExchange/product/create");
 
             // 2. Sanitize and extract the text inputs
             $name =  isset($_POST['name']) ? trim($_POST['name']) : '';
@@ -239,7 +215,7 @@ class ProductController {
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // 1. CSRF Token Check
-            $this->validateCRSF("/UnityExchange/product/edit/" . $id);
+            $this->validateCSRF("/UnityExchange/product/edit/" . $id);
 
             // 2. Extract inputs
             $name = isset($_POST['name']) ? trim($_POST['name']) : '';
@@ -289,7 +265,7 @@ class ProductController {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Strict CSRF verification for destructive actions
-            $this->validateCRSF("/UnityExchange/product/edit/" . $id);
+            $this->validateCSRF("/UnityExchange/product/edit/" . $id);
 
             $seller_id = $_SESSION['user_id'];
 

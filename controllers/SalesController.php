@@ -1,30 +1,22 @@
 <?php
 // controllers/SalesController.php
 
-require_once 'config/Database.php';
+require_once 'BaseController.php';
 require_once 'models/Order.php';
-class SalesController {
+
+class SalesController extends BaseController {
     private $orderModel;
 
     public function __construct()
     {
-        $database = new Database();
-        $db = $database->connect();
+        parent::__construct();
+        $this->requireLogin();
 
-        $this->orderModel = new Order($db);
-    }
-
-    private function requireLogin() {
-        if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            header("Location: /UnityExchange/auth/login");
-            exit();
-        }
+        $this->orderModel = new Order($this->db);
     }
 
     // URL: /UnityExchange/sales
     public function index() {
-        $this->requireLogin();
-
         $seller_id = $_SESSION['user_id'];
 
         // Fetch the sales data for this seller

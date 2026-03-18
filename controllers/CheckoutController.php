@@ -1,44 +1,27 @@
 <?php
 // controllers/CheckoutController.php
 
-require_once 'config/Database.php';
+require_once 'BaseController.php';
 require_once 'models/Order.php';
 require_once 'models/Product.php';
 
-class CheckoutController {
+class CheckoutController extends BaseController {
     private $orderModel;
     private $productModel;
 
     public function __construct () {
-        $database = new Database();
-        $db = $database->connect();
+        parent::__construct ();
+        $this->requireLogin();
 
-        $this->orderModel = new Order($db);
-        $this->productModel = new Product($db);
-    }
-
-    private function requireLogin() {
-        if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            header("Location: /UnityExchange/auth/login");
-            exit();
-        }
-    }
-
-    private function validateCRSF($headerRedirectPath) {
-        if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
-            $_SESSION['flash_message'] = "Security validation failed. Unauthorized request.";
-            $_SESSION['flash_type'] = "error";
-            header("Location: $headerRedirectPath");
-            exit();
-        }
+        $this->orderModel = new Order($this->db);
+        $this->productModel = new Product($this->db);
     }
 
     // URL: /UnityExchange/checkout
     // Shows the final summary screen before placing the order
     public function index() {
-        $this->requireLogin();
 
-        $cart_session = $_SESSION['cart'] ?? [];
+        $cart_session = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
         if (empty($cart_session)) {
             $_SESSION['flash_message'] = "Your cart is empty. Please add items to your cart before checking out.";
             $_SESSION['flash_type'] = "error";
@@ -83,16 +66,14 @@ class CheckoutController {
     //URL: /UnityExchange/checkout/process
     // The POST route that actually processes the order and saves it to the database
     public function process() {
-        $this->requireLogin();
-
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header("Location: /UnityExchange/checkout");
             exit();
         }
 
-        $this->validateCRSF("/UnityExchange/checkout");
+        $this->validateCSRF("/UnityExchange/checkout");
 
-        $cart_session = $_SESSION['cart'] ?? [];
+        $cart_session = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
         if (empty($cart_session)) {
             header("Location: /UnityExchange/cart");
             exit();
