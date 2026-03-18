@@ -4,10 +4,12 @@
 require_once 'config/Database.php';
 require_once 'models/User.php';
 require_once 'models/Product.php';
+require_once 'models/Order.php';
 
 class AdminController {
     private $userModel;
     private $productModel;
+    private $orderModel;
 
     public function __construct()
     {
@@ -22,6 +24,7 @@ class AdminController {
         $db = $database->connect();
         $this->userModel = new User($db);
         $this->productModel = new Product($db);
+        $this->orderModel = new Order($db);
     }
 
     private function validateCRSF($headerRedirectPath) {
@@ -37,7 +40,8 @@ class AdminController {
         // Get total counts for dashboard stats
         $total_users = $this->userModel->getTotalUsers();
         $total_products = $this->productModel->getTotalProducts();
-        
+        $total_transactions = $this->orderModel->getTotalCompletedOrders();
+
         require_once 'includes/admin_header.php';
         require_once 'views/admin/index.php';
         require_once 'includes/footer.php';
@@ -150,5 +154,44 @@ class AdminController {
         $_SESSION['flash_type'] = "success";
         header("Location: /UnityExchange/admin/products");
         exit();
+    }
+
+    public function transactions() {
+        $orders = $this->orderModel->getAllOrders();
+
+        require_once 'includes/admin_header.php';
+        require_once 'views/admin/transactions.php';
+        require_once 'includes/footer.php';
+    }
+
+    public function updateOrderStatus($id) {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: /UnityExchange/admin/transactions");
+            exit();
+        }
+
+        $this->validateCRSF("/UnityExchange/admin/transactions");
+
+        $new_status = isset($_POST['status']) ? trim($_POST['status']) : '';
+        
+        // Ensure only valid statuses can be injected into the DB
+        if (!in_array($new_status, ['pending', 'completed', 'cancelled'])) {
+            $_SESSION['flash_message'] = "Invalid status selected.";
+            $_SESSION['flash_type'] = "error";
+            header("Location: /UnityExchange/admin/transactions");
+            exit();
+        } 
+
+        if ($this->orderModel->adminUpdateOrderStatus($id, $new_status)) {
+            $_SESSION['flash_message'] = "Order #{$id} status updated to " . ucfirst($new_status) . ".";
+            $_SESSION['flash_type'] = "success";
+            header("Location: /UnityExchange/admin/transactions");
+            exit();
+        } else {
+            $_SESSION['flash_message'] = "Failed to update order status.";
+            $_SESSION['flash_type'] = "error";
+            header("Location: /UnityExchange/admin/transactions");
+            exit();
+        }
     }
 }

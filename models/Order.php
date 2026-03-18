@@ -148,4 +148,37 @@ class Order {
 
         return $stmt->fetchAll();
     }
+
+    // Admin function to fetch all orders across the platform (for admin dashboard)
+    public function getAllOrders() {
+        $query = "SELECT o.id, o.total_amount, o.status, o.created_at,
+                         u.username as buyer_name
+                  FROM orders o
+                  JOIN users u ON o.user_id = u.id
+                  ORDER BY o.created_at DESC";
+        
+        $stmt = $this->db->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
+    // Force update on order's status (for admin use only, with strict checks in the controller)
+    public function adminUpdateOrderStatus($order_id, $new_status) {
+        try {
+            $query = "UPDATE orders set status = :new_status WHERE id = :order_id";
+            $stmt = $this->db->prepare($query);
+            return $stmt->execute([':new_status' => $new_status, ':order_id' => $order_id]);
+        } catch (PDOException $e) {
+            error_log("Admin failed to update order status: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getTotalCompletedOrders() {
+        $query = "SELECT COUNT(*) as total FROM orders WHERE status = 'completed'";
+        $stmt = $this->db->query($query);
+        $result = $stmt->fetch();
+        return $result ? $result['total'] : 0;
+    }
 }

@@ -401,6 +401,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
+    // USER ROLE FILTERING (Admin)
+    // ==========================================
+    const orderStatusFilter = document.getElementById('statusFilter');
+    
+    // ONLY run this script if the User Filter actually exists on the page
+    if (orderStatusFilter) {
+        const orderRows = document.querySelectorAll('.order-row');
+        const orderEmptyState = document.getElementById('js-order-empty-state');
+
+        orderStatusFilter.addEventListener('change', (event) => {
+            // Convert to lowercase to ensure it matches the data-status attribute perfectly
+            const filterValue = event.target.value.toLowerCase();
+            let visibleCount = 0;
+
+            orderRows.forEach(row => {
+                const orderStatus = row.getAttribute('data-status') || '';
+                
+                // If "all" is selected OR if the row's status string INCLUDES the selected status
+                if (filterValue === 'all' || orderStatus.includes(filterValue)) {
+                    row.style.display = ''; // Reverts to default table-row
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none'; // Hides the row
+                }
+            });
+
+            // Toggle the empty state row based on the visible count
+            if (orderEmptyState) {
+                orderEmptyState.style.display = (visibleCount === 0 && orderRows.length > 0) ? '' : 'none';
+            }
+        });
+    }
+
+    // ==========================================
     // ADMIN LIVE SEARCH (Users & Products Tables)
     // ==========================================
     const adminSearch = document.getElementById('adminLiveSearch');
@@ -412,8 +446,10 @@ document.addEventListener('DOMContentLoaded', () => {
             // Grab both types of rows and empty states
             const productRows = document.querySelectorAll('.product-row');
             const userRows = document.querySelectorAll('.user-row');
+            const orderRows = document.querySelectorAll('.order-row');
             const productEmptyState = document.getElementById('js-empty-state');
             const userEmptyState = document.getElementById('js-user-empty-state');
+            const orderEmptyState = document.getElementById('js-order-empty-state');
 
             // 1. Filter Products Table (if it exists on the page)
             if (productRows.length > 0) {
@@ -452,6 +488,26 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Show empty state if nothing matches
                 if (userEmptyState) {
                     userEmptyState.style.display = (visibleCount === 0) ? '' : 'none';
+                }
+            }
+
+            // 3. Filter Orders Table (if it exists on the page)
+            if (orderRows.length > 0) {
+                let visibleCount = 0;
+                orderRows.forEach(row => {
+                    // .textContent grabs ALL the text (Order ID, Buyer, Total Amount, Date Placed, Current Status)
+                    const rowText = row.textContent.toLowerCase();
+                    if (rowText.includes(searchTerm)) {
+                        row.style.display = ''; // Show row
+                        visibleCount++;
+                    } else {
+                        row.style.display = 'none'; // Hide row
+                    }
+                });
+
+                // Show empty state if nothing matches
+                if (orderEmptyState) {
+                    orderEmptyState.style.display = (visibleCount === 0) ? '' : 'none';
                 }
             }
         });

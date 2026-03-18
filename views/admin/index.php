@@ -60,12 +60,12 @@
         </div>
 
         <div class="product-card">
-            <a href="#" class="admin-icon-link gradient-green">
+            <a href="/UnityExchange/admin/transactions" class="admin-icon-link gradient-green">
                 <i class="fa fa-money-bill-wave admin-icon"></i>
             </a>
             <div class="product-card-body">
                 <h3 class="product-title">
-                    <a href="#">Transactions</a>
+                    <a href="/UnityExchange/admin/transactions">Transactions</a>
                 </h3>
                 <div class="metric-container metric-green">
                     <div>
@@ -77,8 +77,8 @@
                 <p class="admin-card-description">
                     Track marketplace sales, view order histories, and resolve transaction disputes between buyers and sellers.
                 </p>
-                <a href="#" class="btn-primary btn-block">
-                    Coming Soon
+                <a href="/UnityExchange/admin/transactions" class="btn-primary btn-block">
+                    Manage Transactions &rarr;
                 </a>
             </div>
         </div>

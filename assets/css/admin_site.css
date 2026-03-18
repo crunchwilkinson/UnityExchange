@@ -817,3 +817,38 @@ footer p {
     margin-right: 8px;
 }
 
+/* =========================================
+   Order Status Badges & Transaction Form
+   ========================================= */
+.admin-badge {
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.admin-badge-completed { background: #e6fffa; color: #234e52; }
+.admin-badge-cancelled { background: #fff5f5; color: #9b2c2c; }
+.admin-badge-pending { background: #ebf8ff; color: #2b6cb0; }
+
+.status-update-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin: 0;
+}
+
+.status-select-sm {
+    min-width: 130px;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+}
+
+/* Reset standard button overrides for the tiny table update button */
+.status-update-form .btn-edit {
+    border: none;
+    cursor: pointer;
+    padding: 7px 12px;
+}
