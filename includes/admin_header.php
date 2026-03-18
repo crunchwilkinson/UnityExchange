@@ -12,13 +12,14 @@
 <body>
     <header class="navbar">
         <div class="logo">
-            <a href="/UnityExchange/admin" style="color: whitesmoke; text-decoration: none;">UnityExchange</a>
+            <a href="/UnityExchange/admin">UnityExchange</a>
         </div>
         <nav>
             <div class="nav-links">
                 <a href="/UnityExchange/admin"><i class="fa fa-home"></i> Home</a>
                 <a href="/UnityExchange/admin/users"><i class="fa fa-users"></i> Users</a>
                 <a href="/UnityExchange/admin/products"><i class="fa fa-shopping-cart"></i> Products</a>
+                <a href="/UnityExchange/admin/transactions"><i class="fa fa-exchange-alt"></i> Transactions</a>
 
                 <div class="nav-search">
                 <div class="search-container">

@@ -123,11 +123,20 @@ class AdminController {
         $this->validateCRSF("/UnityExchange/admin/users");
 
         // Prevent admins from deleting themselves
-        if ($_SESSION['user_id'] != $id) {
-            $this->userModel->deleteUser($id);
+        if ($_SESSION['user_id'] === $id) {
+            $_SESSION['flash_message'] = "You cannot delete your own account.";
+            $_SESSION['flash_type'] = "error";
+            header("Location: /UnityExchange/admin/users");
+            exit();
         }
-        $_SESSION['flash_message'] = "User deleted successfully.";
-        $_SESSION['flash_type'] = "success";
+
+        if ($this->userModel->deleteUser($id)) {
+            $_SESSION['flash_message'] = "User deleted successfully.";
+            $_SESSION['flash_type'] = "success";
+        } else {
+            $_SESSION['flash_message'] = "Failed to delete user.";
+            $_SESSION['flash_type'] = "error";
+        }
         header("Location: /UnityExchange/admin/users");
         exit();
     }

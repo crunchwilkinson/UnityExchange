@@ -62,6 +62,16 @@ body {
     color: #3498db;
 }
 
+/* Targets the link inside the logo directly */
+.navbar .logo a {
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.navbar .logo a:hover {
+    color: #fff;
+}
+
 .welcome-message {
     margin: 0;
     font-size: 0.95rem;

@@ -401,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ==========================================
-    // USER ROLE FILTERING (Admin)
+    // ORDER STATUS FILTERING (Admin)
     // ==========================================
     const orderStatusFilter = document.getElementById('statusFilter');
     
