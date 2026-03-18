@@ -4,7 +4,9 @@
             <h1>Edit Product</h1>
             <p>Update your listing details</p>
         </div>
-        <a href="/UnityExchange/product/details/<?php echo $product['id']; ?>" class="btn-secondary">← Back to Product</a>
+        <a href="/UnityExchange/product/details/<?php echo $product['id']; ?>" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Product
+        </a>
     </div>
 
     <div class="edit-product-layout">

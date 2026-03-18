@@ -5,7 +5,9 @@
             <h1>My Profile</h1>
             <p>Manage your account settings and security preferences.</p>
         </div>
-        <a href="/UnityExchange/product/" class="btn-secondary">← Back to Marketplace</a>
+        <a href="/UnityExchange/product/" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
+        </a>
     </div>
 
     <div class="edit-product-layout">

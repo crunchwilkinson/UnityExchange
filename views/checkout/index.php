@@ -5,7 +5,9 @@
             <h1>Checkout Review</h1>
             <p>Please review your order details before confirming.</p>
         </div>
-        <a href="/UnityExchange/cart" class="btn-secondary">← Back to Cart</a>
+        <a href="/UnityExchange/cart" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Cart
+        </a>
     </div>
 
     <div class="cart-layout">

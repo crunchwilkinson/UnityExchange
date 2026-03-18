@@ -1540,6 +1540,11 @@ button[type="submit"].btn-danger:hover,
     margin-right: 8px;
 }
 
+/* Adds consistent spacing for icons placed on the left side of text */
+.btn-icon-left {
+    margin-right: 8px;
+}
+
 /* =========================================
    Dashboard & Order Cards
    ========================================= */

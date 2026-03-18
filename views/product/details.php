@@ -1,6 +1,8 @@
 <div class="products-section">
 	<div class="details-breadcrumb">
-		<a href="/UnityExchange/product">← Back to Marketplace</a>
+		<a href="javascript:history.back()">
+			<i class="fa fa-arrow-left btn-icon-left"></i>Go Back
+		</a>
 	</div>
 
 	<div class="product-details-layout">

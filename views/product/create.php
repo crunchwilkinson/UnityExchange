@@ -4,7 +4,9 @@
             <h1>List a new Product</h1>
             <p>Create a new listing for your item.</p>
         </div>
-        <a href="/UnityExchange/product/" class="btn-secondary">← Back to Marketplace</a>
+        <a href="/UnityExchange/product/" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
+        </a>
     </div>
 
     <div class="admin-form-container">

@@ -5,7 +5,9 @@
             <h1>Your Cart</h1>
             <p>Review your items before proceeding to checkout.</p>
         </div>
-        <a href="/UnityExchange/product" class="btn-secondary">Continue Shopping</a>
+        <a href="/UnityExchange/product" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Continue Shopping
+        </a>
     </div>
 
     <?php if (empty($cart_items)): ?>

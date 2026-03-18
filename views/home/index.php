@@ -1,5 +1,5 @@
 <div class="home-section">
-    
+
     <div class="hero-banner">
         <div class="hero-content">
             <h1>Empowering Local Trade</h1>
@@ -18,7 +18,7 @@
     <div class="info-section">
         <h2 class="section-title">How It Works</h2>
         <div class="info-grid">
-            
+
             <div class="info-card">
                 <div class="info-icon"><i class="fa fa-handshake icon-navy"></i></div>
                 <h3>Connect Locally</h3>
@@ -45,44 +45,51 @@
             <h2 class="section-title home-section-title">Featured Listings</h2>
             <a href="/UnityExchange/product" class="home-section-link">View All →</a>
         </div>
-        
+
         <div class="product-grid">
             <?php if (!empty($products)): ?>
                 <?php foreach ($products as $product): ?>
                     <div class="product-card">
-                
-                <a href="/UnityExchange/product/details/<?php echo $product['id']; ?>" class="product-image-link">
-                    <img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>" 
-                         alt="<?php echo htmlspecialchars($product['name']); ?>" 
-                         class="product-image">
-                </a>
 
-                <div class="product-card-body">
-                    
-                    <h3 class="product-title">
-                        <a href="/UnityExchange/product/details/<?php echo $product['id']; ?>">
-                            <?php echo htmlspecialchars($product['name']); ?>
+                        <a href="/UnityExchange/product/details/<?php echo $product['id']; ?>" class="product-image-link">
+                            <img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>"
+                                alt="<?php echo htmlspecialchars($product['name']); ?>"
+                                class="product-image">
                         </a>
-                    </h3>
-                    
-                    <p class="product-price">
-                        R <?php echo number_format($product['price'], 2); ?>
-                    </p>
 
-                    <div class="product-footer">
-                        <span class="seller-info">
-                            Sold by <strong><?php echo htmlspecialchars($product['seller_name']); ?></strong>
-                        </span>
-                        
-                        <?php if ($product['stock_quantity'] > 0): ?>
-                            <span class="stock-badge in-stock">In Stock</span>
-                        <?php else: ?>
-                            <span class="stock-badge sold-out">Sold Out</span>
-                        <?php endif; ?>
+                        <div class="product-card-body">
+
+                            <h3 class="product-title">
+                                <a href="/UnityExchange/product/details/<?php echo $product['id']; ?>">
+                                    <?php echo htmlspecialchars($product['name']); ?>
+                                </a>
+                            </h3>
+
+                            <p class="product-price">
+                                R <?php echo number_format($product['price'], 2); ?>
+                            </p>
+
+                            <div class="product-footer">
+                                <span class="seller-info">
+                                    <div class="seller-info">
+                                        Sold by:
+                                        <strong>
+                                            <a href="/UnityExchange/profile/details/<?php echo $product['user_id']; ?>" class="seller-link">
+                                                <?php echo htmlspecialchars($product['seller_name']); ?>
+                                            </a>
+                                        </strong>
+                                    </div>
+                                </span>
+
+                                <?php if ($product['stock_quantity'] > 0): ?>
+                                    <span class="stock-badge in-stock">In Stock</span>
+                                <?php else: ?>
+                                    <span class="stock-badge sold-out">Sold Out</span>
+                                <?php endif; ?>
+                            </div>
+
+                        </div>
                     </div>
-                    
-                </div>
-            </div>
                 <?php endforeach; ?>
             <?php else: ?>
                 <p>No featured products available at the moment.</p>

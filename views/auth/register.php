@@ -5,7 +5,9 @@
             <h1>Create an Account</h1>
             <p>Create a new account to access UnityExchange.</p>
         </div>
-        <a href="/UnityExchange/product/" class="btn-secondary">← Back to Marketplace</a>
+        <a href="/UnityExchange/product/" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
+        </a>
     </div>
 
     <div class="auth-container">

@@ -4,7 +4,9 @@
             <h1>Seller Profile</h1>
             <p>Learn more about this UnityExchange member.</p>
         </div>
-        <a href="javascript:history.back()" class="btn-secondary">← Go Back</a>
+        <a href="javascript:history.back()" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Go Back
+        </a>
     </div>
 
     <div class="admin-form-container seller-profile-card">

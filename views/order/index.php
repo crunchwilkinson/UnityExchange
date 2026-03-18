@@ -5,7 +5,9 @@
             <h1>My Order History</h1>
             <p>Track your purchases and view your digital receipts.</p>
         </div>
-        <a href="/UnityExchange/product" class="btn-secondary">← Back to Marketplace</a>
+        <a href="/UnityExchange/product" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
+        </a>
     </div>
 
     <?php if (empty($orders)): ?>
