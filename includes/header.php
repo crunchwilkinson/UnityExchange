@@ -16,6 +16,11 @@
             <a href="/UnityExchange/home">UnityExchange</a>
         </div>
 
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="menu-icon">
+            <i class="fa fa-bars"></i>
+        </label>
+
         <nav>
             <div class="nav-links">
                 <a href="/UnityExchange/home"><i class="fa fa-home"></i> Home</a>

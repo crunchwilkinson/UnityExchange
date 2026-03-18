@@ -89,7 +89,12 @@
                     <div class="user-details-section">
                         <h4 class="user-details-title">Buyer Details</h4>
                         <p class="user-details-text">
-                            <strong>Username:</strong> <?php echo htmlspecialchars($sale['buyer_name']); ?>
+                            <strong>Username: </strong> 
+                            
+                                <a href="/UnityExchange/profile/details/<?php echo $sale['buyer_id']; ?>" class="seller-link">
+                                    <?php echo htmlspecialchars($sale['buyer_name']); ?>
+                                </a>
+                            
                         </p>
                         <p class="user-details-text">
                             <strong>Email:</strong> 

@@ -135,7 +135,7 @@ class Order {
         $query = "SELECT oi.quantity, oi.price_at_purchase, 
                          p.name as product_name, p.image_file, 
                          o.id as order_id, o.created_at as sale_date, o.status as order_status,
-                         u.username as buyer_name, u.email as buyer_email
+                         u.username as buyer_name, u.email as buyer_email, u.id as buyer_id
                   FROM order_items oi
                   JOIN products p ON oi.product_id = p.id
                   JOIN orders o ON oi.order_id = o.id

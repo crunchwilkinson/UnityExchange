@@ -14,6 +14,12 @@
         <div class="logo">
             <a href="/UnityExchange/admin">UnityExchange</a>
         </div>
+        
+        <input type="checkbox" id="admin-menu-toggle" class="menu-toggle">
+        <label for="admin-menu-toggle" class="menu-icon">
+            <i class="fa fa-bars"></i>
+        </label>
+
         <nav>
             <div class="nav-links">
                 <a href="/UnityExchange/admin"><i class="fa fa-home"></i> Home</a>
@@ -22,11 +28,11 @@
                 <a href="/UnityExchange/admin/transactions"><i class="fa fa-exchange-alt"></i> Transactions</a>
 
                 <div class="nav-search">
-                <div class="search-container">
-                    <input type="text" id="adminLiveSearch" placeholder="Search records...">
-                    <button type="button" aria-label="Search"><i class="fa fa-search"></i></button>
+                    <div class="search-container">
+                        <input type="text" id="adminLiveSearch" placeholder="Search records...">
+                        <button type="button" aria-label="Search"><i class="fa fa-search"></i></button>
+                    </div>
                 </div>
-            </div>
             </div>
             <div class="auth-links">
                 <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>

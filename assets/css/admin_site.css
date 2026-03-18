@@ -16,14 +16,26 @@ body {
     min-height: 100vh;
 }
 
-/* --- Navigation Bar (Flexbox) --- */
+/* --- Navigation Bar (Flexbox & Sticky) --- */
 .navbar {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Pushes logo and hamburger apart */
+    flex-wrap: wrap; /* Allows mobile menu to drop to the next line */
     background-color: #2c3e50;
     color: #fff;
     padding: 1rem 2rem;
     gap: 2rem;
+    position: sticky; /* Modern: Stays at the top of the screen */
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Adds depth */
+}
+
+/* Hide hamburger elements on Desktop */
+.menu-toggle, 
+.menu-icon {
+    display: none;
 }
 
 .navbar .logo {
@@ -31,6 +43,13 @@ body {
     font-weight: bold;
     letter-spacing: 1px;
     text-decoration: none;
+}
+
+.navbar nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex: 1;
 }
 
 .navbar nav {
@@ -683,33 +702,137 @@ footer p {
 }
 
 /* =========================================
-   Responsive Design
+   Comprehensive Mobile Responsiveness
    ========================================= */
 @media (max-width: 768px) {
-    .admin-table {
-        font-size: 0.875rem;
-    }
-    
-    .admin-table th,
-    .admin-table td {
-        padding: 12px 10px;
-    }
-    
-    .action-buttons {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
+    html, body {
+        max-width: 100vw;
+        overflow-x: hidden;
     }
 
-    .product-action-buttons {
-        display: table-cell;
-        text-align: center;
+    .admin-section {
+        padding: 1.5rem 1rem 60px 1rem;
     }
-    
+
+   /* --- Modern Hamburger Menu Fix --- */
+    .navbar {
+        padding: 15px 20px;
+        flex-direction: row; /* Keeps logo and hamburger on the same line */
+        gap: 0;
+    }
+
+    .menu-icon {
+        display: block; /* Show the hamburger icon */
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #fff;
+        padding: 5px;
+    }
+
+    .navbar nav {
+        display: none; /* Hide the menu completely by default */
+        width: 100%;
+        flex-direction: column;
+        gap: 15px;
+        padding-top: 15px;
+        margin-top: 10px;
+        border-top: 1px solid #34495e; /* Clean separator line */
+        animation: slideDown 0.3s ease-in-out;
+    }
+
+    /* THE MAGIC: When the hidden checkbox is checked, show the nav! */
+    .menu-toggle:checked ~ nav {
+        display: flex;
+    }
+
+    .navbar .nav-links, 
+    .navbar .auth-links {
+        flex-direction: column;
+        align-items: flex-start; /* Align text cleanly to the left */
+        width: 100%;
+        gap: 15px;
+    }
+
+    .navbar .auth-links {
+        margin-left: 0;
+        padding-top: 15px;
+        border-top: 1px dashed #34495e;
+    }
+
+    .nav-search {
+        width: 100%;
+        margin: 0;
+        order: -1; /* Keep search bar at the very top of the open menu */
+    }
+
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- Dashboard Grid Fix --- */
+    /* Forces the grid to drop to 1 single column on mobile */
+    .product-grid {
+        grid-template-columns: 1fr;
+    }
+
     .catalog-header {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
+        text-align: center;
+        padding: 20px;
         gap: 15px;
+    }
+
+    .catalog-header .btn-secondary {
+        width: 100%;
+    }
+
+    .admin-filterbar-wrapper {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+    }
+
+    .admin-filter-bar, .admin-filter-select {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    /* --- THE DATA TABLE FIX --- */
+    .admin-grid-wrapper {
+        padding: 15px;
+    }
+
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        display: block; /* Forces container to respect width constraints */
+        -webkit-overflow-scrolling: touch; /* Smooth horizontal scroll on iOS */
+        border: 1px solid #34495e;
+        border-radius: 8px;
+    }
+
+    .admin-table {
+        /* We FORCE the table to stay wide so it scrolls instead of shrinking */
+        min-width: 800px; 
+    }
+
+    .admin-table th, 
+    .admin-table td {
+        padding: 12px 15px;
+    }
+
+    /* --- Transaction Update Forms --- */
+    .status-update-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .status-select-sm, .status-update-form .btn-edit {
+        width: 100%;
+        text-align: center;
+        margin-top: 5px;
     }
 }
 
@@ -766,6 +889,11 @@ footer p {
 /* Adds consistent spacing for icons placed on the left side of text */
 .btn-icon-left {
     margin-right: 8px;
+}
+
+/* Utility to force text to stay on a single line (great for prices and dates) */
+.text-nowrap {
+    white-space: nowrap;
 }
 
 /* =========================================

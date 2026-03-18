@@ -35,9 +35,8 @@
                         <th>Image</th>
                         <th>ID</th>
                         <th>Name</th>
-                        <th>Description</th>
                         <th>Price</th>
-                        <th>Stock Quantity</th>
+                        <th>Stock</th>
                         <th>Created At</th>
                         <th>Actions</th>
                     </tr>
@@ -49,9 +48,8 @@
                                 <td><img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>" alt="Product Image" class="product-image"></td>
                                 <td><?php echo htmlspecialchars($product['id']); ?></td>
                                 <td><strong><?php echo htmlspecialchars($product['name']); ?></strong></td>
-                                <td><?php echo htmlspecialchars($product['description']); ?></td>
 
-                                <td>
+                                <td class="text-nowrap">
                                     <?php
                                     if (!empty($product['price'])) {
                                         echo 'R ' . number_format($product['price'], 2);
@@ -71,7 +69,7 @@
                                     ?>
                                 </td>
 
-                                <td>
+                                <td class="text-nowrap">
                                     <?php
                                     $date = new DateTime($product['created_at']);
                                     echo $date->format('M j, Y');

@@ -25,17 +25,19 @@
                             </strong>
                         </p>
                     </div>
-                    
+
                     <div class="item-quantity">
                         <label>Quantity</label>
-                        <p class="qty-display-value">
+                        <p class="qty-display-value text-highlight-blue">
                             <?php echo htmlspecialchars($item['quantity']); ?>
                         </p>
                     </div>
-                    
+
                     <div class="item-actions">
                         <label class="action-label-small">Subtotal</label>
-                        <p>R <?php echo number_format($item['subtotal'], 2); ?></p>
+                        <p class="no-margin text-highlight-green">
+                            R <?php echo number_format($item['subtotal'], 2); ?>
+                        </p>
                     </div>
                 </div>
             <?php endforeach; ?>
