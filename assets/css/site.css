@@ -212,12 +212,12 @@ body {
     cursor: pointer;
 }
 
-/* 1. Kill the global button shine effect */
+/* Kill the global button shine effect */
 .nav-search button[type="submit"]::before {
     display: none;
 }
 
-/* 2. Kill the global hover and active bounce animations */
+/* Kill the global hover and active bounce animations */
 .nav-search button[type="submit"]:hover,
 .nav-search button[type="submit"]:active {
     transform: none;
@@ -563,7 +563,6 @@ footer p {
     text-decoration: none;
     display: inline-block;
     box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
-    /* Added to contain the shine effect */
     position: relative; 
     overflow: hidden;
 }
@@ -1532,7 +1531,7 @@ button[type="submit"].btn-danger:hover,
     align-items: center;
     padding: 8px 16px !important;
     font-size: 0.9rem !important;
-    width: auto !important; /* Overrides the width: 100% on normal btn-primary */
+    width: auto !important; 
     margin-top: 10px !important;
 }
 
@@ -1679,7 +1678,7 @@ button[type="submit"].btn-danger:hover,
     text-decoration: underline;
 }
 
-/* New Status Badge Variation */
+/* Status Badge Variation */
 .stock-badge.pending {
     background-color: #ebf8ff;
     color: #2b6cb0;
@@ -1774,7 +1773,7 @@ button[type="submit"].btn-danger:hover,
     justify-content: center;
     padding: 14px 35px !important;
     font-size: 1.1rem !important;
-    width: auto !important; /* Overrides the width: 100% on normal btn-primary */
+    width: auto !important; 
 }
 
 /* =========================================

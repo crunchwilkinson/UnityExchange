@@ -125,7 +125,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: default; /* Changed from pointer since it's just a visual icon for live search */
+    cursor: default; 
 }
 
 /* Make it wrap nicely on smaller screens */
@@ -145,7 +145,6 @@ body {
 .table-responsive {
     overflow-x: auto;
     margin-bottom: 1rem;
-    /* Removed the white background and shadow here since the parent div handles it */
     width: 100%;
     margin-top: 20px; /* Gives some space between the filter and the table */
 }
@@ -314,8 +313,6 @@ footer {
     padding: 1rem 0;
     background-color: #2c3e50;
     color: #fff;
-    
-    /* NEW: This automatically pushes the footer to the bottom of the screen */
     margin-top: auto;
 }
 
@@ -346,8 +343,6 @@ footer p {
     margin-bottom: 2rem;
     color: #2d3748;
 }
-
-
 
 /* =========================================
    Forms & Alerts
@@ -514,15 +509,13 @@ footer p {
     flex-direction: column;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    
-    /* NEW: Force GPU rendering on the entire card */
+
     transform: translateZ(0);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
 }
 
 .product-card:hover {
-    /* NEW: Keep the Z-translation active while floating up */
     transform: translateY(-6px) translateZ(0);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
@@ -603,7 +596,7 @@ footer p {
     transform: translateZ(0) scale(1); 
     will-change: transform;
 
-    /* NEW: Expands the strict GPU bounding box so wide icons aren't clipped */
+    /* Expands the strict GPU bounding box so wide icons aren't clipped */
     padding: 5px; 
     margin: -5px;
     line-height: 1;
