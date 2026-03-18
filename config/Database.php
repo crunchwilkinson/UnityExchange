@@ -29,13 +29,15 @@ function loadEnv($filePath) {
 }
 
 // Load environment variables from the .env file
-loadEnv(__DIR__ . '/../.env');
+if (!isset($_ENV['DB_HOST'])) {
+    loadEnv(__DIR__ . '/../.env');
+}
 class Database {
     private $host;
     private $db_name;
     private $db_user;
     private $db_password;
-    private $conn;
+    private static $conn = null;
 
     public function __construct() {
         $this->host = $_ENV['DB_HOST'];
@@ -46,24 +48,26 @@ class Database {
 
     // Connect to the database using PDO
     public function connect() {
-        $this->conn = null;
+        // If a connection already exists, just return it immediately instead of making a new one!
+        if (self::$conn === null) {
+            try {
+                // Define the DSN (Data Source Name) for PDO
+                $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->db_name . ';charset=utf8mb4';
 
-        try {
-            // Define the DSN (Data Source Name) for PDO
-            $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->db_name . ';charset=utf8mb4';
+                // Create the PDO instance
+                self::$conn = new PDO($dsn, $this->db_user, $this->db_password);
 
-            // Create the PDO instance
-            $this->conn = new PDO($dsn, $this->db_user, $this->db_password);
+                // Set PDO error mode to exception 
+                self::$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            // Set PDO error mode to exception 
-            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-            // Set default fetch mode to associative array
-            $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            // If the connection fails, output the error message (for development purposes only - in production, consider logging this instead)
-            error_log("Connection Error: " . $e->getMessage());
+                // Set default fetch mode to associative array
+                self::$conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+            } catch (PDOException $e) {
+                // If the connection fails, output the error message (for development purposes only - in production, consider logging this instead)
+                error_log("Connection Error: " . $e->getMessage());
+                die("A database connection error occurred. Please try again later.");
+            }
         }
-        return $this->conn;
+        return self::$conn;
     }
 }
