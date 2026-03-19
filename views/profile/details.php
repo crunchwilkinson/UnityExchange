@@ -4,8 +4,8 @@
             <h1>Seller Profile</h1>
             <p>Learn more about this UnityExchange member.</p>
         </div>
-        <a href="<?php echo $_ENV['APP_URL']; ?>/home/" class="btn-secondary">
-            <i class="fa fa-arrow-left btn-icon-left"></i>Back To Home
+        <a href="javascript:history.back()" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Go Back
         </a>
     </div>
 

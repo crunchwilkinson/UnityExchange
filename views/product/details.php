@@ -1,6 +1,6 @@
 <div class="products-section">
 	<div class="details-breadcrumb">
-		<a href="<?php echo $_ENV['APP_URL']; ?>/product/" class="btn-secondary">
+		<a href="<?php echo $_ENV['APP_URL']; ?>/product/">
 			<i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
 		</a>
 	</div>
