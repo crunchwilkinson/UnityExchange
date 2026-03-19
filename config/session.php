@@ -5,11 +5,17 @@ ini_set('session.use_only_cookies', 1);
 ini_set('session.use_strict_mode', 1);
 ini_set('session.gc_maxlifetime', 1800);
 
+// Remove or dynamically set the domain so it works locally AND in production
+$current_domain = $_SERVER['HTTP_HOST'];
+
+// Automatically detect if the site is using HTTPS (SSL)
+$is_secure = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on';
+
 session_set_cookie_params([
     'lifetime' => 0,                        // 0 = Expires when the browser is closed
-    'domain' => 'localhost',                
+    'domain' => $current_domain,
     'path' => '/',                          // Available across the entire domain   
-    'secure' => true,                       // Set to true if using HTTPS
+    'secure' => $is_secure,                  // Set to true if using HTTPS
     'httponly' => true,                     // Prevent JavaScript access to session cookies
     'samesite' => 'Lax'                     // Adjust as needed (None, Lax, Strict)
 ]);
