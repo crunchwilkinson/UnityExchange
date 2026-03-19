@@ -121,10 +121,8 @@ body {
     gap: 5px;
 }
 
-/* Show the dropdown menu on hover (Desktop) OR when tapped (Mobile) */
-.nav-dropdown:hover .dropdown-content,
-#tx-dropdown-toggle:checked ~ .dropdown-content {
-    display: block;
+.nav-dropdown:hover .dropdown-trigger {
+    color: #3498db;
 }
 
 .dropdown-content {
@@ -2098,30 +2096,6 @@ button[type="submit"].btn-green:hover {
     @keyframes slideDown {
         from { opacity: 0; transform: translateY(-10px); }
         to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* --- Mobile Dropdown Accordion Fix --- */
-    .nav-dropdown {
-        width: 100%; 
-    }
-    
-    /* Make the dropdown push content down instead of floating over it */
-    .dropdown-content {
-        position: static; 
-        box-shadow: none;
-        background-color: transparent;
-        border-left: 2px solid #34495e; /* Adds a nice native app indent line */
-        border-radius: 0;
-        padding-left: 10px;
-        margin-left: 15px;
-        margin-top: 10px;
-    }
-
-    /* Make the text white to match the rest of the dark mobile menu */
-    .navbar nav .dropdown-content a {
-        color: #ecf0f1; 
-        border-bottom: 1px dashed #34495e;
-        padding: 10px 15px;
     }
 
    /* --- Mini-Desktop Headers --- */
