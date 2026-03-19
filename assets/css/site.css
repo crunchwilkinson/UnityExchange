@@ -2214,7 +2214,7 @@ button[type="submit"].btn-green:hover {
     }
 
     .product-price {
-        font-size: 0.9rem; /* Slightly smaller price */
+        font-size: 0.8rem; /* Slightly smaller price */
         margin-bottom: 10px;
     }
 
