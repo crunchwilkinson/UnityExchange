@@ -47,7 +47,7 @@ class ProfileController extends BaseController {
         $unique_filename = uniqid() . "_" . bin2hex(random_bytes(4)) . "." . $file_extension;
         
         // Define where the file should be saved (Note the /users/ directory)
-        $destination = $_SERVER['DOCUMENT_ROOT'] . '/UnityExchange/assets/images/users/' . $unique_filename;
+        $destination = $_SERVER['DOCUMENT_ROOT'] . '/' . $_ENV['APP_URL'] . '/assets/images/users/' . $unique_filename;
 
         // Ensure directory exists
         if (!is_dir(dirname($destination))) {
@@ -70,7 +70,7 @@ class ProfileController extends BaseController {
 
         if (!$user) {
             // Failsafe guard: if user not found, log out
-            header('Location: /UnityExchange/auth/logout');
+            header('Location: ' . $_ENV['APP_URL'] . '/auth/logout');
             exit();
         }
 
@@ -82,12 +82,12 @@ class ProfileController extends BaseController {
     public function updateDetails() {
         $this->requireLogin();
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: /UnityExchange/profile");
+            header("Location: " . $_ENV['APP_URL'] . "/profile");
             exit();
         }
 
         // Validate CSRF
-        $this->validateCSRF("/UnityExchange/profile");
+        $this->validateCSRF($_ENV['APP_URL'] . "/profile");
 
         $user_id = $_SESSION['user_id'];
         $username = isset($_POST['username']) ? trim($_POST['username']) : '';
@@ -96,7 +96,7 @@ class ProfileController extends BaseController {
 
         if (empty($username) || empty($email)) {
             $_SESSION['flash_message'] = "Please fill in all required fields.";
-            header("Location: /UnityExchange/profile");
+            header("Location: " . $_ENV['APP_URL'] . "/profile");
             exit();
         }
 
@@ -107,7 +107,7 @@ class ProfileController extends BaseController {
         if (!$uploadResult['success']) {
             $_SESSION['flash_message'] = $uploadResult['error'];
             $_SESSION['flash_type'] = "error";
-            header("Location: /UnityExchange/profile");
+            header("Location: " . $_ENV['APP_URL'] . "/profile");
             exit();
         }
 
@@ -124,12 +124,12 @@ class ProfileController extends BaseController {
 
             $_SESSION['flash_message'] = "Account details updated successfully!";
             $_SESSION['flash_type'] = "success";
-            header("Location: /UnityExchange/profile");
+            header("Location: " . $_ENV['APP_URL'] . "/profile");
             exit();
         } else {
             $_SESSION['flash_message'] = "Failed to update account details. Please try again.";
             $_SESSION['flash_type'] = "error";
-            header("Location: /UnityExchange/profile");
+            header("Location: " . $_ENV['APP_URL'] . "/profile");
             exit();
         }
     }
@@ -137,12 +137,12 @@ class ProfileController extends BaseController {
     public function updatePassword() {
         $this->requireLogin();
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: /UnityExchange/profile");
+            header("Location: " . $_ENV['APP_URL'] . "/profile");
             exit();
         }
 
         // Validate CSRF
-        $this->validateCSRF("/UnityExchange/profile");
+        $this->validateCSRF($_ENV['APP_URL'] . "/profile");
 
         $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
         $current_password = isset($_POST['current_password']) ? $_POST['current_password'] : '';
@@ -152,14 +152,14 @@ class ProfileController extends BaseController {
         if (empty($current_password) || empty($new_password) || empty($confirm_password)) {
             $_SESSION['flash_message'] = "Please fill in all password fields.";
             $_SESSION['flash_type'] = "error";
-            header("Location: /UnityExchange/profile");
+            header("Location: " . $_ENV['APP_URL'] . "/profile");
             exit();
         }
 
         if ($new_password !== $confirm_password) {
             $_SESSION['flash_message'] = "New password and confirmation do not match.";
             $_SESSION['flash_type'] = "error";
-            header("Location: /UnityExchange/profile");
+            header("Location: " . $_ENV['APP_URL'] . "/profile");
             exit();
         }
 
@@ -168,14 +168,14 @@ class ProfileController extends BaseController {
         if (empty($user)) {
             $_SESSION['flash_message'] = "User not found.";
             $_SESSION['flash_type'] = "error";
-            header("Location: /UnityExchange/profile");
+            header("Location: " . $_ENV['APP_URL'] . "/profile");
             exit();
         }
 
         if (!password_verify($current_password, $user['password_hash'])) {
             $_SESSION['flash_message'] = "Please ensure your current password is correct.";
             $_SESSION['flash_type'] = "error";
-            header("Location: /UnityExchange/profile");
+            header("Location: " . $_ENV['APP_URL'] . "/profile");
             exit();
         }
 
@@ -184,12 +184,12 @@ class ProfileController extends BaseController {
         if ($this->userModel->updatePassword($user_id, $new_password_hash)) {
             $_SESSION['flash_message'] = "Password updated successfully!";
             $_SESSION['flash_type'] = "success";
-            header("Location: /UnityExchange/profile");
+            header("Location: " . $_ENV['APP_URL'] . "/profile");
             exit();
         } else {
             $_SESSION['flash_message'] = "Failed to update password. Please try again.";
             $_SESSION['flash_type'] = "error";
-            header("Location: /UnityExchange/profile");
+            header("Location: " . $_ENV['APP_URL'] . "/profile");
             exit();
         }
     }

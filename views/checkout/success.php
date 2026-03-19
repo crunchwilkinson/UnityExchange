@@ -22,7 +22,7 @@
             The seller has been notified and will begin preparing your items. 
         </p>
 
-        <a href="/UnityExchange/product" class="btn-primary btn-lg">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/product" class="btn-primary btn-lg">
             Continue Shopping
         </a>
     </div>

@@ -43,9 +43,6 @@ class AdminController extends BaseController {
         require_once 'views/admin/users.php';
         require_once 'includes/footer.php';
     }
-
-    // URL: /UnityExchange/admin/edit/5
-    // STRICTLY for displaying the HTML form
     public function edit($id) {
         // Grab any flash messages sent from the update() method
         $error = $_SESSION['flash_error'] ?? '';
@@ -70,16 +67,15 @@ class AdminController extends BaseController {
         require_once 'includes/footer.php';
     }
 
-    // URL: /UnityExchange/admin/update/5
-    // STRICTLY for processing the POST request
+ 
     public function update($id) {
         // Kick out anyone trying to load this URL directly without submitting the form
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: /UnityExchange/admin/edit/" . $id);
+            header("Location: " . $_ENV['APP_URL'] . "/admin/edit/" . $id);
             exit();
         }
 
-        $this->validateCSRF("/UnityExchange/admin/edit/" . $id);
+        $this->validateCSRF($_ENV['APP_URL'] . "/admin/edit/" . $id);
 
         $username = isset($_POST['username']) ? trim($_POST['username']) : '';
         $email = isset($_POST['email']) ? trim($_POST['email']) : '';
@@ -98,23 +94,23 @@ class AdminController extends BaseController {
         }
 
         // PRG Pattern: Redirect back to the GET route!
-        header("Location: /UnityExchange/admin/edit/" . $id);
+        header("Location: " . $_ENV['APP_URL'] . "/admin/edit/" . $id);
         exit();
     }
 
     public function delete($id) {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: /UnityExchange/admin/users");
+            header("Location: " . $_ENV['APP_URL'] . "/admin/users");
             exit();
         }
 
-        $this->validateCSRF("/UnityExchange/admin/users");
+        $this->validateCSRF($_ENV['APP_URL'] . "/admin/users");
 
         // Prevent admins from deleting themselves
         if ($_SESSION['user_id'] === $id) {
             $_SESSION['flash_message'] = "You cannot delete your own account.";
             $_SESSION['flash_type'] = "error";
-            header("Location: /UnityExchange/admin/users");
+            header("Location: " . $_ENV['APP_URL'] . "/admin/users");
             exit();
         }
 
@@ -125,7 +121,7 @@ class AdminController extends BaseController {
             $_SESSION['flash_message'] = "Failed to delete user.";
             $_SESSION['flash_type'] = "error";
         }
-        header("Location: /UnityExchange/admin/users");
+        header("Location: " . $_ENV['APP_URL'] . "/admin/users");
         exit();
     }
 
@@ -140,16 +136,16 @@ class AdminController extends BaseController {
 
     public function deleteProduct($id) {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: /UnityExchange/admin/products");
+            header("Location: " . $_ENV['APP_URL'] . "/admin/products");
             exit();
         }
 
-        $this->validateCSRF("/UnityExchange/admin/products");
+        $this->validateCSRF($_ENV['APP_URL'] . "/admin/products");
 
         $this->productModel->adminDeleteProduct($id);
         $_SESSION['flash_message'] = "Product deleted successfully.";
         $_SESSION['flash_type'] = "success";
-        header("Location: /UnityExchange/admin/products");
+        header("Location: " . $_ENV['APP_URL'] . "/admin/products");
         exit();
     }
 
@@ -163,11 +159,11 @@ class AdminController extends BaseController {
 
     public function updateOrderStatus($id) {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: /UnityExchange/admin/transactions");
+            header("Location: " . $_ENV['APP_URL'] . "/admin/transactions");
             exit();
         }
 
-        $this->validateCSRF("/UnityExchange/admin/transactions");
+        $this->validateCSRF($_ENV['APP_URL'] . "/admin/transactions");
 
         $new_status = isset($_POST['status']) ? trim($_POST['status']) : '';
         
@@ -175,19 +171,19 @@ class AdminController extends BaseController {
         if (!in_array($new_status, ['pending', 'completed', 'cancelled'])) {
             $_SESSION['flash_message'] = "Invalid status selected.";
             $_SESSION['flash_type'] = "error";
-            header("Location: /UnityExchange/admin/transactions");
+            header("Location: " . $_ENV['APP_URL'] . "/admin/transactions");
             exit();
         } 
 
         if ($this->orderModel->adminUpdateOrderStatus($id, $new_status)) {
             $_SESSION['flash_message'] = "Order #{$id} status updated to " . ucfirst($new_status) . ".";
             $_SESSION['flash_type'] = "success";
-            header("Location: /UnityExchange/admin/transactions");
+            header("Location: " . $_ENV['APP_URL'] . "/admin/transactions");
             exit();
         } else {
             $_SESSION['flash_message'] = "Failed to update order status.";
             $_SESSION['flash_type'] = "error";
-            header("Location: /UnityExchange/admin/transactions");
+            header("Location: " . $_ENV['APP_URL'] . "/admin/transactions");
             exit();
         }
     }

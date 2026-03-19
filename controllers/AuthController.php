@@ -13,12 +13,11 @@ class AuthController extends BaseController {
         $this->userModel = new User($this->db);
     }
 
-    // Handles URL: /UnityExchange/auth/register
     public function register() {
 
         // PRG POST: Process the form
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->validateCSRF("/UnityExchange/auth/register");
+            $this->validateCSRF($_ENV['APP_URL'] . "/auth/register");
 
             $username = isset($_POST['username']) ? trim($_POST['username']) : '';
             $email = isset($_POST['email']) ? trim($_POST['email']) : '';
@@ -31,21 +30,21 @@ class AuthController extends BaseController {
 
             if (empty($username) || empty($email) || empty($password) || empty($password_confirm)) {
                 $_SESSION['flash_error'] = "Please fill in all fields.";
-                header("Location: /UnityExchange/auth/register");
+                header("Location: " . $_ENV['APP_URL'] . "/auth/register");
                 exit();
             }
 
             if ($password !== $password_confirm) {
                 $_SESSION['flash_message'] = "Passwords do not match.";
                 $_SESSION['flash_type'] = "error";
-                header("Location: /UnityExchange/auth/register");
+                header("Location: " . $_ENV['APP_URL'] . "/auth/register");
                 exit();
             }
 
             if ($this->userModel->getUserByEmail($email)) {
                 $_SESSION['flash_message'] = "Email is already registered.";
                 $_SESSION['flash_type'] = "error";
-                header("Location: /UnityExchange/auth/register");
+                header("Location: " . $_ENV['APP_URL'] . "/auth/register");
                 exit();
             }
 
@@ -60,12 +59,12 @@ class AuthController extends BaseController {
                 
                 $_SESSION['flash_message'] = "Registration successful! You can now log in.";
                 $_SESSION['flash_type'] = "success";
-                header("Location: /UnityExchange/auth/login");
+                header("Location: " . $_ENV['APP_URL'] . "/auth/login");
                 exit();
             } else {
                 $_SESSION['flash_message'] = "Something went wrong. Please try again.";
                 $_SESSION['flash_type'] = "error";
-                header("Location: /UnityExchange/auth/register");
+                header("Location: " . $_ENV['APP_URL'] . "/auth/register");
                 exit();
             }
         }
@@ -81,12 +80,11 @@ class AuthController extends BaseController {
         require_once 'includes/footer.php';
     }
 
-    // Handles URL: /UnityExchange/auth/login
     public function login() {
 
         // PRG POST: Process the form
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $this->validateCSRF("/UnityExchange/auth/login");
+            $this->validateCSRF($_ENV['APP_URL'] . "/auth/login");
 
             $email = isset($_POST['email']) ? trim($_POST['email']) : '';
             $password = isset($_POST['password']) ? $_POST['password'] : '';
@@ -97,7 +95,7 @@ class AuthController extends BaseController {
             if (empty($email) || empty($password)) {
                 $_SESSION['flash_message'] = "Please fill in all fields.";
                 $_SESSION['flash_type'] = "error";
-                header("Location: /UnityExchange/auth/login");
+                header("Location: " . $_ENV['APP_URL'] . "/auth/login");
                 exit();
             }
 
@@ -121,18 +119,18 @@ class AuthController extends BaseController {
                 if (in_array('admin', $roles)) {
                     $_SESSION['flash_message'] = "Welcome back, Admin " . htmlspecialchars($user['username']) . "!";
                     $_SESSION['flash_type'] = "success";
-                    header("Location: /UnityExchange/admin");
+                    header("Location: " . $_ENV['APP_URL'] . "/admin");
                     exit();
                 } else {
                     $_SESSION['flash_message'] = "Welcome back, " . htmlspecialchars($user['username']) . "!";
                     $_SESSION['flash_type'] = "success";
-                    header("Location: /UnityExchange/product");
+                    header("Location: " . $_ENV['APP_URL'] . "/product");
                     exit();
                 }
             } else {
                 $_SESSION['flash_message'] = "Invalid email or password.";
                 $_SESSION['flash_type'] = "error";
-                header("Location: /UnityExchange/auth/login");
+                header("Location: " . $_ENV['APP_URL'] . "/auth/login");
                 exit();
             }
         }
@@ -153,7 +151,7 @@ class AuthController extends BaseController {
         }
         session_unset();
         session_destroy();
-        header("Location: /UnityExchange/home");
+        header("Location: " . $_ENV['APP_URL'] . "/home");
         exit();
     }
 }

@@ -5,11 +5,11 @@
             <h1>Empowering Local Trade</h1>
             <p>Connect directly with buyers and sellers in your community. UnityExchange makes informal trading secure, fast, and simple.</p>
             <div class="hero-actions">
-                <a href="/UnityExchange/product" class="btn-primary">Shop the Marketplace</a>
+                <a href="<?php echo $_ENV['APP_URL']; ?>/product" class="btn-primary">Shop the Marketplace</a>
                 <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
-                    <a href="/UnityExchange/product/create" class="btn-secondary">Start Selling</a>
+                    <a href="<?php echo $_ENV['APP_URL']; ?>/product/create" class="btn-secondary">Start Selling</a>
                 <?php else: ?>
-                    <a href="/UnityExchange/auth/register" class="btn-secondary">Join Now</a>
+                    <a href="<?php echo $_ENV['APP_URL']; ?>/auth/register" class="btn-secondary">Join Now</a>
                 <?php endif; ?>
             </div>
         </div>
@@ -43,7 +43,7 @@
     <div class="products-grid">
         <div class="home-section-header">
             <h2 class="section-title home-section-title">Featured Listings</h2>
-            <a href="/UnityExchange/product" class="home-section-link">View All →</a>
+            <a href="<?php echo $_ENV['APP_URL']; ?>/product" class="home-section-link">View All →</a>
         </div>
 
         <div class="product-grid">
@@ -51,8 +51,8 @@
                 <?php foreach ($products as $product): ?>
                     <div class="product-card">
 
-                        <a href="/UnityExchange/product/details/<?php echo $product['id']; ?>" class="product-image-link">
-                            <img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>"
+                        <a href="<?php echo $_ENV['APP_URL']; ?>/product/details/<?php echo $product['id']; ?>" class="product-image-link">
+                            <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>"
                                 alt="<?php echo htmlspecialchars($product['name']); ?>"
                                 class="product-image">
                         </a>
@@ -60,7 +60,7 @@
                         <div class="product-card-body">
 
                             <h3 class="product-title">
-                                <a href="/UnityExchange/product/details/<?php echo $product['id']; ?>">
+                                <a href="<?php echo $_ENV['APP_URL']; ?>/product/details/<?php echo $product['id']; ?>">
                                     <?php echo htmlspecialchars($product['name']); ?>
                                 </a>
                             </h3>
@@ -74,7 +74,7 @@
                                     <div class="seller-info">
                                         Sold by:
                                         <strong>
-                                            <a href="/UnityExchange/profile/details/<?php echo $product['user_id']; ?>" class="seller-link">
+                                            <a href="<?php echo $_ENV['APP_URL']; ?>/profile/details/<?php echo $product['user_id']; ?>" class="seller-link">
                                                 <?php echo htmlspecialchars($product['seller_name']); ?>
                                             </a>
                                         </strong>
@@ -100,7 +100,7 @@
     <div class="bottom-cta">
         <h2>Ready to turn your skills into income?</h2>
         <p>Join hundreds of local entrepreneurs already trading on the platform.</p>
-        <a href="/UnityExchange/product/create" class="btn-secondary">List Your First Item</a>
+        <a href="<?php echo $_ENV['APP_URL']; ?>/product/create" class="btn-secondary">List Your First Item</a>
     </div>
 
 </div>

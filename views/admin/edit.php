@@ -5,13 +5,13 @@
             <h1>Edit User: <?php echo htmlspecialchars($user['username']); ?></h1>
             <p>View and manage user accounts, permissions, and roles.</p>
         </div>
-        <a href="/UnityExchange/admin/users" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/admin/users" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i> Back to Users
         </a>
     </div>
 
     <div class="admin-form-container">
-        <form action="/UnityExchange/admin/update/<?php echo htmlspecialchars($user['id']); ?>" method="POST">
+        <form action="<?php echo $_ENV['APP_URL']; ?>/admin/update/<?php echo htmlspecialchars($user['id']); ?>" method="POST">
             <input type = "hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
             
             <div class="form-group">

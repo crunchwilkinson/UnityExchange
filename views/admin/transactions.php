@@ -4,7 +4,7 @@
             <h1>Manage Transactions</h1>
             <p>View all marketplace orders and force-update fulfillment statuses.</p>
         </div>
-        <a href="/UnityExchange/admin" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/admin" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i> Go Back
         </a>
     </div>
@@ -58,7 +58,7 @@
                                 </td>
 
                                 <td class="action-buttons">
-                                    <form action="/UnityExchange/admin/updateOrderStatus/<?php echo $order['id']; ?>" method="POST" class="status-update-form">
+                                    <form action="<?php echo $_ENV['APP_URL']; ?>/admin/updateOrderStatus/<?php echo $order['id']; ?>" method="POST" class="status-update-form">
                                         <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
                                         
                                         <select name="status" class="admin-filter-select status-select-sm">

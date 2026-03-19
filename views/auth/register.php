@@ -5,13 +5,13 @@
             <h1>Create an Account</h1>
             <p>Create a new account to access UnityExchange.</p>
         </div>
-        <a href="/UnityExchange/product/" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/product/" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
         </a>
     </div>
 
     <div class="auth-container">
-        <form action="/UnityExchange/auth/register" method="POST">
+        <form action="<?php echo $_ENV['APP_URL']; ?>/auth/register" method="POST">
             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
             <div class="form-group">
                 <label for="username">Username:</label>
@@ -32,6 +32,6 @@
             <button type="submit" class="btn-primary">Register</button>
         </form>
 
-        <p class="auth-link-container">Already have an account? <a class="auth-link" href="/UnityExchange/auth/login">Login here</a></p>
+        <p class="auth-link-container">Already have an account? <a class="auth-link" href="<?php echo $_ENV['APP_URL']; ?>/auth/login">Login here</a></p>
     </div>
 </div>

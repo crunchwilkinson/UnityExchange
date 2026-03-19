@@ -14,7 +14,6 @@ class OrderController extends BaseController {
         $this->orderModel = new Order($this->db);
     }
 
-    // URL: /UnityExchange/order
     // Displays the "My Orders" list for the buyer
     public function index() {
         $user_id = $_SESSION['user_id'];
@@ -28,7 +27,7 @@ class OrderController extends BaseController {
         require_once 'includes/footer.php';
     }
 
-    // URL: /UnityExchange/order/details/5
+
     public function details($order_id) {
         $user_id = $_SESSION['user_id'];
 
@@ -38,7 +37,7 @@ class OrderController extends BaseController {
         if (!$order) {
             $_SESSION['flash_message'] = "Order not found or you do not have permission to view it.";
             $_SESSION['flash_type'] = "error";
-            header("Location: /UnityExchange/order");
+            header("Location: " . $_ENV['APP_URL'] . "/order");
             exit();
         }
 
@@ -51,16 +50,15 @@ class OrderController extends BaseController {
         require_once 'includes/footer.php';
     }
 
-    // URL: /UnityExchange/order/complete/5
     public function complete($order_id) {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $_SESSION['flash_message'] = "Invalid request method.";
             $_SESSION['flash_type'] = "error";
-            header("Location: /UnityExchange/order/details/" . $order_id);
+            header("Location: " . $_ENV['APP_URL'] . "/order/details/" . $order_id);
             exit();
         }
 
-        $this->validateCSRF("/UnityExchange/order/details/" . $order_id);
+        $this->validateCSRF($_ENV['APP_URL'] . "/order/details/" . $order_id);
 
         $user_id = $_SESSION['user_id'];
 
@@ -68,12 +66,12 @@ class OrderController extends BaseController {
         if ($this->orderModel->markOrderCompleted($order_id,$user_id)) {
             $_SESSION['flash_message'] = "Thank you for confirming receipt! Your order is now marked as completed.";
             $_SESSION['flash_type'] = "success";
-            header("Location: /UnityExchange/order/details/" . $order_id);
+            header("Location: " . $_ENV['APP_URL'] . "/order/details/" . $order_id);
             exit();
         } else {
             $_SESSION['flash_message'] = "Failed to update order status. Please try again.";
             $_SESSION['flash_type'] = "error";
-            header("Location: /UnityExchange/order/details/" . $order_id);
+            header("Location: " . $_ENV['APP_URL'] . "/order/details/" . $order_id);
             exit();
         }
     }

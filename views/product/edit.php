@@ -4,7 +4,7 @@
             <h1>Edit Product</h1>
             <p>Update your listing details</p>
         </div>
-        <a href="/UnityExchange/product/details/<?php echo $product['id']; ?>" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/product/details/<?php echo $product['id']; ?>" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i>Back to Product
         </a>
     </div>
@@ -13,12 +13,12 @@
         <div class="admin-form-container">
             <div class="current-image-preview">
                 <p class="current-image-label">Current Image:</p>
-                <img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>" 
+                <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>" 
                      alt="<?php echo htmlspecialchars($product['name']); ?>" 
                      class="current-image-img">
             </div>
 
-            <form action="/UnityExchange/product/update/<?php echo $product['id']; ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?php echo $_ENV['APP_URL']; ?>/product/update/<?php echo $product['id']; ?>" method="POST" enctype="multipart/form-data">
 
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
 
@@ -75,7 +75,7 @@
         <div class="admin-form-container delete-container">
             <h3 class="delete-warning-title">Danger Zone</h3>
             <p class="delete-warning-text">Deleting this product is permanent and cannot be undone.</p>
-            <form action="/UnityExchange/product/delete/<?php echo $product['id']; ?>" method="POST" onsubmit="return confirm('Are you sure you want to delete this product? This action cannot be undone.');">
+            <form action="<?php echo $_ENV['APP_URL']; ?>/product/delete/<?php echo $product['id']; ?>" method="POST" onsubmit="return confirm('Are you sure you want to delete this product? This action cannot be undone.');">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
                 <button type="submit" class="btn-primary btn-danger" style="width: 100%;">Delete Product</button>
             </form>

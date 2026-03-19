@@ -18,7 +18,7 @@ class BaseController {
      */
     protected function requireLogin() {
         if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
-            header("Location: /UnityExchange/auth/login");
+            header("Location: " . $_ENV['APP_URL'] . "/auth/login");
             exit();
         }
     }
@@ -30,7 +30,7 @@ class BaseController {
         if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
             $_SESSION['flash_message'] = "Security validation failed. Unauthorized request.";
             $_SESSION['flash_type'] = "error";
-            header("Location: $headerRedirectPath");
+            header("Location: " . $headerRedirectPath);
             exit();
         }
     }

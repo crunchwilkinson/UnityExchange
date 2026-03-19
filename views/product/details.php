@@ -7,7 +7,7 @@
 
 	<div class="product-details-layout">
 		<div class="product-details-image-card">
-			<img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($product['image_file'] ?? 'default_product.png'); ?>"
+			<img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($product['image_file'] ?? 'default_product.png'); ?>"
 				alt="<?php echo htmlspecialchars($product['name']); ?>"
 				class="product-details-image">
 		</div>
@@ -30,7 +30,7 @@
 				<div class="meta-row">
 					<span class="meta-label">Seller</span>
 					<span class="meta-value">
-                        <a href="/UnityExchange/profile/details/<?php echo $product['user_id']; ?>" class="seller-link">
+                        <a href="<?php echo $_ENV['APP_URL']; ?>/profile/details/<?php echo $product['user_id']; ?>" class="seller-link">
 							<?php echo htmlspecialchars($product['seller_name']); ?>
 						</a>
 					</span>
@@ -55,11 +55,11 @@
 
 			<div class="product-details-actions">
 				<?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true && $_SESSION['user_id'] == $product['user_id']): ?>
-					<a href="/UnityExchange/product/edit/<?php echo $product['id']; ?>" class="btn-primary">Edit Product</a>
+					<a href="<?php echo $_ENV['APP_URL']; ?>/product/edit/<?php echo $product['id']; ?>" class="btn-primary">Edit Product</a>
 				<?php elseif (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
 					<a class="btn-primary" id="add-to-cart-button" data-id="<?php echo $product['id']; ?>">Add to cart</a>
 				<?php else: ?>
-					<a href="/UnityExchange/auth/login" class="btn-primary">Login to Add to Cart</a>
+					<a href="<?php echo $_ENV['APP_URL']; ?>/auth/login" class="btn-primary">Login to Add to Cart</a>
 				<?php endif; ?>
 
 			</div>

@@ -47,7 +47,6 @@ class CartController extends BaseController{
     // HTML VIEW ROUTES
     // ==========================
 
-    // URL: /UnityExchange/cart
     public function index() {
         $cart_items = [];
         $grand_total = 0;
@@ -83,7 +82,6 @@ class CartController extends BaseController{
         require_once 'includes/footer.php';
     }
 
-    // URL: /UnityExchange/cart/add (expects POST with product_id and quantity)
     public function add() {
         $this->validateApiRequest();
 
@@ -120,7 +118,6 @@ class CartController extends BaseController{
         $this->jsonResponse('success', 'Product added to cart.', ['cart_count' => $total_items_in_cart]);
     }
 
-    // URL: /UnityExchange/cart/update
     public function update() {
         $this->validateApiRequest();
 
@@ -151,7 +148,6 @@ class CartController extends BaseController{
         $this->jsonResponse('success', 'Cart Updated', ['cart_count' => array_sum($_SESSION['cart'])]);
     }
 
-    // URL: /UnityExchange/cart/remove
     public function remove() {
         $this->validateApiRequest();
 
@@ -164,7 +160,6 @@ class CartController extends BaseController{
         $this->jsonResponse('success', 'Item Removed.', ['cart_count' => array_sum($_SESSION['cart'])]);
     }
 
-    // URL: /UnityExchange/cart/clear
     public function clear() {
         $this->validateApiRequest();
         

@@ -5,7 +5,7 @@
             <h1>My Profile</h1>
             <p>Manage your account settings and security preferences.</p>
         </div>
-        <a href="/UnityExchange/product/" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/product/" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
         </a>
     </div>
@@ -17,7 +17,7 @@
                 <i class="fa fa-user icon-blue"></i> Account Details
             </h2>
             
-            <form action="/UnityExchange/profile/updateDetails" method="POST" enctype="multipart/form-data">
+            <form action="<?php echo $_ENV['APP_URL']; ?>/profile/updateDetails" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
 
                 <div class="avatar-upload-container">
@@ -25,7 +25,7 @@
                         // Fallback to default avatar if none exists
                         $avatar = !empty($user['profile_picture']) ? $user['profile_picture'] : 'default_avatar.png'; 
                     ?>
-                    <img src="/UnityExchange/assets/images/users/<?php echo htmlspecialchars($avatar); ?>" 
+                    <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/users/<?php echo htmlspecialchars($avatar); ?>" 
                          alt="Profile Picture" 
                          class="avatar-preview">
                     
@@ -64,7 +64,7 @@
                 Ensure your account is using a long, random password to stay secure.
             </p>
             
-            <form action="/UnityExchange/profile/updatePassword" method="POST">
+            <form action="<?php echo $_ENV['APP_URL']; ?>/profile/updatePassword" method="POST">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
 
                 <div class="form-group">

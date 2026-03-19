@@ -5,7 +5,7 @@
             <h1>My Order History</h1>
             <p>Track your purchases and view your digital receipts.</p>
         </div>
-        <a href="/UnityExchange/product" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/product" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
         </a>
     </div>
@@ -15,7 +15,7 @@
         <div class="empty-cart">
             <h2>No orders yet</h2>
             <p>You haven't purchased anything from the marketplace yet.</p>
-            <a href="/UnityExchange/product" class="btn-primary btn-sm">
+            <a href="<?php echo $_ENV['APP_URL']; ?>/product" class="btn-primary btn-sm">
                 Start Exploring
             </a>
         </div>
@@ -61,7 +61,7 @@
                     </div>
 
                     <div class="order-history-actions">
-                        <a href="/UnityExchange/order/details/<?php echo $order['id']; ?>" class="btn-primary btn-sm btn-green no-margin">
+                        <a href="<?php echo $_ENV['APP_URL']; ?>/order/details/<?php echo $order['id']; ?>" class="btn-primary btn-sm btn-green no-margin">
                             View Details
                         </a>
                     </div>

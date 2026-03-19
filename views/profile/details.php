@@ -13,7 +13,7 @@
         
         <div class="seller-profile-header">
             <?php $avatar = !empty($user['profile_picture']) ? $user['profile_picture'] : 'default_avatar.png'; ?>
-            <img src="/UnityExchange/assets/images/users/<?php echo htmlspecialchars($avatar); ?>" 
+            <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/users/<?php echo htmlspecialchars($avatar); ?>" 
                  alt="Profile Picture" 
                  class="seller-avatar">
             

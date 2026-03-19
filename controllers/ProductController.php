@@ -56,7 +56,7 @@ class ProductController extends BaseController {
         $unique_filename = uniqid() . "_" . bin2hex(random_bytes(4)) . "." . $file_extension;
         
         // Define where the file should be saved
-        $destination = $_SERVER['DOCUMENT_ROOT'] . '/UnityExchange/assets/images/products/' . $unique_filename;
+        $destination = $_SERVER['DOCUMENT_ROOT'] . '/' . $_ENV['APP_URL'] . '/assets/images/products/' . $unique_filename;
 
         // 6. Move the file from temporary memory to the permanent assets folder
         if (move_uploaded_file($file_tmp_path, $destination)) {
@@ -71,7 +71,6 @@ class ProductController extends BaseController {
     // PUBLIC ROUTES (NO LOGIN REQUIRED)
     // ==================================
 
-    // URL: /UnityExchange/product OR /UnityExchange/product/index
     // Displays the main marketplace catalog
     public function index() {
         // Grab the search term if it exists, otherwise set to null
@@ -92,7 +91,7 @@ class ProductController extends BaseController {
         require_once 'includes/footer.php';
     }
 
-    // URL: /UnityExchange/product/details/5
+   
     // Displays the specific details for a single product
     public function details($id) {
         $product = $this->productModel->getProductById($id);
@@ -111,7 +110,7 @@ class ProductController extends BaseController {
     // PROTECTED ROUTES (LOGIN REQUIRED)
     // ==================================
 
-    // URL: /UnityExchange/product/create 
+ 
     // Shows the blank form to list a new item
     public function create() {
         $this->requireLogin();
@@ -124,14 +123,14 @@ class ProductController extends BaseController {
         require_once 'includes/footer.php';
     }
 
-    // URL: /UnityExchange/product/store 
+
     // Captures the form submission from create() and saves to the database
     public function store() {
         $this->requireLogin();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // 1. Validate the CSRF token to prevent cross-site request forgery
-            $this->validateCSRF("/UnityExchange/product/create");
+            $this->validateCSRF($_ENV['APP_URL'] . "/product/create");
 
             // 2. Sanitize and extract the text inputs
             $name =  isset($_POST['name']) ? trim($_POST['name']) : '';
@@ -148,7 +147,7 @@ class ProductController extends BaseController {
             if (!$uploadResult['success']) {
                 $_SESSION['flash_message'] = $uploadResult['error'];
                 $_SESSION['flash_type'] = "error";
-                header("Location: /UnityExchange/product/create");
+                header("Location: " . $_ENV['APP_URL'] . "/product/create");
                 exit();
             }
 
@@ -163,23 +162,23 @@ class ProductController extends BaseController {
                 $_SESSION['flash_type'] = "success";
 
                 // Success! Redirect the user back to the marketplace catalog
-                header("Location: /UnityExchange/product");
+                header("Location: " . $_ENV['APP_URL'] . "/product");
                 exit();
             } else {
                 // Database failed
                 $_SESSION['flash_message'] = "Database error: Could not save your product. Please try again.";
                 $_SESSION['flash_type'] = "error";
-                header("Location: /UnityExchange/product/create");
+                header("Location: " . $_ENV['APP_URL'] . "/product/create");
                 exit();
             }
         } else {
             // If not POST, redirect back to the create page
-            header("Location: /UnityExchange/product/create");
+            header("Location: " . $_ENV['APP_URL'] . "/product/create");
             exit();
         }
     }
 
-    // URL: /UnityExchange/product/edit/5
+
     // Shows the pre-filled form to edit an existing item
     public function edit($id) {
         $this->requireLogin();
@@ -201,7 +200,7 @@ class ProductController extends BaseController {
         require_once 'includes/footer.php';
     }
 
-    // URL: /UnityExchange/product/update/5
+
     // Captures the form submission from edit() and updates the database
     public function update($id) {
         $this->requireLogin();
@@ -215,7 +214,7 @@ class ProductController extends BaseController {
         
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // 1. CSRF Token Check
-            $this->validateCSRF("/UnityExchange/product/edit/" . $id);
+            $this->validateCSRF($_ENV['APP_URL'] . "/product/edit/" . $id);
 
             // 2. Extract inputs
             $name = isset($_POST['name']) ? trim($_POST['name']) : '';
@@ -231,7 +230,7 @@ class ProductController extends BaseController {
             // If the user uploaded a bad file (wrong type/too big), kick them back
             if (!$uploadResult['success']) {
                 $_SESSION['flash_error'] = $uploadResult['error'];
-                header("Location: /UnityExchange/product/edit/" . $id);
+                header("Location: " . $_ENV['APP_URL'] . "/product/edit/" . $id);
                 exit();
             }
 
@@ -243,29 +242,29 @@ class ProductController extends BaseController {
                 $_SESSION['flash_message'] = "Product updated successfully!";
                 $_SESSION['flash_type'] = "success";
                 // Success! Send them to the product details page so they can see their updates
-                header("Location: /UnityExchange/product/details/" . $id);
+                header("Location: " . $_ENV['APP_URL'] . "/product/details/" . $id);
                 exit();
             } else {
                 $_SESSION['flash_message'] = "Database error: Could not update your product.";
                 $_SESSION['flash_type'] = "error";
-                header("Location: /UnityExchange/product/edit/" . $id);
+                header("Location: " . $_ENV['APP_URL'] . "/product/edit/" . $id);
                 exit();
             }
         } else {
             // If not POST, redirect back to the edit page
-            header("Location: /UnityExchange/product/edit/" . $id);
+            header("Location: " . $_ENV['APP_URL'] . "/product/edit/" . $id);
             exit();
         }
     }
 
-    // URL: /UnityExchange/product/delete/5
+
     // Removes the product from the database
     public function delete($id) {
         $this->requireLogin();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Strict CSRF verification for destructive actions
-            $this->validateCSRF("/UnityExchange/product/edit/" . $id);
+            $this->validateCSRF($_ENV['APP_URL'] . "/product/edit/" . $id);
 
             $seller_id = $_SESSION['user_id'];
 
@@ -273,22 +272,22 @@ class ProductController extends BaseController {
             if ($this->productModel->deleteProduct($id, $seller_id)) {
                 $_SESSION['flash_message'] = "Product deleted successfully.";
                 $_SESSION['flash_type'] = "success";
-                header("Location: /UnityExchange/product/myListings");
+                header("Location: " . $_ENV['APP_URL'] . "/product/myListings");
                 exit();
             } else {
                 // PRG Pattern: Database failed (likely because the item is tied to an existing order)
                 $_SESSION['flash_message'] = "Error: Cannot delete this product. It may already be linked to an active customer order.";
                 $_SESSION['flash_type'] = "error";
-                header("Location: /UnityExchange/product/edit/" . $id);
+                header("Location: " . $_ENV['APP_URL'] . "/product/edit/" . $id);
                 exit();
             }
         } else {
-            header("Location: /UnityExchange/home");
+            header("Location: " . $_ENV['APP_URL'] . "/home");
             exit();
         }
     }
 
-    // URL: /UnityExchange/product/myListings 
+
     // Shows a private dashboard of all items listed by the logged-in user
     public function myListings() {
         $this->requireLogin();

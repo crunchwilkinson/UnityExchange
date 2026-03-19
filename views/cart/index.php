@@ -5,7 +5,7 @@
             <h1>Your Cart</h1>
             <p>Review your items before proceeding to checkout.</p>
         </div>
-        <a href="/UnityExchange/product" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/product" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i>Continue Shopping
         </a>
     </div>
@@ -15,7 +15,7 @@
         <div class="empty-cart">
             <h2>Your cart is currently empty.</h2>
             <p>Looks like you haven't added anything to your cart yet.</p>
-            <a href="/UnityExchange/product" class="btn-primary">Discover Marketplace Items</a>
+            <a href="<?php echo $_ENV['APP_URL']; ?>/product" class="btn-primary">Discover Marketplace Items</a>
         </div>
 
     <?php else: ?>
@@ -27,18 +27,18 @@
                 <?php foreach ($cart_items as $item): ?>
                     <div class="cart-item">
 
-                        <img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($item['product']['image_file']); ?>"
+                        <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($item['product']['image_file']); ?>"
                             alt="<?php echo htmlspecialchars($item['product']['name']); ?>">
 
                         <div class="item-details">
                             <h3>
-                                <a href="/UnityExchange/product/details/<?php echo $item['product']['id']; ?>">
+                                <a href="<?php echo $_ENV['APP_URL']; ?>/product/details/<?php echo $item['product']['id']; ?>">
                                     <?php echo htmlspecialchars($item['product']['name']); ?>
                                 </a>
                             </h3>
                             <p>Sold by:
                             <strong>
-                                <a href="/UnityExchange/profile/details/<?php echo $item['seller_id']; ?>" class="seller-link">
+                                <a href="<?php echo $_ENV['APP_URL']; ?>/profile/details/<?php echo $item['seller_id']; ?>" class="seller-link">
                                     <?php echo htmlspecialchars($item['product']['seller_name']); ?>
                                 </a>
                             </strong>
@@ -101,7 +101,7 @@
                     <span>R <?php echo number_format($grand_total, 2); ?></span>
                 </div>
 
-                <a href="/UnityExchange/checkout" class="btn-primary">
+                <a href="<?php echo $_ENV['APP_URL']; ?>/checkout" class="btn-primary">
                     Proceed to Checkout
                 </a>
 

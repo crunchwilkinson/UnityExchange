@@ -4,7 +4,7 @@
             <h1>Manage Products</h1>
             <p>View and manage all products listed on the marketplace.</p>
         </div>
-        <a href="/UnityExchange/admin" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/admin" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i> Go Back
         </a>
     </div>
@@ -45,7 +45,7 @@
                     <?php if (!empty($products)): ?>
                         <?php foreach ($products as $product): ?>
                             <tr class="product-row" data-category="<?php echo isset($product['category_id']) ? htmlspecialchars($product['category_id']) : ''; ?>">
-                                <td><img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>" alt="Product Image" class="product-image"></td>
+                                <td><img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>" alt="Product Image" class="product-image"></td>
                                 <td><?php echo htmlspecialchars($product['id']); ?></td>
                                 <td><strong><?php echo htmlspecialchars($product['name']); ?></strong></td>
 
@@ -77,7 +77,7 @@
                                 </td>
 
                                 <td class="action-buttons product-action-buttons">
-                                    <form action="/UnityExchange/admin/deleteProduct/<?php echo $product['id']; ?>" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to completely delete product <?php echo htmlspecialchars($product['name']); ?>? This cannot be undone.');">
+                                    <form action="<?php echo $_ENV['APP_URL']; ?>/admin/deleteProduct/<?php echo $product['id']; ?>" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to completely delete product <?php echo htmlspecialchars($product['name']); ?>? This cannot be undone.');">
                                         <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
                                         <button type="submit" class="btn-delete">
                                             Delete

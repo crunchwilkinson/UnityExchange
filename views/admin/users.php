@@ -4,7 +4,7 @@
             <h1>Manage Users</h1>
             <p>View and manage user accounts, permissions, and roles.</p>
         </div>
-        <a href="/UnityExchange/admin" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/admin" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i> Go Back
         </a>
     </div>
@@ -66,10 +66,10 @@
                                 </td>
 
                                 <td class="action-buttons">
-                                    <a href="/UnityExchange/admin/edit/<?php echo $user['id']; ?>" class="btn-edit">Edit</a>
+                                    <a href="<?php echo $_ENV['APP_URL']; ?>/admin/edit/<?php echo $user['id']; ?>" class="btn-edit">Edit</a>
 
                                     <?php if ($user['id'] != $_SESSION['user_id']): ?>
-                                        <form action="/UnityExchange/admin/delete/<?php echo $user['id']; ?>" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to completely delete user <?php echo htmlspecialchars($user['username']); ?>? This cannot be undone.');">
+                                        <form action="<?php echo $_ENV['APP_URL']; ?>/admin/delete/<?php echo $user['id']; ?>" method="POST" class="delete-form" onsubmit="return confirm('Are you sure you want to completely delete user <?php echo htmlspecialchars($user['username']); ?>? This cannot be undone.');">
                                             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
                                             <button type="submit" class="btn-delete">
                                                 Delete

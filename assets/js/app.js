@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.disabled = true;
 
             // 4. Send the background POST request to the server
-            fetch('/UnityExchange/cart/add', {
+            fetch(window.APP_URL + '/cart/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('quantity', newQuantity);
             formData.append('csrf_token', csrfToken);
             
-            fetch('/UnityExchange/cart/update', {
+            fetch(window.APP_URL + '/cart/update', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formData.append('product_id', productId);
             formData.append('csrf_token', csrfToken);
 
-            fetch('/UnityExchange/cart/remove', {
+            fetch(window.APP_URL + '/cart/remove', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -271,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new URLSearchParams();
             formData.append('csrf_token', csrfToken);
 
-            fetch('/UnityExchange/cart/clear', {
+            fetch(window.APP_URL + '/cart/clear', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

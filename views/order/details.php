@@ -5,7 +5,7 @@
             <h1>Order #<?php echo htmlspecialchars($order['id']); ?></h1>
             <p>Placed on <?php echo date('F j, Y \a\t g:i A', strtotime($order['created_at'])); ?></p>
         </div>
-        <a href="/UnityExchange/order" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/order" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i>Back to Order History
         </a>
     </div>
@@ -17,18 +17,18 @@
             <?php foreach ($items as $item): ?>
                 <div class="cart-item cart-item-readonly">
 
-                    <img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($item['image_file']); ?>"
+                    <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($item['image_file']); ?>"
                         alt="<?php echo htmlspecialchars($item['product']['name']); ?>">
 
                     <div class="item-details">
                         <h3>
-                            <a href="/UnityExchange/product/details/<?php echo $item['product_id']; ?>">
+                            <a href="<?php echo $_ENV['APP_URL']; ?>/product/details/<?php echo $item['product_id']; ?>">
                                 <?php echo htmlspecialchars($item['product_name']); ?>
                             </a>
                         </h3>
                         <p>Sold by:
                             <strong>
-                                <a href="/UnityExchange/profile/details/<?php echo $item['seller_id']; ?>" class="seller-link">
+                                <a href="<?php echo $_ENV['APP_URL']; ?>/profile/details/<?php echo $item['seller_id']; ?>" class="seller-link">
                                     <?php echo htmlspecialchars($item['seller_name']); ?>
                                 </a>
                             </strong>
@@ -91,7 +91,7 @@
             </div>
 
             <?php if ($status === 'pending'): ?>
-                <form action="/UnityExchange/order/complete/<?php echo $order['id']; ?>" method="POST" class="no-margin-form">
+                <form action="<?php echo $_ENV['APP_URL']; ?>/order/complete/<?php echo $order['id']; ?>" method="POST" class="no-margin-form">
                     <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
 
                     <button type="submit" class="btn-primary btn-green">

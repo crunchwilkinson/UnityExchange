@@ -4,13 +4,13 @@
             <h1>List a new Product</h1>
             <p>Create a new listing for your item.</p>
         </div>
-        <a href="/UnityExchange/product/" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/product/" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
         </a>
     </div>
 
     <div class="admin-form-container">
-        <form action="/UnityExchange/product/store" method="POST" enctype="multipart/form-data">
+        <form action="<?php echo $_ENV['APP_URL']; ?>/product/store" method="POST" enctype="multipart/form-data">
 
             <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
 

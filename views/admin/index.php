@@ -4,7 +4,7 @@
             <h1>Admin Dashboard</h1>
             <p>Welcome to the UnityExchange command center.</p>
         </div>
-        <a href="/UnityExchange/home" class="btn-secondary" target="_blank">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/home" class="btn-secondary" target="_blank">
             <i class="fa fa-external-link-alt btn-icon-left"></i> View Live Site
         </a>
     </div>
@@ -12,12 +12,12 @@
     <div class="product-grid">
 
         <div class="product-card">
-            <a href="/UnityExchange/admin/users" class="admin-icon-link gradient-purple">
+            <a href="<?php echo $_ENV['APP_URL']; ?>/admin/users" class="admin-icon-link gradient-purple">
                 <i class="fa fa-users admin-icon"></i>
             </a>
             <div class="product-card-body">
                 <h3 class="product-title">
-                    <a href="/UnityExchange/admin/users">User Management</a>
+                    <a href="<?php echo $_ENV['APP_URL']; ?>/admin/users">User Management</a>
                 </h3>
                 <div class="metric-container metric-purple">
                     <div>
@@ -29,19 +29,19 @@
                 <p class="admin-card-description">
                     Review registered accounts, update email addresses, and manage administrative roles across the platform.
                 </p>
-                <a href="/UnityExchange/admin/users" class="btn-primary btn-block">
+                <a href="<?php echo $_ENV['APP_URL']; ?>/admin/users" class="btn-primary btn-block">
                     Manage Users
                 </a>
             </div>
         </div>
 
         <div class="product-card">
-            <a href="/UnityExchange/admin/products" class="admin-icon-link gradient-blue">
+            <a href="<?php echo $_ENV['APP_URL']; ?>/admin/products" class="admin-icon-link gradient-blue">
                 <i class="fa fa-shopping-cart admin-icon"></i>
             </a>
             <div class="product-card-body">
                 <h3 class="product-title">
-                    <a href="/UnityExchange/admin/products">Inventory Control</a>
+                    <a href="<?php echo $_ENV['APP_URL']; ?>/admin/products">Inventory Control</a>
                 </h3>
                <div class="metric-container metric-blue">
                     <div>
@@ -53,19 +53,19 @@
                 <p class="admin-card-description">
                     Monitor all active listings, moderate inappropriate content, and completely remove products from the database.
                 </p>
-                <a href="/UnityExchange/admin/products" class="btn-primary btn-block">
+                <a href="<?php echo $_ENV['APP_URL']; ?>/admin/products" class="btn-primary btn-block">
                     Manage Inventory
                 </a>
             </div>
         </div>
 
         <div class="product-card">
-            <a href="/UnityExchange/admin/transactions" class="admin-icon-link gradient-green">
+            <a href="<?php echo $_ENV['APP_URL']; ?>/admin/transactions" class="admin-icon-link gradient-green">
                 <i class="fa fa-money-bill-wave admin-icon"></i>
             </a>
             <div class="product-card-body">
                 <h3 class="product-title">
-                    <a href="/UnityExchange/admin/transactions">Transactions</a>
+                    <a href="<?php echo $_ENV['APP_URL']; ?>/admin/transactions">Transactions</a>
                 </h3>
                 <div class="metric-container metric-green">
                     <div>
@@ -77,7 +77,7 @@
                 <p class="admin-card-description">
                     Track marketplace sales, view order histories, and resolve transaction disputes between buyers and sellers.
                 </p>
-                <a href="/UnityExchange/admin/transactions" class="btn-primary btn-block">
+                <a href="<?php echo $_ENV['APP_URL']; ?>/admin/transactions" class="btn-primary btn-block">
                     Manage Transactions
                 </a>
             </div>

@@ -15,7 +15,6 @@ class SalesController extends BaseController {
         $this->orderModel = new Order($this->db);
     }
 
-    // URL: /UnityExchange/sales
     public function index() {
         $seller_id = $_SESSION['user_id'];
 

@@ -5,7 +5,7 @@
             <h1>Checkout Review</h1>
             <p>Please review your order details before confirming.</p>
         </div>
-        <a href="/UnityExchange/cart" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/cart" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i>Back to Cart
         </a>
     </div>
@@ -15,7 +15,7 @@
         <div class="cart-items">
             <?php foreach ($cart_items as $item): ?>
                 <div class="cart-item cart-item-readonly">
-                    <img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($item['product']['image_file']); ?>" 
+                    <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($item['product']['image_file']); ?>" 
                              alt="<?php echo htmlspecialchars($item['product']['name']); ?>">
                     <div class="item-details">
                         <h3><?php echo htmlspecialchars($item['product']['name']); ?></h3>
@@ -61,7 +61,7 @@
                 <span>R <?php echo number_format($grand_total, 2); ?></span>
             </div>
 
-            <form action="/UnityExchange/checkout/process" method="POST" class="no-margin-form">
+            <form action="<?php echo $_ENV['APP_URL']; ?>/checkout/process" method="POST" class="no-margin-form">
                 <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
                 <button type="submit" class="btn-primary">Confirm & Pay</button>
             </form>

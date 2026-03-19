@@ -5,7 +5,7 @@
             <h1>My Sales Dashboard</h1>
             <p>Track the items you've sold and arrange fulfillment with buyers.</p>
         </div>
-        <a href="/UnityExchange/product" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/product" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
         </a>
     </div>
@@ -15,7 +15,7 @@
         <div class="empty-cart">
             <h2>No sales yet</h2>
             <p>Keep listing great products! Your sales will appear here.</p>
-            <a href="/UnityExchange/product/create" class="btn-primary" style="display: inline-block; margin-top: 10px;">
+            <a href="<?php echo $_ENV['APP_URL']; ?>/product/create" class="btn-primary" style="display: inline-block; margin-top: 10px;">
                 List New Product
             </a>
         </div>
@@ -46,7 +46,7 @@
                     <div class="order-header">
                         
                         <div class="order-product-info">
-                            <img src="/UnityExchange/assets/images/products/<?php echo htmlspecialchars($sale['image_file']); ?>" 
+                            <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($sale['image_file']); ?>" 
                                  alt="<?php echo htmlspecialchars($sale['product_name']); ?>" 
                                  class="order-product-image">
                             
@@ -91,7 +91,7 @@
                         <p class="user-details-text">
                             <strong>Username: </strong> 
                             
-                                <a href="/UnityExchange/profile/details/<?php echo $sale['buyer_id']; ?>" class="seller-link">
+                                <a href="<?php echo $_ENV['APP_URL']; ?>/profile/details/<?php echo $sale['buyer_id']; ?>" class="seller-link">
                                     <?php echo htmlspecialchars($sale['buyer_name']); ?>
                                 </a>
                             

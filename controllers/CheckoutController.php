@@ -17,7 +17,7 @@ class CheckoutController extends BaseController {
         $this->productModel = new Product($this->db);
     }
 
-    // URL: /UnityExchange/checkout
+    
     // Shows the final summary screen before placing the order
     public function index() {
 
@@ -25,7 +25,7 @@ class CheckoutController extends BaseController {
         if (empty($cart_session)) {
             $_SESSION['flash_message'] = "Your cart is empty. Please add items to your cart before checking out.";
             $_SESSION['flash_type'] = "error";
-            header("Location: /UnityExchange/cart");
+            header("Location: " . $_ENV['APP_URL'] . "/cart");
             exit();
         }
 
@@ -63,19 +63,18 @@ class CheckoutController extends BaseController {
         require_once 'includes/footer.php';
     }
 
-    //URL: /UnityExchange/checkout/process
     // The POST route that actually processes the order and saves it to the database
     public function process() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: /UnityExchange/checkout");
+            header("Location: " . $_ENV['APP_URL'] . "/checkout");
             exit();
         }
 
-        $this->validateCSRF("/UnityExchange/checkout");
+        $this->validateCSRF($_ENV['APP_URL'] . "/checkout");
 
         $cart_session = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
         if (empty($cart_session)) {
-            header("Location: /UnityExchange/cart");
+            header("Location: " . $_ENV['APP_URL'] . "/cart");
             exit();
         }
 
@@ -91,7 +90,7 @@ class CheckoutController extends BaseController {
                 if ($quantity > $product['stock_quantity']) {
                     $_SESSION['flash_message'] = "Sorry, '" . $product['name'] . "' only has " . $product['stock_quantity'] . " left in stock. Please adjust your cart.";
                     $_SESSION['flash_type'] = "error";
-                    header("Location: /UnityExchange/cart");
+                    header("Location: " . $_ENV['APP_URL'] . "/cart");
                     exit();
                 }
 
@@ -113,22 +112,21 @@ class CheckoutController extends BaseController {
             unset($_SESSION['cart']);
 
             // Redirect to the success receipt page
-            header("Location: /UnityExchange/checkout/success/" . $order_id);
+            header("Location: " . $_ENV['APP_URL'] . "/checkout/success/" . $order_id);
             exit();
         } else {
             $_SESSION['flash_message'] = "An error occurred while processing your order. Please try again.";
             $_SESSION['flash_type'] = "error";
-            header("Location: /UnityExchange/checkout");
+            header("Location: " . $_ENV['APP_URL'] . "/checkout");
             exit();
         }
     }
 
-    // URL: /UnityExchange/checkout/success/5
     public function success($order_id) {
         $this->requireLogin();
 
         if (!$order_id) {
-            header("Location: /UnityExchange/product");
+            header("Location: " . $_ENV['APP_URL'] . "/product");
             exit();
         }
 
