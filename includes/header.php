@@ -28,7 +28,12 @@
                 <a href="<?php echo $_ENV['APP_URL']; ?>/product/myListings"><i class="fa fa-box"></i> My Listings</a>
                 <a href="<?php echo $_ENV['APP_URL']; ?>/cart"><i class="fa fa-shopping-cart"></i> Cart</a>
                 <div class="nav-dropdown">
-                    <span class="dropdown-trigger"><i class="fa fa-exchange-alt"></i> Transactions <i class="fa fa-caret-down"></i></span>
+                    <input type="checkbox" id="tx-dropdown-toggle" style="display: none;">
+
+                    <label for="tx-dropdown-toggle" class="dropdown-trigger">
+                        <i class="fa fa-exchange-alt"></i> Transactions <i class="fa fa-caret-down"></i>
+                    </label>
+
                     <div class="dropdown-content">
                         <a href="<?php echo $_ENV['APP_URL']; ?>/order"><i class="fa fa-shopping-bag"></i> My Purchases</a>
                         <a href="<?php echo $_ENV['APP_URL']; ?>/sales"><i class="fa fa-store"></i> My Sales</a>
@@ -46,12 +51,12 @@
                     <div class="nav-user-profile">
                         <?php $nav_avatar = !empty($_SESSION['profile_picture']) ? $_SESSION['profile_picture'] : 'default_avatar.png'; ?>
                         <a href="<?php echo $_ENV['APP_URL']; ?>/profile">
-                            <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/users/<?php echo htmlspecialchars($nav_avatar); ?>" 
-                                 alt="Avatar" 
-                                 class="nav-avatar">
+                            <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/users/<?php echo htmlspecialchars($nav_avatar); ?>"
+                                alt="Avatar"
+                                class="nav-avatar">
                         </a>
                         <p class="welcome-message">
-                            Welcome, <?php echo htmlspecialchars($_SESSION['username']);?>
+                            Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?>
                         </p>
                     </div>
                     <a href="<?php echo $_ENV['APP_URL']; ?>/auth/logout">Logout</a>

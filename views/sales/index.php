@@ -2,8 +2,8 @@
     
     <div class="catalog-header">
         <div>
-            <h1>My Sales Dashboard</h1>
-            <p>Track the items you've sold and arrange fulfillment with buyers.</p>
+            <h1>My Sales History</h1>
+            <p>Track the items you've sold and view your payslips.</p>
         </div>
         <a href="javascript:history.back()" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i>Go Back
