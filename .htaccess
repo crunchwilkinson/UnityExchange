@@ -12,6 +12,10 @@
 # ==========================================
 RewriteEngine On
 
+# Force all traffic to HTTPS securely
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 # If the user is trying to access a real file (like an image or CSS), let them
 RewriteCond %{REQUEST_FILENAME} !-f
 # If the user is trying to access a real directory, let them
