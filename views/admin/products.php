@@ -46,7 +46,7 @@
                         <?php foreach ($products as $product): ?>
                             <tr class="product-row" data-category="<?php echo isset($product['category_id']) ? htmlspecialchars($product['category_id']) : ''; ?>">
                                 <?php 
-                                // Fallback to default avatar if none exists
+                                // Fallback to default image if none exists
                                 $image = !empty($product['image_file']) ? $product['image_file'] : 'default_product.png'; 
                                 ?>
                                 <td><img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($image); ?>" alt="Product Image" class="product-image"></td>

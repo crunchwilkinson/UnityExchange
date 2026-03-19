@@ -4,7 +4,7 @@
             <h1>My Listings</h1>
             <p>Manage your items listed on the marketplace.</p>
         </div>
-        
+
         <?php if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] === true): ?>
             <a href="<?php echo $_ENV['APP_URL']; ?>/product/create" class="btn-secondary">+ List an Item</a>
         <?php else: ?>
@@ -13,7 +13,7 @@
     </div>
 
     <div class="product-grid-wrapper">
-        
+
         <div class="filter-bar-wrapper">
             <div class="filter-title">
                 <i class="fa fa-filter filter-icon"></i> Browse by Category
@@ -34,13 +34,13 @@
         </div>
 
         <div class="product-grid">
-            
+
             <?php if (!empty($products)): ?>
                 <?php foreach ($products as $product): ?>
                     <div class="product-card" data-category="<?php echo $product['category_id']; ?>">
-                        <?php 
-                        // Fallback to default avatar if none exists
-                        $image = !empty($product['image_file']) ? $product['image_file'] : 'default_product.png'; 
+                        <?php
+                        // Fallback to default image if none exists
+                        $image = !empty($product['image_file']) ? $product['image_file'] : 'default_product.png';
                         ?>
                         <a href="<?php echo $_ENV['APP_URL']; ?>/product/details/<?php echo $product['id']; ?>" class="product-image-link">
                             <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($image); ?>" alt="<?php echo htmlspecialchars($product['name']); ?>" class="product-image">
@@ -52,7 +52,7 @@
                             <p class="product-price">R <?php echo number_format($product['price'], 2); ?></p>
                             <div class="product-footer">
                                 <span class="seller-info">
-                                    Sold by: 
+                                    Sold by:
                                     <strong>
                                         <a href="<?php echo $_ENV['APP_URL']; ?>/profile/details/<?php echo $product['user_id']; ?>" class="seller-link">
                                             <?php echo htmlspecialchars($product['seller_name']); ?>

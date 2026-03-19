@@ -7,9 +7,9 @@
 
 	<div class="product-details-layout">
 		<div class="product-details-image-card">
-			<?php 
-			// Fallback to default avatar if none exists
-			$image = !empty($product['image_file']) ? $product['image_file'] : 'default_product.png'; 
+			<?php
+			// Fallback to default image if none exists
+			$image = !empty($product['image_file']) ? $product['image_file'] : 'default_product.png';
 			?>
 			<img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($image); ?>"
 				alt="<?php echo htmlspecialchars($product['name']); ?>"
@@ -34,7 +34,7 @@
 				<div class="meta-row">
 					<span class="meta-label">Seller</span>
 					<span class="meta-value">
-                        <a href="<?php echo $_ENV['APP_URL']; ?>/profile/details/<?php echo $product['user_id']; ?>" class="seller-link">
+						<a href="<?php echo $_ENV['APP_URL']; ?>/profile/details/<?php echo $product['user_id']; ?>" class="seller-link">
 							<?php echo htmlspecialchars($product['seller_name']); ?>
 						</a>
 					</span>

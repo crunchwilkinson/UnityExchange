@@ -12,8 +12,8 @@
 
     <div class="admin-form-container">
         <form action="<?php echo $_ENV['APP_URL']; ?>/admin/update/<?php echo htmlspecialchars($user['id']); ?>" method="POST">
-            <input type = "hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
-            
+            <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
