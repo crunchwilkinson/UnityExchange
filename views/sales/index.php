@@ -5,8 +5,8 @@
             <h1>My Sales Dashboard</h1>
             <p>Track the items you've sold and arrange fulfillment with buyers.</p>
         </div>
-        <a href="<?php echo $_ENV['APP_URL']; ?>/product" class="btn-secondary">
-            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
+        <a href="<?php echo $_ENV['APP_URL']; ?>/home/" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Home
         </a>
     </div>
 

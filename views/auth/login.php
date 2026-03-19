@@ -1,12 +1,12 @@
 <div class="auth-section">
 
-<div class="catalog-header">
+    <div class="catalog-header">
         <div>
             <h1>Login to UnityExchange</h1>
             <p>Sign in to access your account.</p>
         </div>
-        <a href="<?php echo $_ENV['APP_URL']; ?>/product/" class="btn-secondary">
-            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
+        <a href="<?php echo $_ENV['APP_URL']; ?>/home/" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Home
         </a>
     </div>
 

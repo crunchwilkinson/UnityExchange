@@ -4,8 +4,8 @@
             <h1>List a new Product</h1>
             <p>Create a new listing for your item.</p>
         </div>
-        <a href="<?php echo $_ENV['APP_URL']; ?>/product/" class="btn-secondary">
-            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
+        <a href="javascript:history.back()" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Go Back
         </a>
     </div>
 

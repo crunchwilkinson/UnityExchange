@@ -5,8 +5,8 @@
             <h1>My Order History</h1>
             <p>Track your purchases and view your digital receipts.</p>
         </div>
-        <a href="<?php echo $_ENV['APP_URL']; ?>/product" class="btn-secondary">
-            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
+        <a href="<?php echo $_ENV['APP_URL']; ?>/home/" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Home
         </a>
     </div>
 

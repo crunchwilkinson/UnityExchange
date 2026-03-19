@@ -5,8 +5,8 @@
             <h1>Create an Account</h1>
             <p>Create a new account to access UnityExchange.</p>
         </div>
-        <a href="<?php echo $_ENV['APP_URL']; ?>/product/" class="btn-secondary">
-            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
+        <a href="<?php echo $_ENV['APP_URL']; ?>/home/" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Home
         </a>
     </div>
 

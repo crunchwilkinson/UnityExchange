@@ -5,8 +5,8 @@
             <h1>My Profile</h1>
             <p>Manage your account settings and security preferences.</p>
         </div>
-        <a href="<?php echo $_ENV['APP_URL']; ?>/product/" class="btn-secondary">
-            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
+        <a href="javascript:history.back()" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Go Back
         </a>
     </div>
 
