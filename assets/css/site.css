@@ -157,8 +157,9 @@ body {
     color: #3498db;
 }
 
-/* Show the dropdown menu on hover */
-.nav-dropdown:hover .dropdown-content {
+/* Show the dropdown menu on hover (Desktop) OR when tapped (Mobile) */
+.nav-dropdown:hover .dropdown-content,
+#tx-dropdown-toggle:checked ~ .dropdown-content {
     display: block;
 }
 
