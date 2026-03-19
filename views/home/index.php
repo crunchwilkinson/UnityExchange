@@ -50,9 +50,13 @@
             <?php if (!empty($products)): ?>
                 <?php foreach ($products as $product): ?>
                     <div class="product-card">
+                        <?php 
+                            // Fallback to default avatar if none exists
+                            $image = !empty($product['image_file']) ? $product['image_file'] : 'default_product.png'; 
+                        ?>
 
                         <a href="<?php echo $_ENV['APP_URL']; ?>/product/details/<?php echo $product['id']; ?>" class="product-image-link">
-                            <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>"
+                            <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($image); ?>"
                                 alt="<?php echo htmlspecialchars($product['name']); ?>"
                                 class="product-image">
                         </a>

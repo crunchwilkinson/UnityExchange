@@ -13,7 +13,11 @@
         <div class="admin-form-container">
             <div class="current-image-preview">
                 <p class="current-image-label">Current Image:</p>
-                <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($product['image_file']); ?>" 
+                <?php 
+                // Fallback to default avatar if none exists
+                $image = !empty($product['image_file']) ? $product['image_file'] : 'default_product.png'; 
+                ?>
+                <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($image); ?>" 
                      alt="<?php echo htmlspecialchars($product['name']); ?>" 
                      class="current-image-img">
             </div>

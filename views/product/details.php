@@ -7,7 +7,11 @@
 
 	<div class="product-details-layout">
 		<div class="product-details-image-card">
-			<img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($product['image_file'] ?? 'default_product.png'); ?>"
+			<?php 
+			// Fallback to default avatar if none exists
+			$image = !empty($product['image_file']) ? $product['image_file'] : 'default_product.png'; 
+			?>
+			<img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($image); ?>"
 				alt="<?php echo htmlspecialchars($product['name']); ?>"
 				class="product-details-image">
 		</div>

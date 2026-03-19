@@ -15,7 +15,11 @@
         <div class="cart-items">
             <?php foreach ($cart_items as $item): ?>
                 <div class="cart-item cart-item-readonly">
-                    <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($item['product']['image_file']); ?>" 
+                    <?php 
+                    // Fallback to default avatar if none exists
+                    $image = !empty($item['product']['image_file']) ? $item['product']['image_file'] : 'default_product.png'; 
+                    ?>
+                    <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($image); ?>" 
                              alt="<?php echo htmlspecialchars($item['product']['name']); ?>">
                     <div class="item-details">
                         <h3><?php echo htmlspecialchars($item['product']['name']); ?></h3>
