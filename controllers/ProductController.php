@@ -56,7 +56,7 @@ class ProductController extends BaseController {
         $unique_filename = uniqid() . "_" . bin2hex(random_bytes(4)) . "." . $file_extension;
         
         // Define where the file should be saved
-        $destination = $_SERVER['DOCUMENT_ROOT'] . '/' . $_ENV['APP_URL'] . '/assets/images/products/' . $unique_filename;
+        $destination = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/products/' . $unique_filename;
 
         // 6. Move the file from temporary memory to the permanent assets folder
         if (move_uploaded_file($file_tmp_path, $destination)) {

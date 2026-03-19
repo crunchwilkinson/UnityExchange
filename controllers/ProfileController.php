@@ -47,7 +47,7 @@ class ProfileController extends BaseController {
         $unique_filename = uniqid() . "_" . bin2hex(random_bytes(4)) . "." . $file_extension;
         
         // Define where the file should be saved (Note the /users/ directory)
-        $destination = $_SERVER['DOCUMENT_ROOT'] . '/' . $_ENV['APP_URL'] . '/assets/images/users/' . $unique_filename;
+        $destination = $_SERVER['DOCUMENT_ROOT'] . '/assets/images/users/' . $unique_filename;
 
         // Ensure directory exists
         if (!is_dir(dirname($destination))) {
