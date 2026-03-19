@@ -5,7 +5,7 @@
             <p>View all marketplace orders and force-update fulfillment statuses.</p>
         </div>
         <a href="/UnityExchange/admin" class="btn-secondary">
-            <i class="fa fa-arrow-left btn-icon-left"></i> Back to Dashboard
+            <i class="fa fa-arrow-left btn-icon-left"></i> Go Back
         </a>
     </div>
 

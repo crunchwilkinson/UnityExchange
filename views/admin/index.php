@@ -30,7 +30,7 @@
                     Review registered accounts, update email addresses, and manage administrative roles across the platform.
                 </p>
                 <a href="/UnityExchange/admin/users" class="btn-primary btn-block">
-                    Manage Users &rarr;
+                    Manage Users
                 </a>
             </div>
         </div>
@@ -54,7 +54,7 @@
                     Monitor all active listings, moderate inappropriate content, and completely remove products from the database.
                 </p>
                 <a href="/UnityExchange/admin/products" class="btn-primary btn-block">
-                    Manage Inventory &rarr;
+                    Manage Inventory
                 </a>
             </div>
         </div>
@@ -78,7 +78,7 @@
                     Track marketplace sales, view order histories, and resolve transaction disputes between buyers and sellers.
                 </p>
                 <a href="/UnityExchange/admin/transactions" class="btn-primary btn-block">
-                    Manage Transactions &rarr;
+                    Manage Transactions
                 </a>
             </div>
         </div>

@@ -5,7 +5,7 @@
             <p>View and manage all products listed on the marketplace.</p>
         </div>
         <a href="/UnityExchange/admin" class="btn-secondary">
-            <i class="fa fa-arrow-left btn-icon-left"></i> Back to Admin Dashboard
+            <i class="fa fa-arrow-left btn-icon-left"></i> Go Back
         </a>
     </div>
 

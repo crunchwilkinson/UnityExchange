@@ -708,6 +708,7 @@ footer p {
     html, body {
         max-width: 100vw;
         overflow-x: hidden;
+        font-size: 14px; /* Proportionately shrinks ALL text on mobile! */
     }
 
     .admin-section {
@@ -770,33 +771,115 @@ footer p {
         to { opacity: 1; transform: translateY(0); }
     }
 
-    /* --- Dashboard Grid Fix --- */
-    /* Forces the grid to drop to 1 single column on mobile */
-    .product-grid {
-        grid-template-columns: 1fr;
+    /* --- Mini-Desktop Headers --- */
+   .catalog-header, .cart-header, .hero-banner {
+        flex-direction: row; /* Keeps items side-by-side */
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+        padding: 15px 20px;
+        gap: 10px;
     }
 
-    .catalog-header {
-        flex-direction: column;
-        align-items: stretch;
-        text-align: center;
-        padding: 20px;
+    .catalog-header > div, .cart-header > div {
+        flex: 1; /* Allows the text side to take up remaining space */
+    }
+
+    .catalog-header h1, .hero-content h1, .cart-header h1 {
+        font-size: 1.3rem; /* Scaled down header title */
+        margin-bottom: 2px;
+    }
+
+    .catalog-header p, .hero-content p, .cart-header p {
+        font-size: 0.7rem; /* Scaled down subtext */
+        margin: 0;
+    }
+
+    .admin-section h1 {
+        font-size: 1.3rem; /* Scaled down admin title */
+    }
+
+    /* Scaled down header buttons */
+    .catalog-header .btn-secondary, 
+    .cart-header .btn-primary {
+        width: auto; 
+        min-width: 0; /* Removes desktop min-width */
+        padding: 8px 12px;
+        font-size: 0.7rem;
+        margin: 0;
+        white-space: nowrap; /* Prevents button text from wrapping */
+    }
+
+   /* --- Mini-Desktop Filters --- */
+    .admin-filterbar-wrapper {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        text-align: left;
+    }
+
+    .admin-filter-title {
+        font-size: 1rem;
+    }
+
+    .admin-filter-select {
+        width: auto;
+        min-width: 140px;
+        font-size: 0.85rem;
+        padding: 6px 10px;
+        align-items: left;
+    }
+
+    /* --- Scaled-Down 2-Column Dashboard Grid --- */
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
         gap: 15px;
     }
 
-    .catalog-header .btn-secondary {
-        width: 100%;
+    .admin-icon-link {
+        height: 120px; /* Smaller icon tiles */
+    }
+    
+    .admin-icon {
+        font-size: 2rem; /* Smaller icons inside tiles */
     }
 
-    .admin-filterbar-wrapper {
-        flex-direction: column;
-        align-items: stretch;
-        text-align: center;
+    /* --- Fix Metric Containers (Restores Visual Hierarchy) --- */
+    .metric-container {
+        padding: 12px 15px; /* Scaled down padding */
+        margin: 12px 0;
     }
 
-    .admin-filter-bar, .admin-filter-select {
-        width: 100%;
-        min-width: 100%;
+    .metric-container .metric-value {
+        font-size: 1.6rem; /* Restores the large, prominent number size */
+    }
+
+    .metric-container .metric-label {
+        font-size: 0.7rem; /* Keeps the label clean and small */
+        letter-spacing: 0.5px;
+    }
+
+    .metric-icon-small {
+        font-size: 1.6rem; /* Scales the background icon to match */
+    }
+
+    .product-card-body {
+        padding: 15px;
+    }
+
+    .product-card .product-title {
+        font-size: 1rem; 
+        margin-bottom: 6px;
+    }
+
+    .admin-card-description {
+        font-size: 0.7rem;
+        
+    }
+
+    .product-card-body .btn-block {
+        padding: 8px 12px;
+        font-size: 0.7rem;
     }
 
     /* --- THE DATA TABLE FIX --- */
@@ -807,20 +890,25 @@ footer p {
     .table-responsive {
         width: 100%;
         overflow-x: auto;
-        display: block; /* Forces container to respect width constraints */
-        -webkit-overflow-scrolling: touch; /* Smooth horizontal scroll on iOS */
+        display: block; 
+        -webkit-overflow-scrolling: touch; 
         border: 1px solid #34495e;
         border-radius: 8px;
     }
 
     .admin-table {
-        /* We FORCE the table to stay wide so it scrolls instead of shrinking */
         min-width: 800px; 
     }
 
+    /* Scaled down table text and tighter padding for mobile */
     .admin-table th, 
     .admin-table td {
-        padding: 12px 15px;
+        padding: 10px 12px; 
+        font-size: 0.85rem; 
+    }
+
+    .admin-table th {
+        font-size: 0.75rem; 
     }
 
     /* --- Transaction Update Forms --- */
