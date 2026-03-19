@@ -2140,7 +2140,7 @@ button[type="submit"].btn-green:hover {
         width: auto; 
         min-width: 0; 
         padding: 10px 16px; /* Slightly thicker padding for a better mobile tap target */
-        font-size: 0.8rem;  /* Unified size */
+        font-size: 0.7rem;  /* Unified size */
         margin: 10px 5px;   /* Adds the requested margin around the buttons! */
         white-space: nowrap; 
         display: inline-block;
