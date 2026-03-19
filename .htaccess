@@ -1,3 +1,15 @@
+# ==========================================
+# 1. SECURITY RULES
+# ==========================================
+# Block public access to the .env file so passwords cannot be stolen
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# ==========================================
+# 2. APPLICATION ROUTING
+# ==========================================
 RewriteEngine On
 
 # If the user is trying to access a real file (like an image or CSS), let them
