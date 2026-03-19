@@ -2213,7 +2213,7 @@ button[type="submit"].btn-green:hover {
         -webkit-box-orient: vertical;
     }
 
-    .product-price {
+    .product-card .product-price {
         font-size: 0.8rem; /* Slightly smaller price */
         margin-bottom: 10px;
     }
