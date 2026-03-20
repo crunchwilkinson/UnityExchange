@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<?php echo isset($_SESSION['csrf_token']) ? htmlspecialchars($_SESSION['csrf_token']) : ''; ?>">
     <title>UnityExchange</title>
-    <link rel="stylesheet" href="<?php echo $_ENV['APP_URL']; ?>/assets/css/site.css">
+    <?php 
+    // Automatically get the exact timestamp of when the CSS file was last modified (Cache Busting)
+    $css_version = filemtime(__DIR__ . '/../assets/css/site.css'); 
+    ?>
+    <link rel="stylesheet" href="<?php echo $_ENV['APP_URL']; ?>/assets/css/site.css?v=<?php echo $css_version; ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
