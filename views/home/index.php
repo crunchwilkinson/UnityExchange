@@ -104,7 +104,7 @@
     <div class="bottom-cta">
         <h2>Ready to turn your skills into income?</h2>
         <p>Join hundreds of local entrepreneurs already trading on the platform.</p>
-        <a href="<?php echo $_ENV['APP_URL']; ?>/product/create" class="btn-secondary">List Your First Item</a>
+        <a href="<?php echo $_ENV['APP_URL']; ?>/product/create" class="btn-secondary">List An Item Today</a>
     </div>
 
 </div>

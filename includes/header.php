@@ -35,7 +35,7 @@
                     </label>
                     
                     <div class="dropdown-content">
-                        <a href="<?php echo $_ENV['APP_URL']; ?>/order"><i class="fa fa-shopping-bag"></i> My Purchases</a>
+                        <a href="<?php echo $_ENV['APP_URL']; ?>/order"><i class="fa fa-shopping-bag"></i> My Orders</a>
                         <a href="<?php echo $_ENV['APP_URL']; ?>/sales"><i class="fa fa-store"></i> My Sales</a>
                     </div>
                 </div>

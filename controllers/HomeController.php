@@ -14,6 +14,7 @@ class HomeController extends BaseController{
         $this->productModel = new Product($this->db);
     }
     
+    // URL: unityexchange.great-site.net/home/index
     public function index() {
 
         // Fetch the real data from MySQL

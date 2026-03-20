@@ -5,7 +5,7 @@
             <h1>My Order History</h1>
             <p>Track your purchases and view your digital receipts.</p>
         </div>
-        <a href="javascript:history.back()" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/product/" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i>Go Back
         </a>
     </div>

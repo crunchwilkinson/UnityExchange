@@ -43,9 +43,9 @@ class CartController extends BaseController{
         }
     }
 
-    // ==========================
-    // HTML VIEW ROUTES
-    // ==========================
+    // ==============================================
+    // HTML VIEW ROUTES (LOGIN REQUIRED)
+    // ==============================================
 
     public function index() {
         $cart_items = [];

@@ -4,8 +4,8 @@
             <h1>Edit Product</h1>
             <p>Update your listing details</p>
         </div>
-        <a href="<?php echo $_ENV['APP_URL']; ?>/product/details/<?php echo $product['id']; ?>" class="btn-secondary">
-            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Product
+        <a href="<?php echo $_ENV['APP_URL']; ?>/product/myListings" class="btn-secondary">
+            <i class="fa fa-arrow-left btn-icon-left"></i>Back to Products
         </a>
     </div>
 
@@ -59,7 +59,7 @@
                     </div>
 
                     <div class="form-group form-col">
-                        <label for="stock_quantity">Quantity Available</label>
+                        <label for="stock_quantity">Available Stock</label>
                         <input type="number" id="stock_quantity" name="stock_quantity" min="0" value="<?php echo htmlspecialchars($product['stock_quantity']); ?>" required>
                     </div>
                 </div>

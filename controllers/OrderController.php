@@ -14,6 +14,7 @@ class OrderController extends BaseController {
         $this->orderModel = new Order($this->db);
     }
 
+    // URL: unityexchange.great-site.net/order/index
     // Displays the "My Orders" list for the buyer
     public function index() {
         $user_id = $_SESSION['user_id'];
@@ -27,7 +28,8 @@ class OrderController extends BaseController {
         require_once 'includes/footer.php';
     }
 
-
+    // URL: unityexchange.great-site.net/order/details/{order_id}
+    // Displays the details for a specific order, including the itemized list and the "Confirm Receipt" button if the order is still marked as "shipped"
     public function details($order_id) {
         $user_id = $_SESSION['user_id'];
 
@@ -50,6 +52,8 @@ class OrderController extends BaseController {
         require_once 'includes/footer.php';
     }
 
+    // URL: unityexchange.great-site.net/order/complete/{order_id}
+    // This is the endpoint hit when the buyer clicks the "Confirm Receipt" button.
     public function complete($order_id) {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             $_SESSION['flash_message'] = "Invalid request method.";

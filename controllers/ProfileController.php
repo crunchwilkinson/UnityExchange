@@ -14,12 +14,10 @@ class ProfileController extends BaseController {
         $this->userModel = new User($this->db);
     }
 
-
     // ==================================
     // PRIVATE HELPER METHODS
     // ==================================
 
-    // Reusing your optimal upload logic from ProductController
     private function handleImageUpload($fileArray) {
         // 1. If no file was uploaded, that's fine for profiles (it's optional)
         if (!isset($fileArray) || $fileArray['error'] === UPLOAD_ERR_NO_FILE) {

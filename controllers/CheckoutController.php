@@ -17,7 +17,7 @@ class CheckoutController extends BaseController {
         $this->productModel = new Product($this->db);
     }
 
-    
+    // URL: unityexchange.great-site.net/checkout/index
     // Shows the final summary screen before placing the order
     public function index() {
 
@@ -63,6 +63,7 @@ class CheckoutController extends BaseController {
         require_once 'includes/footer.php';
     }
 
+    // URL: unityexchange.great-site.net/checkout/process
     // The POST route that actually processes the order and saves it to the database
     public function process() {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -122,6 +123,8 @@ class CheckoutController extends BaseController {
         }
     }
 
+    // URL: unityexchange.great-site.net/checkout/success/{order_id}
+    // A simple confirmation page that thanks the user for their purchase and shows the order ID
     public function success($order_id) {
         $this->requireLogin();
 

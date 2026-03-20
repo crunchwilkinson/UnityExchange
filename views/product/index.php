@@ -84,7 +84,6 @@
                     <p>The marketplace is currently empty. Be the first to list an item!</p>
                 </div>
             <?php endif; ?>
-
         </div>
     </div>
 </div>

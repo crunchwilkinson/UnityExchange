@@ -15,6 +15,10 @@ class ProductController extends BaseController {
         $this->productModel = new Product($this->db);
     }
 
+    // ================================================
+    // PRIVATE HELPER METHODS
+    // ================================================
+
     // Helper: Handles secure image uploading, size limits, and MIME type checks.
     // The $isRequired parameter allows us to force an upload for new products, 
     // but keep it optional when editing existing products.
@@ -71,6 +75,7 @@ class ProductController extends BaseController {
     // PUBLIC ROUTES (NO LOGIN REQUIRED)
     // ==================================
 
+    // unityexchange.great-site.net/product/index
     // Displays the main marketplace catalog
     public function index() {
         // Grab the search term if it exists, otherwise set to null
@@ -91,7 +96,7 @@ class ProductController extends BaseController {
         require_once 'includes/footer.php';
     }
 
-   
+    // unityexchange.great-site.net/product/details/{id}
     // Displays the specific details for a single product
     public function details($id) {
         $product = $this->productModel->getProductById($id);
@@ -110,7 +115,7 @@ class ProductController extends BaseController {
     // PROTECTED ROUTES (LOGIN REQUIRED)
     // ==================================
 
- 
+    // URL: unityexchange.great-site.net/product/create
     // Shows the blank form to list a new item
     public function create() {
         $this->requireLogin();
@@ -122,7 +127,6 @@ class ProductController extends BaseController {
         require_once 'views/product/create.php';
         require_once 'includes/footer.php';
     }
-
 
     // Captures the form submission from create() and saves to the database
     public function store() {
@@ -178,7 +182,7 @@ class ProductController extends BaseController {
         }
     }
 
-
+    // URL: unityexchange.great-site.net/product/edit/{id}
     // Shows the pre-filled form to edit an existing item
     public function edit($id) {
         $this->requireLogin();
@@ -200,7 +204,7 @@ class ProductController extends BaseController {
         require_once 'includes/footer.php';
     }
 
-
+    // URL: unityexchange.great-site.net/product/update/{id}
     // Captures the form submission from edit() and updates the database
     public function update($id) {
         $this->requireLogin();
@@ -257,7 +261,7 @@ class ProductController extends BaseController {
         }
     }
 
-
+    // URL: unityexchange.great-site.net/product/delete/{id}
     // Removes the product from the database
     public function delete($id) {
         $this->requireLogin();
@@ -287,7 +291,7 @@ class ProductController extends BaseController {
         }
     }
 
-
+    // URL: unityexchange.great-site.net/product/myListings
     // Shows a private dashboard of all items listed by the logged-in user
     public function myListings() {
         $this->requireLogin();

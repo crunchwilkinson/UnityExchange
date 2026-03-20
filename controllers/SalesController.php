@@ -15,6 +15,8 @@ class SalesController extends BaseController {
         $this->orderModel = new Order($this->db);
     }
 
+    // URL: unityexchange.great-site.net/sales/index
+    // Displays the "My Sales" list for the seller
     public function index() {
         $seller_id = $_SESSION['user_id'];
 

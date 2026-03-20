@@ -24,6 +24,7 @@ class AdminController extends BaseController {
         $this->orderModel = new Order($this->db);
     }
 
+    // URL: unityexchange.great-site.net/admin/index
     public function index() {
         // Get total counts for dashboard stats
         $total_users = $this->userModel->getTotalUsers();
@@ -35,6 +36,7 @@ class AdminController extends BaseController {
         require_once 'includes/footer.php';
     }
 
+    // URL: unityexchange.great-site.net/admin/users
     public function users() {
         // Fetch all users with their concatenated roles
         $users = $this->userModel->getAllUsersWithRoles();
@@ -43,6 +45,8 @@ class AdminController extends BaseController {
         require_once 'views/admin/users.php';
         require_once 'includes/footer.php';
     }
+
+    // URL: unityexchange.great-site.net/admin/edit/{id}
     public function edit($id) {
         // Grab any flash messages sent from the update() method
         $error = $_SESSION['flash_error'] ?? '';
@@ -67,7 +71,7 @@ class AdminController extends BaseController {
         require_once 'includes/footer.php';
     }
 
- 
+    // URL: unityexchange.great-site.net/admin/update/{id}
     public function update($id) {
         // Kick out anyone trying to load this URL directly without submitting the form
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -125,6 +129,7 @@ class AdminController extends BaseController {
         exit();
     }
 
+    // URL: unityexchange.great-site.net/admin/products
     public function products() {
         $products = $this->productModel->getAllProducts();
 
@@ -134,6 +139,7 @@ class AdminController extends BaseController {
         require_once 'includes/footer.php';
     }
 
+    // URL: unityexchange.great-site.net/admin/products/delete/{id}
     public function deleteProduct($id) {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header("Location: " . $_ENV['APP_URL'] . "/admin/products");
@@ -149,6 +155,7 @@ class AdminController extends BaseController {
         exit();
     }
 
+    // URL: unityexchange.great-site.net/admin/transactions
     public function transactions() {
         $orders = $this->orderModel->getAllOrders();
 

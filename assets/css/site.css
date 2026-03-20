@@ -2043,7 +2043,7 @@ button[type="submit"].btn-green:hover {
         padding: 1.5rem 1rem 60px 1rem; 
     }
 
-    /* --- Modern Hamburger Menu Fix --- */
+    /* --- Modern Hamburger Menu --- */
     .navbar {
         padding: 15px 20px;
         flex-direction: row; /* Keeps logo and hamburger on the same line */
@@ -2099,6 +2099,10 @@ button[type="submit"].btn-green:hover {
         to { opacity: 1; transform: translateY(0); }
     }
 
+    .product-grid-wrapper {
+        padding: 15px 10px; /* Adds a bit of horizontal breathing room on mobile */
+    }
+
    /* --- Mini-Desktop Headers --- */
     .catalog-header, .cart-header {
         flex-direction: row; /* Keeps items side-by-side */
@@ -2109,7 +2113,7 @@ button[type="submit"].btn-green:hover {
         gap: 10px;
     }
 
-    /* --- Home Page "View All" Wrap Fix --- */
+    /* --- Home Page "View All" Wrap --- */
     .home-section-header {
         flex-direction: row;
         align-items: center;
@@ -2147,7 +2151,11 @@ button[type="submit"].btn-green:hover {
         display: inline-block;
     }
 
-    /* --- Mobile Hero Banner (Un-cramped!) --- */
+    .product-card-body .seller-info {
+        display: none; /* Hides the seller info on mobile to save space */
+    }
+
+    /* --- Mobile Hero Banner --- */
     .hero-banner {
         padding: 25px 10px; /* Restores the tall breathing room */
         text-align: center; /* Centers everything neatly */
@@ -2174,8 +2182,9 @@ button[type="submit"].btn-green:hover {
         margin-bottom: 15px;
     }
 
-    .home-section-header .home-section-title {
-        font-size: 1.2rem; /* Scaled down from 1.75rem */
+    .home-section-header .home-section-link {
+        font-size: 1rem;
+        margin-top: -10px; /* Scaled down from 1.75rem */
     }
 
     /* --- Mini-Desktop Filters --- */
@@ -2215,7 +2224,7 @@ button[type="submit"].btn-green:hover {
     }
 
     .product-card .product-price {
-        font-size: 0.8rem; /* Slightly smaller price */
+        font-size: 0.75rem; /* Slightly smaller price */
         margin-bottom: 10px;
     }
 
@@ -2234,7 +2243,6 @@ button[type="submit"].btn-green:hover {
         gap: 6px;
     }
 
-    /* --- Scale Down Product Details Page --- */
     /* --- Scale Down Product Details Page --- */
     .product-details-title {
         font-size: 1.3rem !important; /* Shrunk down significantly */

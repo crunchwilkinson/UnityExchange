@@ -1,6 +1,6 @@
 <div class="products-section">
 	<div class="details-breadcrumb">
-		<a href="<?php echo $_ENV['APP_URL']; ?>/product/">
+		<a href="javascript:history.back()">
 			<i class="fa fa-arrow-left btn-icon-left"></i>Back to Marketplace
 		</a>
 	</div>

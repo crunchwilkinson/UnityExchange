@@ -13,6 +13,7 @@ class AuthController extends BaseController {
         $this->userModel = new User($this->db);
     }
 
+    // URL: unityexchange.great-site.net/auth/register
     public function register() {
 
         // PRG POST: Process the form
@@ -80,6 +81,7 @@ class AuthController extends BaseController {
         require_once 'includes/footer.php';
     }
 
+    // URL: unityexchange.great-site.net/auth/login
     public function login() {
 
         // PRG POST: Process the form

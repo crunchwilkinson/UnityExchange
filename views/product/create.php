@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="form-group form-col">
-                    <label for="stock_quantity">Quantity Available</label>
+                    <label for="stock_quantity">Available Stock</label>
                     <input type="number" id="stock_quantity" name="stock_quantity" min="1" value="1" required>
                 </div>
             </div>
