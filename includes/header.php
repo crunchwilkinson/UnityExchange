@@ -10,6 +10,7 @@
     // Automatically get the exact timestamp of when the CSS file was last modified (Cache Busting)
     $css_version = filemtime(__DIR__ . '/../assets/css/site.css'); 
     ?>
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo $_ENV['APP_URL']; ?>/favicon.png">
     <link rel="stylesheet" href="<?php echo $_ENV['APP_URL']; ?>/assets/css/site.css?v=<?php echo $css_version; ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>

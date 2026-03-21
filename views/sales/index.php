@@ -1,17 +1,17 @@
 <div class="cart-section">
-    
+
     <div class="catalog-header">
         <div>
             <h1>My Sales History</h1>
             <p>Track the items you've sold and view your payslips.</p>
         </div>
-        <a href="javascript:history.back()" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/home" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i>Go Back
         </a>
     </div>
 
     <?php if (empty($sales)): ?>
-        
+
         <div class="empty-cart">
             <h2>No sales yet</h2>
             <p>Keep listing great products! Your sales will appear here.</p>
@@ -24,32 +24,32 @@
 
         <div class="dashboard-list">
             <?php foreach ($sales as $sale): ?>
-                
-                <?php 
-                    // Simplified Badge Logic (Removed $inlineStyle)
-                    $status = strtolower($sale['order_status']);
-                    if ($status === 'completed') {
-                        $badgeClass = 'stock-badge in-stock'; 
-                        $statusText = 'Completed';
-                    } elseif ($status === 'cancelled') {
-                        $badgeClass = 'stock-badge sold-out'; 
-                        $statusText = 'Cancelled';
-                    } else {
-                        // Utilizes the new .pending CSS class
-                        $badgeClass = 'stock-badge pending';
-                        $statusText = 'Pending Delivery';
-                    }
+
+                <?php
+                // Simplified Badge Logic (Removed $inlineStyle)
+                $status = strtolower($sale['order_status']);
+                if ($status === 'completed') {
+                    $badgeClass = 'stock-badge in-stock';
+                    $statusText = 'Completed';
+                } elseif ($status === 'cancelled') {
+                    $badgeClass = 'stock-badge sold-out';
+                    $statusText = 'Cancelled';
+                } else {
+                    // Utilizes the new .pending CSS class
+                    $badgeClass = 'stock-badge pending';
+                    $statusText = 'Pending Delivery';
+                }
                 ?>
 
                 <div class="product-card order-card">
-                    
+
                     <div class="order-header">
-                        
+
                         <div class="order-product-info">
-                            <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($sale['image_file']); ?>" 
-                                 alt="<?php echo htmlspecialchars($sale['product_name']); ?>" 
-                                 class="order-product-image">
-                            
+                            <img src="<?php echo $_ENV['APP_URL']; ?>/assets/images/products/<?php echo htmlspecialchars($sale['image_file']); ?>"
+                                alt="<?php echo htmlspecialchars($sale['product_name']); ?>"
+                                class="order-product-image">
+
                             <div>
                                 <h3 class="order-product-title">
                                     <?php echo htmlspecialchars($sale['product_name']); ?>
@@ -69,14 +69,14 @@
                     </div>
 
                     <div class="financial-summary-box">
-                        
+
                         <div class="financial-detail">
                             <span class="financial-label">Quantity Sold:</span>
                             <span class="financial-value">
                                 <?php echo htmlspecialchars($sale['quantity']); ?>
                             </span>
                         </div>
-                        
+
                         <div class="financial-detail align-right">
                             <span class="financial-label-alt">Total Earned:</span>
                             <span class="financial-total">
@@ -89,18 +89,17 @@
                     <div class="user-details-section">
                         <h4 class="user-details-title">Buyer Details</h4>
                         <p class="user-details-text">
-                            <strong>Username: </strong> 
-                            
-                                <a href="<?php echo $_ENV['APP_URL']; ?>/profile/details/<?php echo $sale['buyer_id']; ?>" class="seller-link">
-                                    <?php echo htmlspecialchars($sale['buyer_name']); ?>
-                                </a>
-                            
+                            <strong>Username: </strong>
+                            <a href="<?php echo $_ENV['APP_URL']; ?>/profile/details/<?php echo $sale['buyer_id']; ?>" class="user-details-link">
+                                <?php echo htmlspecialchars($sale['buyer_name']); ?>
+                            </a>
+
                         </p>
                         <p class="user-details-text">
-                            <strong>Email:</strong> 
-                            <a href="mailto:<?php echo htmlspecialchars($sale['buyer_email']); ?>" class="user-details-link">
+                            <strong>Email:</strong>
+                            <span>
                                 <?php echo htmlspecialchars($sale['buyer_email']); ?>
-                            </a>
+                            </span>
                         </p>
                     </div>
 

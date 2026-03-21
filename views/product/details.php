@@ -34,7 +34,7 @@
 				<div class="meta-row">
 					<span class="meta-label">Seller</span>
 					<span class="meta-value">
-						<a href="<?php echo $_ENV['APP_URL']; ?>/profile/details/<?php echo $product['user_id']; ?>" class="seller-link">
+						<a href="<?php echo $_ENV['APP_URL']; ?>/profile/details/<?php echo $product['user_id']; ?>" class="link-value">
 							<?php echo htmlspecialchars($product['seller_name']); ?>
 						</a>
 					</span>
@@ -43,9 +43,9 @@
 				<?php if (!empty($product['seller_email'])): ?>
 					<div class="meta-row">
 						<span class="meta-label">Contact</span>
-						<a href="mailto:<?php echo htmlspecialchars($product['seller_email']); ?>" class="meta-value link-value">
+						<span class="meta-value">
 							<?php echo htmlspecialchars($product['seller_email']); ?>
-						</a>
+						</span>
 					</div>
 				<?php endif; ?>
 

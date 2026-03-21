@@ -5,7 +5,7 @@
             <h1>Your Cart</h1>
             <p>Review your items before proceeding to checkout.</p>
         </div>
-        <a href="javascript:history.back()" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/product" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i>Go Back
         </a>
     </div>

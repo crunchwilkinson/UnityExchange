@@ -22,8 +22,8 @@
             The seller has been notified and will begin preparing your items. 
         </p>
 
-        <a href="<?php echo $_ENV['APP_URL']; ?>/product" class="btn-primary btn-lg">
-            Continue Shopping
+        <a href="<?php echo $_ENV['APP_URL']; ?>/order/<?php echo htmlspecialchars($order_id); ?>" class="btn-primary btn-lg">
+            View Your Order
         </a>
     </div>
 
