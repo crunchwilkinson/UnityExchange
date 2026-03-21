@@ -22,7 +22,7 @@
             <div class="info-card">
                 <div class="info-icon"><i class="fa fa-handshake icon-navy"></i></div>
                 <h3>Connect Locally</h3>
-                <p>Discover unique handcrafted goods, fresh produce, and services directly from people in your area.</p>
+                <p>Discover unique goods, services, and opportunities directly from people in your area.</p>
             </div>
 
             <div class="info-card">

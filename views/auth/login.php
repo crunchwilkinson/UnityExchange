@@ -2,7 +2,7 @@
 
     <div class="catalog-header">
         <div>
-            <h1>Login to UnityExchange</h1>
+            <h1>Login</h1>
             <p>Sign in to access your account.</p>
         </div>
         <a href="<?php echo $_ENV['APP_URL']; ?>/home/" class="btn-secondary">

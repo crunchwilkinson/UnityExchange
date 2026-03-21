@@ -58,13 +58,6 @@ html {
     flex: 1;
 }
 
-.navbar nav {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    flex: 1;
-}
-
 .navbar nav a {
     color: #fff;
     text-decoration: none;
@@ -91,10 +84,20 @@ html {
 .navbar .logo a {
     color: whitesmoke;
     text-decoration: none;
+    display: flex;         /* Places image and text side-by-side */
+    align-items: center;   /* Vertically centers the image with the text */
+    gap: 12px;             /* Adds a clean space between the icon and the name */
 }
 
 .navbar .logo a:hover {
     color: #fff;
+}
+
+/* Constrain the logo size so it doesn't blow up the navbar */
+.logo-img {
+    height: 28px; 
+    width: auto;
+    display: block;
 }
 
 .welcome-message {

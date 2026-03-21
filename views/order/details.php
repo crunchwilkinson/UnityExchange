@@ -5,7 +5,7 @@
             <h1>Order #<?php echo htmlspecialchars($order['id']); ?></h1>
             <p>Placed on <?php echo date('F j, Y \a\t g:i A', strtotime($order['created_at'])); ?></p>
         </div>
-        <a href="javascript:history.back()" class="btn-secondary">
+        <a href="<?php echo $_ENV['APP_URL']; ?>/order" class="btn-secondary">
             <i class="fa fa-arrow-left btn-icon-left"></i>Go Back
         </a>
     </div>

@@ -2,7 +2,7 @@
 
     <div class="catalog-header">
         <div>
-            <h1>Create an Account</h1>
+            <h1>Register</h1>
             <p>Create a new account to access UnityExchange.</p>
         </div>
         <a href="<?php echo $_ENV['APP_URL']; ?>/home/" class="btn-secondary">
