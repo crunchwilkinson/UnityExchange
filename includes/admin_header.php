@@ -17,7 +17,6 @@
 <body>
     <header class="navbar">
         <div class="logo">
-            <div class="logo">
             <a href="<?php echo $_ENV['APP_URL']; ?>/admin">
                 <img src="<?php echo $_ENV['APP_URL']; ?>/favicon.png" alt="UnityExchange Logo" class="logo-img">
                 UnityExchange
