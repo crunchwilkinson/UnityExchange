@@ -9,7 +9,9 @@
     // Automatically get the exact timestamp of when the CSS file was last modified (Cache Busting)
     $css_version = filemtime(__DIR__ . '/../assets/css/admin_site.css'); 
     ?>
-    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo $_ENV['APP_URL']; ?>/favicon.png">
+
+    <?php $icon_version = filemtime(__DIR__ . '/../favicon.png'); ?>
+    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo $_ENV['APP_URL']; ?>/favicon.png?v=<?php echo $icon_version; ?>">
     <link rel="stylesheet" href="<?php echo $_ENV['APP_URL']; ?>/assets/css/admin_site.css?v=<?php echo $css_version; ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -18,7 +20,7 @@
     <header class="navbar">
         <div class="logo">
             <a href="<?php echo $_ENV['APP_URL']; ?>/admin">
-                <img src="<?php echo $_ENV['APP_URL']; ?>/favicon.png" alt="UnityExchange Logo" class="logo-img">
+                <img src="<?php echo $_ENV['APP_URL']; ?>/favicon.png?v=<?php echo $icon_version; ?>" alt="UnityExchange Logo" class="logo-img">
                 UnityExchange
             </a>
         </div>
