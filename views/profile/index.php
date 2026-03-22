@@ -1,5 +1,4 @@
 <div class="products-section">
-    
     <div class="catalog-header">
         <div>
             <h1>My Profile</h1>
