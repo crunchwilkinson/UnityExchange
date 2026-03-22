@@ -29,7 +29,7 @@ To run this project locally, you will need a local server environment like XAMPP
 
 1. Clone the repository:
    ```bash
-  git clone https://github.com/crunchwilkinson/UnityExchange.git
+   git clone https://github.com/crunchwilkinson/UnityExchange.git
 
 2. Move the project folder into your local server's htdocs (XAMPP) or www directory.
 
