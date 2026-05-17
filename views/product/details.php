@@ -1,3 +1,6 @@
+<?php
+/** @var array $product */
+?>
 <div class="products-section">
 	<div class="details-breadcrumb">
 		<a href="javascript:history.back()">

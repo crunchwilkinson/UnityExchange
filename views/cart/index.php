@@ -1,3 +1,7 @@
+<?php
+/** @var array $cart_items */
+/** @var float $grand_total */
+?>
 <div class="cart-section">
 
     <div class="cart-header">

@@ -1,3 +1,6 @@
+<?php
+/** @var array $user */
+?>
 <div class="products-section">
     <div class="catalog-header">
         <div>

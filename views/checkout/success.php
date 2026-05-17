@@ -1,3 +1,6 @@
+<?php
+/** @var int|string $order_id */
+?>
 <div class="cart-section success-container-wrapper">
     
     <div class="success-card">

@@ -1,3 +1,8 @@
+<?php
+/** @var array $user */
+/** @var array $all_roles */
+/** @var array $user_current_roles */
+?>
 <div class="admin-section">
 
     <div class="catalog-header">

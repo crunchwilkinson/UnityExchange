@@ -1,3 +1,7 @@
+<?php
+/** @var array $order */
+/** @var array $items */
+?>
 <div class="cart-section">
 
     <div class="catalog-header">
