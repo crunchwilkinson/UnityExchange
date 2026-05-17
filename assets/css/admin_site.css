@@ -63,6 +63,7 @@ html {
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
+    white-space: nowrap; /* Prevents nav links from breaking into multiple lines */
 }
 
 .navbar .nav-links,
@@ -104,12 +105,14 @@ html {
     margin: 0;
     font-size: 0.95rem;
     color: #ecf0f1;
+    white-space: nowrap;
 }
 
 /* --- Admin Navbar Search Bar --- */
 .nav-search {
-    width: 270px; 
-    margin-left: 1; 
+    width: 100%;
+    max-width: 270px; 
+    margin-left: 1rem; 
 }
 
 .search-container {
@@ -714,9 +717,9 @@ footer p {
 }
 
 /* =============================================
-   1. TABLET OPTIMIZATIONS (Max-width: 1400px)
+   1. TABLET OPTIMIZATIONS (Max-width: 1024px)
    ============================================= */
-@media (max-width: 1400px) {
+@media (max-width: 1024px) {
     /* Replaced 100vw with 100% to permanently cure the white gap blowout */
     html, body {
         width: 100%;
