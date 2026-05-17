@@ -27,11 +27,11 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between; /* Pushes logo and hamburger apart */
-    flex-wrap: wrap; /* Allows mobile menu to drop to the next line */
+    flex-wrap: nowrap; 
     background-color: #2c3e50;
     color: #fff;
     padding: 1rem 2rem;
-    gap: 2rem;
+    gap: 1rem;
     position: sticky; /* Modern: Stays at the top of the screen */
     top: 0;
     z-index: 1000;
@@ -54,7 +54,7 @@ body {
 .navbar nav {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
     flex: 1;
 }
 
@@ -70,7 +70,7 @@ body {
 .navbar .auth-links {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.8rem;
 }
 
 .navbar .auth-links {
@@ -115,6 +115,8 @@ body {
 .nav-avatar {
     width: 36px;
     height: 36px;
+    min-width: 36px; /* Added to enforce strict width */
+    min-height: 36px; /* Added to enforce strict height */
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #3498db;
@@ -126,6 +128,12 @@ body {
     font-size: 0.95rem;
     color: #ecf0f1;
     white-space: nowrap;
+}
+
+/* Keep text on a single line */
+.welcome-message,
+.navbar nav a {
+    white-space: nowrap; 
 }
 
 /* --- Navbar Dropdown Styling --- */
@@ -201,7 +209,8 @@ body {
 /* --- Navbar Search Bar --- */
 .nav-search {
     width: 100%;
-    max-width: 270px; 
+    max-width: 250px; 
+    min-width: 140px; 
     margin-left: 1rem;
 }
 
