@@ -6,7 +6,6 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Paints the absolute bottom canvas dark blue to cure iOS/Mac overscroll bounce */
 html {
     background-color: #2c3e50; 
 }
@@ -19,7 +18,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    min-height: 100dvh; /* Perfectly calculates iOS Safari's dynamic bottom toolbar */
+    min-height: 100dvh;
 }
 
 /* --- Navigation Bar (Flexbox & Sticky) --- */
@@ -115,8 +114,7 @@ body {
 .nav-avatar {
     width: 36px;
     height: 36px;
-    min-width: 36px; /* Added to enforce strict width */
-    min-height: 36px; /* Added to enforce strict height */
+    min-width: 36px; 
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #3498db;
@@ -201,7 +199,7 @@ body {
     top: 100%;
     left: 0;
     width: 100%;
-    height: 15px; /* Slightly larger than the 10px margin to guarantee overlap */
+    height: 15px; 
     background: transparent;
     z-index: 90;
 }
@@ -258,17 +256,15 @@ body {
     cursor: pointer;
 }
 
-/* Kill the global button shine effect */
 .nav-search button[type="submit"]::before {
     display: none;
 }
 
-/* Kill the global hover and active bounce animations */
 .nav-search button[type="submit"]:hover,
 .nav-search button[type="submit"]:active {
     transform: none;
     box-shadow: none;
-    color: #cbd5e0; /* Forces the color to stay exactly the same */
+    color: #cbd5e0; 
     background: transparent;
 }
 
@@ -531,7 +527,6 @@ footer {
     color: #fff;
     margin-top: auto;
 
-    /* SUPERCHARGED: Increased to 300px to completely cover iOS rubber-band overscrolling */
     box-shadow: 0 300px 0 #2c3e50; 
     z-index: 10;
     position: relative;
@@ -671,7 +666,7 @@ footer p {
 .product-image {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* CRITICAL: Changed from cover to contain to stop the zooming/cropping */
+    object-fit: contain; 
     transition: transform 0.4s ease;
 }
 
@@ -1033,12 +1028,11 @@ footer p {
 }
 
 .item-details h3 a {
-    color: #6282a1; /* Now perfectly matches the product card titles! */
+    color: #6282a1;
     text-decoration: none;
     transition: color 0.2s;
 }
 
-/* Keeps the nice interactive blue pop on hover */
 .item-details h3 a:hover {
     color: #3182ce; 
 }
@@ -1524,7 +1518,6 @@ button[type="submit"].btn-danger:hover,
    Public Seller Profile
    ========================================= */
 
-/* Overrides the 600px max-width of the standard admin form container */
 .seller-profile-card {
     max-width: 800px;
 }
@@ -1847,7 +1840,6 @@ button[type="submit"].btn-danger:hover,
     font-weight: bold;
 }
 
-/* NEW: Utility for Subtotals and Success text */
 .text-highlight-green {
     color: #38a169 !important;
     font-weight: bold;
@@ -1869,7 +1861,6 @@ button[type="submit"].btn-danger:hover,
     margin-bottom: 5px;
 }
 
-/* Removes default form margins to keep the summary card compact */
 .order-summary form.no-margin-form {
     margin: 0;
 }
@@ -1942,14 +1933,12 @@ button[type="submit"].btn-green:hover {
    Order Receipt Specifics
    ========================================= */
 
-/* Typography specific to order receipt items */
 .item-price-each {
     color: #3182ce;
     font-weight: bold;
     margin-top: 5px;
 }
 
-/* Slightly larger badge for the receipt summary box */
 .badge-md {
     font-size: 0.95rem;
     padding: 5px 12px;
@@ -2073,7 +2062,7 @@ button[type="submit"].btn-green:hover {
         padding: 15px 30px; 
         flex-direction: row; 
         justify-content: space-between; 
-        flex-wrap: wrap; /* CRITICAL: Allows the menu to drop to a new line */
+        flex-wrap: wrap; /* Allows the menu to drop to a new line */
         width: 100%;
         gap: 0; 
     }
@@ -2092,7 +2081,7 @@ button[type="submit"].btn-green:hover {
     
     .navbar nav {
         display: none; 
-        flex: none; /* CRITICAL: Kills the desktop 'flex: 1' grip so it stops sharing the top row */
+        flex: none; /* Kills the desktop 'flex: 1' grip so it stops sharing the top row */
         width: 100%; 
         flex-direction: column; 
         gap: 15px;
@@ -2144,7 +2133,7 @@ button[type="submit"].btn-green:hover {
         min-height: 320px;
         max-height: 400px; 
         width: 100%;
-        object-fit: contain; /* CRITICAL: Prevents cropping on rotated iPads */
+        object-fit: contain; /* Prevents cropping on rotated iPads */
     }
 
     .cart-items { flex: 1; min-width: 100%; }
