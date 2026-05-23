@@ -4,28 +4,28 @@
 // Initialize highly secure session settings
 require_once 'config/session.php';
 
-// 1. Capture and sanitize the URL (Passed silently by .htaccess)
+// Capture and sanitize the URL (Passed silently by .htaccess)
 $url = isset($_GET['url']) ? rtrim($_GET['url'], '/') : 'home';
 $url = filter_var($url, FILTER_SANITIZE_URL);
 
-// 2. Split the URL into an array
+// Split the URL into an array
 // Example: 'product/view/12' becomes ['product', 'view', '12']
 $url_parts = explode('/', $url);
 
-// 3. Define the Controller
+// Define the Controller
 // 'product' becomes 'ProductController'
 $controllerName = ucfirst($url_parts[0]) . 'Controller';
 $controllerFile = 'controllers/' . $controllerName . '.php';
 
-// 4. Define the Method (Action)
+// Define the Method (Action)
 // If no method is passed, default to 'index'
 $methodName = isset($url_parts[1]) ? $url_parts[1] : 'index';
 
-// 5. Extract Parameters
+// Extract Parameters
 // Grab everything after the controller and method (e.g., the '12')
 $params = array_slice($url_parts, 2);
 
-// 6. Execute the Routing Logic
+// Execute the Routing Logic
 if (file_exists($controllerFile)) {
     // Load the correct controller file
     require_once $controllerFile;
