@@ -13,9 +13,8 @@ class BaseController {
         $this->db = $database->connect();
     }
 
-    /**
-     * Ensures the user is logged in
-     */
+    
+    // Ensures the user is logged in
     protected function requireLogin() {
         if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
             header("Location: " . $_ENV['APP_URL'] . "/auth/login");
@@ -23,9 +22,7 @@ class BaseController {
         }
     }
 
-    /**
-     * Protects POST routes from Cross-Site Request Forgery
-     */
+    // Protects POST routes from Cross-Site Request Forgery
     protected function validateCSRF($headerRedirectPath) {
         if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
             $_SESSION['flash_message'] = "Security validation failed. Unauthorized request.";
@@ -35,9 +32,6 @@ class BaseController {
         }
     }
 
-    /**
-     * Ensures the user has an admin role
-     */
     protected function requireAdmin() {
         // Automatically implies they must be logged in first
         $this->requireLogin();
