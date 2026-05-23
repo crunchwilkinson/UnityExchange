@@ -114,18 +114,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // 2. Prepare the data to send (matching standard HTML form formatting)
+            // Prepare the data to send (matching standard HTML form formatting)
             const formData = new URLSearchParams();
             formData.append('product_id', productId);
             formData.append('quantity', 1); // Default to adding 1 item to the cart
             formData.append('csrf_token', csrfToken);
 
-            // 3. Disable the button so the user doesn't double-click it
+            // Disable the button so the user doesn't double-click it
             const originalText = this.textContent;
             this.innerText = 'Adding...';
             this.disabled = true;
 
-            // 4. Send the background POST request to the server
+            // Send the background POST request to the server
             fetch(window.APP_URL + '/cart/add', {
                 method: 'POST',
                 headers: {
@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.innerText = originalText; // Reset button text
                 this.disabled = false; // Re-enable the button
 
-                // 5. Handle the PHP response (which should be JSON)
+                // Handle the PHP response (which should be JSON)
                 if (data.status === 'success') {
                     showToast(data.message, 'success');
 
@@ -324,7 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const filterValue = event.target.value;
             let visibleCount = 0;
 
-            // 1. Are we on the Catalog Page? (Filter Cards)
+            // Are we on the Catalog Page? (Filter Cards)
             if (productCards.length > 0) {
                 productCards.forEach(card => {
                     if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
@@ -340,7 +340,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // 2. Are we on the Admin Page? (Filter Table Rows)
+            // Are we on the Admin Page? (Filter Table Rows)
             if (productRows.length > 0) {
                 productRows.forEach(row => {
                     if (filterValue === 'all' || row.getAttribute('data-category') === filterValue) {
@@ -357,7 +357,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // 3. Let the "View All Items" button reset the dropdown
+        // Let the "View All Items" button reset the dropdown
         if (clearFilterBtn) {
             clearFilterBtn.addEventListener('click', () => {
                 categoryFilter.value = 'all'; // Change the dropdown back to "All"
@@ -451,11 +451,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const userEmptyState = document.getElementById('js-user-empty-state');
             const orderEmptyState = document.getElementById('js-order-empty-state');
 
-            // 1. Filter Products Table (if it exists on the page)
+            // Filter Products Table (if it exists on the page)
             if (productRows.length > 0) {
                 let visibleCount = 0;
                 productRows.forEach(row => {
-                    // .textContent grabs ALL the text in the row (Name, ID, Description, Price)
+                    // '.textContent' grabs ALL the text in the row (Name, ID, Description, Price)
                     const rowText = row.textContent.toLowerCase();
                     if (rowText.includes(searchTerm)) {
                         row.style.display = ''; // Show row
@@ -471,11 +471,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // 2. Filter Users Table (if it exists on the page)
+            // Filter Users Table (if it exists on the page)
             if (userRows.length > 0) {
                 let visibleCount = 0;
                 userRows.forEach(row => {
-                    // .textContent grabs ALL the text (Username, Email, ID, Roles)
+                    // '.textContent' grabs ALL the text (Username, Email, ID, Roles)
                     const rowText = row.textContent.toLowerCase();
                     if (rowText.includes(searchTerm)) {
                         row.style.display = ''; // Show row
@@ -495,7 +495,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (orderRows.length > 0) {
                 let visibleCount = 0;
                 orderRows.forEach(row => {
-                    // .textContent grabs ALL the text (Order ID, Buyer, Total Amount, Date Placed, Current Status)
+                    // '.textContent' grabs ALL the text (Order ID, Buyer, Total Amount, Date Placed, Current Status)
                     const rowText = row.textContent.toLowerCase();
                     if (rowText.includes(searchTerm)) {
                         row.style.display = ''; // Show row

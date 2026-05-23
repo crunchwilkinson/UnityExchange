@@ -5,7 +5,7 @@ ini_set('session.use_only_cookies', 1);
 ini_set('session.use_strict_mode', 1);
 ini_set('session.gc_maxlifetime', 1800);
 
-// Remove or dynamically set the domain so it works locally AND in production
+// Remove or dynamically set the domain so it works in development AND in production
 $current_domain = $_SERVER['HTTP_HOST'];
 
 // Automatically detect if the site is using HTTPS (SSL)
@@ -23,7 +23,7 @@ session_set_cookie_params([
 // Start the session globally for the entire application
 session_start();
 
-// 1. MANAGE IDLE TIMEOUT (Logout after 30 mins of inactivity)
+// MANAGE IDLE TIMEOUT (Logout after 30 mins of inactivity)
 $timeout_duration = 1800;
 
 if (isset($_SESSION['last_activity'])) {
@@ -38,7 +38,7 @@ if (isset($_SESSION['last_activity'])) {
 // Update the last activity timestamp on every page load
 $_SESSION['last_activity'] = time();
 
-// 2. MANAGE SESSION REGENERATION (Prevent Fixation Attacks)
+// MANAGE SESSION REGENERATION (Prevent Fixation Attacks)
 $regeneration_interval = 30 * 60; // 30 minutes
 
 if (!isset($_SESSION['last_regeneration'])) {
@@ -55,7 +55,7 @@ function regenerateSession() {
     $_SESSION['last_regeneration'] = time();
 }
 
-// 3. GENERATE CSRF TOKEN
+// GENERATE CSRF TOKEN
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }

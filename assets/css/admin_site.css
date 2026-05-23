@@ -14,10 +14,10 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    min-height: 100dvh; /* Perfectly calculates iOS Safari's dynamic bottom toolbar */
+    min-height: 100dvh; 
 }
 
-/* Paints the absolute bottom canvas dark blue to cure iOS/Mac overscroll bounce */
+
 html {
     background-color: #2c3e50; 
 }
@@ -184,33 +184,32 @@ html {
     overflow-x: auto;
     margin-bottom: 1rem;
     width: 100%;
-    margin-top: 20px; /* Gives some space between the filter and the table */
+    margin-top: 20px; 
 }
 
 .admin-table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
-    background-color: transparent; /* Lets the #2c3e50 from the parent shine through */
-    color: #cbd5e0; /* Default text color for the table */
+    background-color: transparent; 
+    color: #cbd5e0; 
 }
 
 .admin-table th, 
 .admin-table td {
     padding: 18px 20px;
-    border-bottom: 1px solid #34495e; /* Darker border */
-    color: #cbd5e0; /* Light text for dark background */
+    border-bottom: 1px solid #34495e; 
+    color: #cbd5e0; 
 }
 
 .admin-table th {
-    background-color: #1a252f; /* Slightly darker than the background to pop */
-    font-weight: 600;
+    background-color: #1a252f; 
     text-transform: uppercase;
     font-size: 0.8rem;
     letter-spacing: 0.05em;
-    color: #a0aec0; /* Slightly muted text for headers */
+    color: #a0aec0; 
     border-bottom: 2px solid #34495e;
-    white-space: nowrap; /* Forces the header text to stay on one line */
+    white-space: nowrap; 
 }
 
 .admin-table tr:last-child td {
@@ -264,7 +263,7 @@ html {
 
 .empty-table-message {
     text-align: center;
-    color: #a0aec0; /* Lighter color for empty state text */
+    color: #a0aec0; 
     padding: 40px 20px !important;
     font-style: italic;
 }
@@ -277,7 +276,7 @@ html {
 }
 
 .text-muted {
-    color: #718096; /* Darker gray for N/A or 0 values */
+    color: #718096;
     font-style: italic;
 }
 
@@ -353,7 +352,6 @@ footer {
     color: #fff;
     margin-top: auto;
 
-    /* SUPERCHARGED: Increased to 300px to completely cover iOS rubber-band overscrolling */
     box-shadow: 0 300px 0 #2c3e50; 
     z-index: 10;
     position: relative;
@@ -407,7 +405,6 @@ footer p {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* Specifically enlarge submit buttons inside admin forms to match the public site */
 .admin-form-container button[type="submit"].btn-primary {
     font-size: 1.1rem;
     padding: 1rem 1.5rem;
